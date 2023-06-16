@@ -4,7 +4,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import { Selected_Items_Context, Items_Lenght_Check_Context } from '../selected_items_context.jsx';
-import SVG_Parser from './svg_generator.jsx'
+
 
 const DisplaySelectedItems = () => {
     const { Selected_Items, set_Selected_Items } = useContext(Selected_Items_Context);
@@ -25,9 +25,6 @@ const DisplaySelectedItems = () => {
                         <Col xs={6}>
                             {item.Description}
                             <Button variant="danger" onClick={() => deleteItem(index)}>Delete</Button>
-                        </Col>
-                        <Col>
-                            <SVG_Parser svgString={item.SVG_str}/>
                         </Col>
                     </Row>
                 </Container>

@@ -1,10 +1,8 @@
 import { useState, useRef } from 'react';
 
 import './App.css';
-
+import PDF_preview from './components/pdf_preview'
 import Select_Breakers_Menu from './components/dropdown_product_selector';
-import Configuration_Preview from './components/configuration_preview';
-import DownloadPDF from './components/local_file_convert';
 
 import { Selected_Items_Context, Items_Lenght_Check_Context } from './selected_items_context.jsx';
 function App() {
@@ -27,10 +25,8 @@ function App() {
 
         {/* Breaker selection Preview */}
         <div>
-          <Configuration_Preview />
+          <PDF_preview />
         </div>
-        <DownloadPDF />
-
       </div>
       
     </>
