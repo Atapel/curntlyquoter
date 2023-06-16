@@ -1,46 +1,48 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { select } from 'd3';
+import { useContext } from 'react';
+import React from 'react';
+import { Selected_Items_Context } from '../selected_items_context.jsx';
+import Button from 'react-bootstrap/Button';
 
-function MyComponent() {
-  const svgRef = useRef();
-  const [svgData, setSvgData] = useState(null);
+const DownloadPDF = () => {
 
-  const generateSvg = () => {
-    const svg = select(svgRef.current);
-    svg.append('circle')
-      .attr('cx', 50)
-      .attr('cy', 50)
-      .attr('r', 50)
-      .attr('fill', 'red');
-    
-    const svgElement = svgRef.current;
-    const serializer = new XMLSerializer();
-    const svgString = serializer.serializeToString(svgElement);
-    setSvgData(svgString);
-  }
+  const {Selected_Items, set_Selected_Items} = useContext(Selected_Items_Context);
 
-  const downloadSvg = () => {
-    if (!svgData) return;
-    const data = "data:image/svg+xml;charset=utf-8,"+ encodeURIComponent(svgData);
+    const downloadPdf = async () => {
+        // Extract SVG Strings
+        // Extract SVG Strings for each selected item
+        let svgStrings = Selected_Items.map(item => item.SVG_str);
+        // Post SVG Strings to Server
+        const response = await fetch('http://localhost:5000/generate-pdf', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({svg: svgStrings})
+        });
 
-    const link = document.createElement('a');
-    link.href = data;
-    link.download = 'image.svg';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  }
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', 'Curntly_Config_Breakers.pdf');
+        document.body.appendChild(link);
+        link.click();
+        link.parentNode.removeChild(link);
+    }
 
-  return (
-    <div>
-      <svg ref={svgRef}></svg>
-      <button onClick={generateSvg}>Generate SVG</button>
-      <button onClick={downloadSvg}>Download SVG</button>
-      {svgData && <p>Saved SVG data: {svgData}</p>}
-    </div>
-  );
+    return (
+        <div>
+            {Selected_Items && Selected_Items.length > 0 ? (
+                <Button variant="success" onClick={downloadPdf}>Download PDF</Button>
+            ) : (
+                <div />
+            )}
+        </div>
+    );
 }
 
-export default MyComponent;
+export default DownloadPDF;
+
+
 
 
