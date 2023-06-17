@@ -6,7 +6,7 @@ import DisplaySelectedItems from './configuration_preview.jsx'
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import { containe_w_dimensions_SVG } from './switch_board.jsx';
+import { containe_w_dimensions_SVG } from '../assets/switch_board.jsx';
 const PDF_preview = () => {
     const { Selected_Items, set_Selected_Items } = useContext(Selected_Items_Context);
     const canvasRef = useRef(null);
