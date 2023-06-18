@@ -7,8 +7,12 @@ const Select_Breakers_Menu = () => {
     const {Selected_Items, set_Selected_Items} = useContext(Selected_Items_Context);
     const {Length_Limit_Check, setLength_Limit_Check} = useContext(Items_Lenght_Check_Context);
     const [Warning_Display, setWarning_Display] = useState(false)
+
+    const [Selected_Voltage, setSelected_Voltage] = useState('Please Select Voltage')
+    const [Selected_KAIC_rating, setSelected_KAIC_rating] = useState('Please KAIC Rating') 
     const [Selected_Breaker_Size, setSelected_Breaker_Size] = useState('Please Select Breaker Size')
     const [Currently_Selected_Breaker, setCurrently_Selected_Breaker] = useState({Description:'Please Select Breaker'})
+    const [Selected_Bus_rating, setSelected_Bus_rating] = useState('Please Bus Rating') 
 
     const handleProductSelect = (product) => {
         if (Length_Limit_Check + product['Size'] <= 45) {
@@ -33,6 +37,57 @@ const Select_Breakers_Menu = () => {
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="mr-auto">
                         
+                        {/*  Selection for Voltage */}
+                        <Dropdown>
+                            <Dropdown.Toggle variant="primary" id="dropdown-basic">
+                                {Selected_Voltage}
+                            </Dropdown.Toggle>
+
+                            <Dropdown.Menu>
+                                    <Dropdown.Item>
+                                        <Button variant="outline-info" size="sm" className="w-100" onClick={() => setSelected_Voltage('208Y/120V')}>
+                                            208Y/120V
+                                        </Button>
+                                    </Dropdown.Item>
+                                    <Dropdown.Item>
+                                        <Button variant="outline-info" size="sm" className="w-100" onClick={() => setSelected_Voltage('480Y/270V')}>
+                                            480Y/270V 
+                                        </Button>
+                                    </Dropdown.Item>
+                            </Dropdown.Menu>
+                        </Dropdown>
+
+                        {/*  Selection for KAIC rating */}
+                        <Dropdown>
+                            <Dropdown.Toggle variant="primary" id="dropdown-basic">
+                                {Selected_KAIC_rating}
+                            </Dropdown.Toggle>
+
+                            <Dropdown.Menu>
+                                    <Dropdown.Item>
+                                        <Button variant="outline-info" size="sm" className="w-100" onClick={() => setSelected_KAIC_rating('35')}>
+                                            35
+                                        </Button>
+                                    </Dropdown.Item>
+                                    <Dropdown.Item>
+                                        <Button variant="outline-info" size="sm" className="w-100" onClick={() => setSelected_KAIC_rating('65')}>
+                                            65 
+                                        </Button>
+                                    </Dropdown.Item>
+                                    <Dropdown.Item>
+                                        <Button variant="outline-info" size="sm" className="w-100" onClick={() => setSelected_KAIC_rating('100')}>
+                                            100
+                                        </Button>
+                                    </Dropdown.Item>
+                                    <Dropdown.Item>
+                                        <Button variant="outline-info" size="sm" className="w-100" onClick={() => setSelected_KAIC_rating('150')}>
+                                            150 
+                                        </Button>
+                                    </Dropdown.Item>
+                            </Dropdown.Menu>
+                        </Dropdown>
+
+                        {/*  Selection for Breaker Size */}
                         <Dropdown>
                             <Dropdown.Toggle variant="primary" id="dropdown-basic">
                                 {Selected_Breaker_Size}
@@ -52,6 +107,7 @@ const Select_Breakers_Menu = () => {
                             </Dropdown.Menu>
                         </Dropdown>
                         
+                        {/* Selection for Breaker */}
                         <Dropdown>
                             <Dropdown.Toggle variant="primary" id="dropdown-basic">
                                 {Currently_Selected_Breaker.Description}
@@ -67,9 +123,35 @@ const Select_Breakers_Menu = () => {
                                 ))}
                             </Dropdown.Menu>
                         </Dropdown>
+
+                        {/*  Selection for Bus rating */}
+                        <Dropdown>
+                            <Dropdown.Toggle variant="primary" id="dropdown-basic">
+                                {Selected_Bus_rating}
+                            </Dropdown.Toggle>
+
+                            <Dropdown.Menu>
+                                    <Dropdown.Item>
+                                        <Button variant="outline-info" size="sm" className="w-100" onClick={() => setSelected_Bus_rating('750A')}>
+                                            750A
+                                        </Button>
+                                    </Dropdown.Item>
+                                    <Dropdown.Item>
+                                        <Button variant="outline-info" size="sm" className="w-100" onClick={() => setSelected_Bus_rating('1500A')}>
+                                            1500A
+                                        </Button>
+                                    </Dropdown.Item>
+                                    <Dropdown.Item>
+                                        <Button variant="outline-info" size="sm" className="w-100" onClick={() => setSelected_Bus_rating('2250A')}>
+                                            2250A
+                                        </Button>
+                                    </Dropdown.Item>
+                            </Dropdown.Menu>
+                        </Dropdown>
                         
+                        {/* Add Breaker to Preview */}
                         <Button variant="outline-info" size="sm" className="w-100" onClick={() => handleProductSelect(Currently_Selected_Breaker)} disabled={Length_Limit_Check > 45}>
-                            Add {Currently_Selected_Breaker.Description}
+                            Add
                         </Button>
 
                     </Nav>
