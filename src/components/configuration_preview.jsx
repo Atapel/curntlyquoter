@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import Container from 'react-bootstrap/Container';
+import ListGroup from 'react-bootstrap/ListGroup';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
@@ -19,16 +19,23 @@ const DisplaySelectedItems = () => {
 
     return (
         <div>
-            {Selected_Items.map((item, index) => (
-                <Container fluid key={index}>
-                    <Row>
-                        <Col xs={6}>
-                            {item.Description}
-                            <Button variant="danger" onClick={() => deleteItem(index)}>Delete</Button>
-                        </Col>
-                    </Row>
-                </Container>
-            ))}
+            <ListGroup>
+                <ListGroup.Item>
+                    <h2>Currently selected: </h2>
+                </ListGroup.Item>
+                {Selected_Items.map((item, index) => (
+                    <ListGroup.Item>
+                        <Row>
+                            <Col>
+                                {item.Description}
+                            </Col>    
+                            <Col>
+                                <Button variant="danger" onClick={() => deleteItem(index)}>Delete</Button>
+                            </Col>
+                        </Row>
+                    </ListGroup.Item>
+                ))}
+            </ListGroup>
         </div>
     );
 };
