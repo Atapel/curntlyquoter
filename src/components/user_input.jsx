@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { Form, Button, Alert } from 'react-bootstrap';
+import { Row, Col, Container } from 'react-bootstrap';
 import { User_Input_Context } from '../selected_items_context.jsx';
 
 const New_config_input = () => {
@@ -26,41 +27,57 @@ const New_config_input = () => {
   return (
  
     <Form onSubmit={handleSubmit}>
-      <Form.Group controlId="formClient">
-        <Form.Label>Client</Form.Label>
-        <Form.Control type="text" name="client" onChange={handleInputChange} />
-      </Form.Group>
-
-      <Form.Group controlId="formProject">
-        <Form.Label>Project</Form.Label>
-        <Form.Control type="text" name="project" onChange={handleInputChange} />
-      </Form.Group>
-
-      {/* <Form.Group controlId="formEquipment">
-        <Form.Label>Equipment</Form.Label>
-        <Form.Control type="text" name="equipment" onChange={handleInputChange} />
-      </Form.Group>
-
-      <Form.Group controlId="formSalesOrderNumber">
-        <Form.Label>Sales Order Number</Form.Label>
-        <Form.Control type="text" name="salesOrderNumber" onChange={handleInputChange} />
-      </Form.Group>
-
-      <Form.Group controlId="formRevision">
-        <Form.Label>Revision</Form.Label>
-        <Form.Control type="text" name="revision" onChange={handleInputChange} />
-      </Form.Group> */}
-
-      <Form.Group controlId="formDrawingDate">
-        <Form.Label>Drawing Date</Form.Label>
-        <Form.Control type="date" name="drawingDate" onChange={handleInputChange} />
-      </Form.Group>
-
-      <Form.Group controlId="formDrawnBy">
-        <Form.Label>Drawn By</Form.Label>
-        <Form.Control type="text" name="drawnBy" onChange={handleInputChange} />
-      </Form.Group>
+      <Container>
+        <Form.Group controlId="formClient">
+          <Row>
+            <Col>
+              <Form.Label>Client</Form.Label>
+            </Col>
+            <Col>
+              <Form.Control type="text" name="client" onChange={handleInputChange} />
+            </Col>
+          </Row>
+        </Form.Group>
+      </Container>
       
+      <Container>
+        <Form.Group controlId="formProject">
+          <Row>
+            <Col>
+              <Form.Label>Project</Form.Label>
+            </Col>
+            <Col>
+              <Form.Control type="text" name="project" onChange={handleInputChange} />
+            </Col>
+          </Row>
+        </Form.Group>
+      </Container>
+
+      <Container>
+        <Form.Group controlId="formDrawingDate">
+          <Row>
+            <Col>
+              <Form.Label>Drawing Date</Form.Label>
+            </Col>
+            <Col>
+              <Form.Control type="date" name="drawingDate" onChange={handleInputChange} />
+            </Col>
+          </Row>
+        </Form.Group>
+      </Container>
+
+      <Container>
+        <Form.Group controlId="formDrawnBy">
+        <Row>
+          <Col>
+            <Form.Label>Drawn By</Form.Label>
+          </Col>
+          <Col>
+            <Form.Control type="text" name="drawnBy" onChange={handleInputChange} />
+          </Col>
+        </Row>
+        </Form.Group>
+      </Container>
       {isFormIncomplete && <Alert variant="warning">Please fill out all fields before submitting.</Alert>}
 
       <Button variant="primary" type="submit" disabled={isFormIncomplete}>
