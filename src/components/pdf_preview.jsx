@@ -1,13 +1,11 @@
-import React, { useContext, useEffect, useRef } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { Selected_Items_Context, User_Input_Context } from '../selected_items_context.jsx';
 import { jsPDF } from "jspdf";
 import Button from 'react-bootstrap/Button';
-import DisplaySelectedItems from './configuration_preview.jsx'
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import { container_46_w_dimensions_SVG } from '../assets/switch_board.jsx';
-// import PDF_generator from './pdf_generator.jsx';
+import { container_46_w_dimensions_SVG, container_36_w_dimensions_SVG } from '../assets/switch_board.jsx';
 
 const PDF_preview = () => {
     const { Selected_Items, set_Selected_Items } = useContext(Selected_Items_Context);
@@ -15,31 +13,42 @@ const PDF_preview = () => {
 
     const canvasRef = useRef(null);
 
-    // Define your containerSVG string
-    const containerSVG = container_46_w_dimensions_SVG
-    
+    const [containerSrc, setContainerSrc] = useState(null);
+
+    useEffect(() => {
+        if (Selected_Items.length > 0) {
+            if (Selected_Items[0].config_specs.Frame_Size === 36) {
+                setContainerSrc('data:image/svg+xml,' + encodeURIComponent(container_36_w_dimensions_SVG));
+            } else if (Selected_Items[0].config_specs.Frame_Size === 46) {
+                setContainerSrc('data:image/svg+xml,' + encodeURIComponent(container_46_w_dimensions_SVG));
+            }
+        }
+    }, [Selected_Items]);
+
     useEffect(() => {
         const canvas = canvasRef.current;
+        if (!canvas || !containerSrc) return;
+        
         const context = canvas.getContext('2d');
-    
+        
         // Load and draw the container SVG first
         const container = new Image();
         container.onload = () => {
             // Set the canvas size to match the container image size
             canvas.width = container.width;
             canvas.height = container.height;
-
-            context.drawImage(container, 0, 0);
     
+            context.drawImage(container, 0, 0);
+        
             // Once the container is drawn, proceed with the SVG items
             let currentY = 117;  // Start with an offset for y-coordinate
             let currentX = 78.5;  // Start with an offset for x-coordinate
-    
+        
             Selected_Items.forEach(item => {
                 const img = new Image();
                 img.onload = () => {
                     context.drawImage(img, currentX, currentY);
-                    if(item.Size == 9){
+                    if(item.Size == 9){ 
                         currentY += 45;  // Increment y-coordinate
                     }else if(item.Size == 6){
                         currentY += 30;  // Increment y-coordinate
@@ -50,12 +59,9 @@ const PDF_preview = () => {
                 img.src = 'data:image/svg+xml,' + encodeURIComponent(item.SVG_str);
             });
         };
-        container.src = 'data:image/svg+xml,' + encodeURIComponent(containerSVG);
-    
-    }, [Selected_Items, containerSVG]);  // Dependency array
-    
-
-    
+        container.src = containerSrc;
+        
+    }, [Selected_Items, containerSrc]);
 
     const createPdf = () => {
         const pdf = new jsPDF({
@@ -97,26 +103,22 @@ const PDF_preview = () => {
 
     return (
         <div>
-            <Container>
-                <Row>
-                    <Col>
-                        <DisplaySelectedItems />
-                    </Col>
-                    <Col>
-                        <canvas ref={canvasRef} />
-                    </Col>
-                </Row>
-                <Row>
-                    <Col>
-                        {Selected_Items && Selected_Items.length > 0 ? (
+            {Selected_Items && Selected_Items.length > 0 ? (
+                <Container>
+                    <Row>
+                        <Col>
+                            <canvas ref={canvasRef} />
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col>
                             <Button variant="success" onClick={createPdf}>Download PDF</Button>
-                            ) : (
-                             <div />
-                        )}
-                        
-                    </Col>
-                </Row>
-            </Container>
+                        </Col>
+                    </Row>
+                </Container>
+            ) : (
+                <div />
+            )}
         </div>
     );
 };
