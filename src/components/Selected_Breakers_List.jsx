@@ -1,9 +1,6 @@
 import React, { useContext } from "react";
 import ListGroup from "react-bootstrap/ListGroup";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import Button from "react-bootstrap/Button";
-import { Dropdown } from "react-bootstrap";
+import { Button,Col, Dropdown, Row } from "react-bootstrap";
 import {
   Configuration_Breakers_Context,
   Items_Lenght_Check_Context,

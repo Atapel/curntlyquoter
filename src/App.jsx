@@ -1,14 +1,12 @@
-import { useState, useRef } from "react";
-import Tab from "react-bootstrap/Tab";
-import Tabs from "react-bootstrap/Tabs";
+import { useState } from "react";
+import { Col, Row, Tab, Tabs } from "react-bootstrap";
 import "./App.css";
 import DisplaySelectedItems from "./components/Selected_Breakers_List";
 import PDF_preview from "./components/pdf_preview";
 import Select_Breakers_Menu from "./components/Breaker_Selection_Menu";
 import New_config_input from "./components/user_input";
 import Select_Panel_Menu from "./components/Frame_Selection_Menu";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
+
 import {
   Configuration_Frame_Context,
   Configuration_Breakers_Context,

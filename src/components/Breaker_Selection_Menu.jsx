@@ -1,11 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import { Alert, Dropdown, Button, Row, ListGroup, Col } from "react-bootstrap";
-import {
-  Single_breakers_46,
-  Single_breakers_36,
-  Double_breakers_46,
-  Double_breakers_36,
-} from "../api_requests/fetch_products.jsx";
+import {getBreakerDetails} from "../api_requests/fetch_products"
+
 import {
   Configuration_Frame_Context,
   Configuration_Breakers_Context,
@@ -47,6 +43,7 @@ const Select_Breakers_Menu = () => {
 
   let products = [];
 
+  let { Single_breakers_46, Double_breakers_46, Single_breakers_36, Double_breakers_36 } = getBreakerDetails(Selected_Panel);
   if (Selected_Breaker_Size == "Single" && Selected_Panel.Frame_Size === 46) {
     products = Single_breakers_46;
   } else if (
