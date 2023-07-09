@@ -1,6 +1,15 @@
 import React, { useContext, useState, useEffect } from "react";
-import { Alert, Dropdown, Button, Row, ListGroup, Col } from "react-bootstrap";
-import {getBreakerDetails} from "../api_requests/fetch_products"
+import {
+  Alert,
+  Dropdown,
+  Button,
+  Row,
+  ListGroup,
+  Col,
+  Form,
+} from "react-bootstrap";
+import { getBreakerDetails } from "../api_requests/fetch_products";
+import Select_Amperage_Menu from "./amperage selection_menu";
 
 import {
   Configuration_Frame_Context,
@@ -9,6 +18,9 @@ import {
 } from "../selected_items_context.jsx";
 
 const Select_Breakers_Menu = () => {
+  // Create the state variable max_amperage
+  const [max_amperage, setMaxAmperage] = useState(0);
+
   const { Selected_Breakers, setSelected_Breakers } = useContext(
     Configuration_Breakers_Context
   );
@@ -39,11 +51,18 @@ const Select_Breakers_Menu = () => {
     } else {
       setWarning_Display(true);
     }
+    setMaxAmperage(0);
   };
 
   let products = [];
 
-  let { Single_breakers_46, Double_breakers_46, Single_breakers_36, Double_breakers_36 } = getBreakerDetails(Selected_Panel);
+  let {
+    Single_breakers_46,
+    Double_breakers_46,
+    Single_breakers_36,
+    Double_breakers_36,
+  } = getBreakerDetails(Selected_Panel);
+
   if (Selected_Breaker_Size == "Single" && Selected_Panel.Frame_Size === 46) {
     products = Single_breakers_46;
   } else if (
@@ -62,6 +81,11 @@ const Select_Breakers_Menu = () => {
   ) {
     products = Double_breakers_36;
   }
+
+  // if (max_amperage !== 0) {
+  products = products.filter((element) => element.Max_Amperage > max_amperage);
+  //   console.log(products)
+  // }
 
   return (
     <div>
@@ -109,6 +133,11 @@ const Select_Breakers_Menu = () => {
           </Dropdown>
         </ListGroup.Item>
 
+        <Select_Amperage_Menu
+          max_amperage={max_amperage}
+          setMaxAmperage={setMaxAmperage}
+        />
+
         <ListGroup.Item>
           {/* Dropdown for Breaker */}
           <Dropdown>
@@ -120,7 +149,7 @@ const Select_Breakers_Menu = () => {
                 <Dropdown.Toggle
                   variant="primary"
                   id="dropdown-basic"
-                  disabled={Selected_Breaker_Size === "Select Breaker Size"}
+                  disabled={max_amperage === 0}
                 >
                   {Currently_Selected_Breaker.Description}
                 </Dropdown.Toggle>
