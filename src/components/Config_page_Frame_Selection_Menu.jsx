@@ -8,7 +8,7 @@ import {
   ListGroupItem,
 } from "react-bootstrap";
 import { Configuration_Frame_Context } from "../selected_items_context.jsx";
-import DisplaySelectedFrame from "./Selected_Frame_Preview.jsx";
+import DisplaySelectedFrame from "./Config_page_Selected_Frame_Preview.jsx";
 
 const Select_Panel_Menu = () => {
   const { Selected_Panel, set_Selected_Panel } = useContext(
