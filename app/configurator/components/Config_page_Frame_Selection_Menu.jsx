@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import {
   Dropdown,
   Button,
@@ -7,19 +7,12 @@ import {
   ListGroup,
   ListGroupItem,
 } from "react-bootstrap";
-// import { Configuration_Frame_Context } from "../../Context/globalContext.jsx/index.js";
-import {
-  UseFrameContext,
-  // UseBreakerContext,
-  // UseLenghtLimitContext,
-} from "@/app/context/globalContext.jsx";
+
+import { UseFrameContext } from "@/app/context/globalContext.jsx";
 import DisplaySelectedFrame from "./Config_page_Selected_Frame_Preview.jsx";
 
 const Select_Panel_Menu = () => {
-  // const { Selected_Panel, set_Selected_Panel } = useContext(
-  //   Configuration_Frame_Context
-  // );
-  const { Selected_Panel, set_Selected_Panel } = UseFrameContext
+  const { Selected_Panel, set_Selected_Panel } = UseFrameContext();
 
   const [Selected_Frame_Size, setSelected_Frame_Size] =
     useState("Select Width");

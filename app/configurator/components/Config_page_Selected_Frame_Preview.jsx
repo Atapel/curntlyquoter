@@ -3,12 +3,10 @@ import ListGroup from "react-bootstrap/ListGroup";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
-import { Configuration_Frame_Context } from "../selected_items_context.jsx";
+import { UseFrameContext } from "@/app/context/globalContext";
 
 const DisplaySelectedFrame = () => {
-  const { Selected_Panel, set_Selected_Panel } = useContext(
-    Configuration_Frame_Context
-  );
+  const { Selected_Panel, set_Selected_Panel } = UseFrameContext;
 
   return (
     <div>

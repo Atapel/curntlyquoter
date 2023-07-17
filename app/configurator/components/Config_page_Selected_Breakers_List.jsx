@@ -1,18 +1,10 @@
-import React, { useContext } from "react";
+import React from "react";
 import ListGroup from "react-bootstrap/ListGroup";
-import { Button,Col, Dropdown, Row } from "react-bootstrap";
-import {
-  Configuration_Breakers_Context,
-  Items_Lenght_Check_Context,
-} from "../selected_items_context.jsx";
+import { Button, Col, Dropdown, Row } from "react-bootstrap";
+import { UseBreakerContext } from "@/app/context/globalContext";
 
 const DisplaySelectedItems = () => {
-  const { Selected_Breakers, setSelected_Breakers } = useContext(
-    Configuration_Breakers_Context
-  );
-  const { Length_Limit_Check, setLength_Limit_Check } = useContext(
-    Items_Lenght_Check_Context
-  );
+  const { Selected_Breakers, setSelected_Breakers } = UseBreakerContext;
 
   const deleteItem = (indexToDelete) => {
     const itemToDelete = Selected_Breakers[indexToDelete];

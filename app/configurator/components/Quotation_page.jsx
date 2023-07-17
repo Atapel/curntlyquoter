@@ -1,25 +1,20 @@
-import { useState, useContext } from "react";
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
-
+import { useState } from "react";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import {
-  Configuration_Frame_Context,
-  Configuration_Breakers_Context,
-  User_Input_Context,
-} from "../selected_items_context.jsx";
+  UseFrameContext,
+  UseBreakerContext,
+  UseUserInputContext,
+} from "@/app/context/globalContext";
 import { Button, ListGroup } from "react-bootstrap";
 
 function InsertButton() {
-  const { Selected_Breakers, setSelected_Breakers } = useContext(
-    Configuration_Breakers_Context
-  );
-  const { Selected_Panel, set_Selected_Panel } = useContext(
-    Configuration_Frame_Context
-  );
-  const { User_Input, setUser_Input } = useContext(User_Input_Context);
+  const { Selected_Breakers, setSelected_Breakers } = UseBreakerContext();
+  const { Selected_Panel, set_Selected_Panel } = UseFrameContext();
+  const { User_Input, setUser_Input } = UseUserInputContext();
 
   const [inserted, setInserted] = useState(false);
 
-  const supabase = createClientComponentClient()
+  const supabase = createClientComponentClient();
 
   async function insertConfigurations() {
     const currentTime = new Date()
@@ -63,9 +58,9 @@ function InsertButton() {
       {showQuoteComponents && (
         <>
           <ListGroup>
-          <ListGroup.Item>
-          <h2>Configuration Overview: </h2>
-          </ListGroup.Item>
+            <ListGroup.Item>
+              <h2>Configuration Overview: </h2>
+            </ListGroup.Item>
             <ListGroup.Item>
               <Button
                 onClick={insertConfigurations}

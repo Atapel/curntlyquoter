@@ -1,9 +1,9 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
-  Configuration_Breakers_Context,
-  Configuration_Frame_Context,
-  User_Input_Context,
-} from "../selected_items_context"
+  UseBreakerContext,
+  UseFrameContext,
+  UseUserInputContext,
+} from "../../context/globalContext";
 import { jsPDF } from "jspdf";
 import { Button, ListGroup } from "react-bootstrap";
 import {
@@ -12,13 +12,9 @@ import {
 } from "../assets/switch_board.jsx";
 
 const PDF_preview = () => {
-  const { Selected_Panel, set_Selected_Panel }= useContext(
-    Configuration_Frame_Context
-  );
-  const { Selected_Breakers, setSelected_Breakers } = useContext(
-    Configuration_Breakers_Context
-  );
-  const { User_Input, setUser_Input } = useContext(User_Input_Context);
+  const { Selected_Breakers, setSelected_Breakers } = UseBreakerContext();
+  const { Selected_Panel, set_Selected_Panel } = UseFrameContext();
+  const { User_Input, setUser_Input } = UseUserInputContext();
 
   const canvasRef = useRef(null);
 

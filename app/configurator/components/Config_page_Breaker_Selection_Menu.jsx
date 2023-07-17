@@ -6,22 +6,8 @@ import {
   UseBreakerContext,
   UseLenghtLimitContext,
 } from "@/app/context/globalContext";
-// import {
-//   Configuration_Frame_Context,
-//   Configuration_Breakers_Context,
-//   Items_Lenght_Check_Context,
-// } from "../../Context/globalContext.jsx/index.js";
 
 const Select_Breakers_Menu = () => {
-  // const { Selected_Breakers, setSelected_Breakers } = useContext(
-  //   Configuration_Breakers_Context
-  // );
-  // const { Selected_Panel, set_Selected_Panel } = useContext(
-  //   Configuration_Frame_Context
-  // );
-  // const { Length_Limit_Check, setLength_Limit_Check } = useContext(
-  //   Items_Lenght_Check_Context
-  // );
   const { Selected_Breakers, setSelected_Breakers } = UseBreakerContext
   const { Selected_Panel, set_Selected_Panel } = UseFrameContext
   const { Length_Limit_Check, setLength_Limit_Check } = UseLenghtLimitContext
