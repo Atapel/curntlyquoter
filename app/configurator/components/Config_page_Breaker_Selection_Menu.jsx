@@ -1,23 +1,31 @@
 import React, { useContext, useState, useEffect } from "react";
 import { Alert, Dropdown, Button, Row, ListGroup, Col } from "react-bootstrap";
-import {getBreakerDetails} from "../api_requests/fetch_products"
-
+import { getBreakerDetails } from "../api_requests/fetch_products";
 import {
-  Configuration_Frame_Context,
-  Configuration_Breakers_Context,
-  Items_Lenght_Check_Context,
-} from "../selected_items_context.jsx";
+  UseFrameContext,
+  UseBreakerContext,
+  UseLenghtLimitContext,
+} from "@/app/context/globalContext";
+// import {
+//   Configuration_Frame_Context,
+//   Configuration_Breakers_Context,
+//   Items_Lenght_Check_Context,
+// } from "../../Context/globalContext.jsx/index.js";
 
 const Select_Breakers_Menu = () => {
-  const { Selected_Breakers, setSelected_Breakers } = useContext(
-    Configuration_Breakers_Context
-  );
-  const { Selected_Panel, set_Selected_Panel } = useContext(
-    Configuration_Frame_Context
-  );
-  const { Length_Limit_Check, setLength_Limit_Check } = useContext(
-    Items_Lenght_Check_Context
-  );
+  // const { Selected_Breakers, setSelected_Breakers } = useContext(
+  //   Configuration_Breakers_Context
+  // );
+  // const { Selected_Panel, set_Selected_Panel } = useContext(
+  //   Configuration_Frame_Context
+  // );
+  // const { Length_Limit_Check, setLength_Limit_Check } = useContext(
+  //   Items_Lenght_Check_Context
+  // );
+  const { Selected_Breakers, setSelected_Breakers } = UseBreakerContext
+  const { Selected_Panel, set_Selected_Panel } = UseFrameContext
+  const { Length_Limit_Check, setLength_Limit_Check } = UseLenghtLimitContext
+
   const [Warning_Display, setWarning_Display] = useState(false);
   const [Selected_Breaker_Size, setSelected_Breaker_Size] = useState(
     "Select Breaker Size"
@@ -43,7 +51,12 @@ const Select_Breakers_Menu = () => {
 
   let products = [];
 
-  let { Single_breakers_46, Double_breakers_46, Single_breakers_36, Double_breakers_36 } = getBreakerDetails(Selected_Panel);
+  let {
+    Single_breakers_46,
+    Double_breakers_46,
+    Single_breakers_36,
+    Double_breakers_36,
+  } = getBreakerDetails(Selected_Panel);
   if (Selected_Breaker_Size == "Single" && Selected_Panel.Frame_Size === 46) {
     products = Single_breakers_46;
   } else if (
