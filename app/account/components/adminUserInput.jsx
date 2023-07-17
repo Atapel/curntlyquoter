@@ -1,11 +1,14 @@
-"use client"
+"use client";
 import React, { useState, useContext } from "react";
 import { Form, Button } from "react-bootstrap";
 import { Row, Col, Container, ListGroup } from "react-bootstrap";
-import { User_Input_Context } from "../../context/globalContext";
+import {
+  UseUserInputContext,
+  User_Input_Context,
+} from "../../context/globalContext";
 
 const NewConfigInput = () => {
-  const { User_Input, setUser_Input } = User_Input_Context();
+  const { User_Input, setUser_Input } = UseUserInputContext();
   const [showAlert, setShowAlert] = useState(false);
 
   const handleInputChange = (event) => {

@@ -1,3 +1,4 @@
+"use client"
 import { useEffect, useState } from "react";
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import {
@@ -26,34 +27,9 @@ function Saved_Configurations() {
     }
   }
 
-  async function getUser() {
-    // try {
-      let authToken = localStorage.getItem(
-        "sb-wnlbohioemzhzlhhknvy-auth-token"
-      );
-      // let user = await supabase.auth.getUser(authToken);
-      
-
-      try {
-        const { data } = await supabase.auth.getUser(authToken);
-        console.log(data);
-      } catch (error) {
-        console.error(error);
-      }
-      
-      // let { user, error } = supabase.auth.getUser(authToken);
-    //   if (error) {
-    //     throw new Error("Failed to retrieve data from the database.");
-    //   }
-    //   setConfigs(data);
-    // } catch (error) {
-    //   console.error(error);
-    // }
-  }
 
   useEffect(() => {
     getConfigs();
-    getUser()
   }, []);
 
   return (
