@@ -9,7 +9,7 @@ export default async function AdminSite({session} ) {
     <>
       <UserPanel session={session} />
       <NewConfigInput />
-      <Saved_Configurations />
+      <Saved_Configurations session={session}/>
     </>
   );
 }
