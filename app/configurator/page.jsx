@@ -7,11 +7,11 @@ import PDF_preview from "./components/Config_page_pdf_preview";
 import Select_Breakers_Menu from "./components/Config_page_Breaker_Selection_Menu";
 import Select_Panel_Menu from "./components/Config_page_Frame_Selection_Menu";
 import InsertButton from "./components/Quotation_page";
-import {UseFrameContext} from "../context/globalContext"
+import { UseFrameContext, UseBreakerContext } from "../context/globalContext";
 
 function configuratorApp() {
-  const { Selected_Panel, set_Selected_Panel } = UseFrameContext()
-
+  const { Selected_Panel, set_Selected_Panel } = UseFrameContext();
+  const { Selected_Breakers, setSelected_Breakers } = UseBreakerContext();
   return (
     <>
       {/* Header */}
