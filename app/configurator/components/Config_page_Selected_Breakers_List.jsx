@@ -4,7 +4,7 @@ import { Button, Col, Dropdown, Row } from "react-bootstrap";
 import { UseBreakerContext } from "@/app/context/globalContext";
 
 const DisplaySelectedItems = () => {
-  const { Selected_Breakers, setSelected_Breakers } = UseBreakerContext;
+  const { Selected_Breakers, setSelected_Breakers } = UseBreakerContext();
 
   const deleteItem = (indexToDelete) => {
     const itemToDelete = Selected_Breakers[indexToDelete];

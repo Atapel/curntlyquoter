@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Alert, Dropdown, Button, Row, ListGroup, Col } from "react-bootstrap";
 import { getBreakerDetails } from "../api_requests/fetch_products";
 import {
@@ -8,9 +8,9 @@ import {
 } from "@/app/context/globalContext";
 
 const Select_Breakers_Menu = () => {
-  const { Selected_Breakers, setSelected_Breakers } = UseBreakerContext
-  const { Selected_Panel, set_Selected_Panel } = UseFrameContext
-  const { Length_Limit_Check, setLength_Limit_Check } = UseLenghtLimitContext
+  const { Selected_Breakers, setSelected_Breakers } = UseBreakerContext();
+  const { Selected_Panel, set_Selected_Panel } = UseFrameContext();
+  const { Length_Limit_Check, setLength_Limit_Check } = UseLenghtLimitContext();
 
   const [Warning_Display, setWarning_Display] = useState(false);
   const [Selected_Breaker_Size, setSelected_Breaker_Size] = useState(

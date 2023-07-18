@@ -6,7 +6,7 @@ import Button from "react-bootstrap/Button";
 import { UseFrameContext } from "@/app/context/globalContext";
 
 const DisplaySelectedFrame = () => {
-  const { Selected_Panel, set_Selected_Panel } = UseFrameContext;
+  const { Selected_Panel, set_Selected_Panel } = UseFrameContext();
 
   return (
     <div>
