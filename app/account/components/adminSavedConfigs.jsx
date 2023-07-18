@@ -11,13 +11,14 @@ import {
   Card,
 } from "react-bootstrap";
 
-function Saved_Configurations() {
+function Saved_Configurations({session}) {
   const supabase = createClientComponentClient()
   const [configs, setConfigs] = useState([]);
 
   async function getConfigs() {
+    const userId = session?.user.id
     try {
-      const { data, error } = await supabase.from("Configurations").select();
+      const { data, error } = await supabase.from("Configurations").select().eq('user_id', userId);
       if (error) {
         throw new Error("Failed to retrieve data from the database.");
       }
