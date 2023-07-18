@@ -1,13 +1,9 @@
 "use client";
 import React, { useState, useContext } from "react";
-// import { useRouter } from 'next/router';
+import Link from "next/link";
 import { Form, Button } from "react-bootstrap";
 import { Row, Col, Container, ListGroup } from "react-bootstrap";
-import {
-  UseUserInputContext,
-  User_Input_Context,
-} from "../../context/globalContext";
-
+import { UseUserInputContext } from "../../context/globalContext";
 
 const NewConfigInput = () => {
   const { User_Input, setUser_Input } = UseUserInputContext();
@@ -111,8 +107,12 @@ const NewConfigInput = () => {
                 </Row>
               </Form.Group>
             </Container>
-            <Button variant="success" type="submit" disabled={isFormIncomplete}>
-              Launch Configurator
+            <Button
+              variant="outline-success"
+              type="submit"
+              disabled={isFormIncomplete}
+            >
+              <Link href="/configurator">Launch Configurator</Link>
             </Button>
           </Form>
         </ListGroup.Item>
