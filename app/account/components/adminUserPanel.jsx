@@ -2,10 +2,13 @@
 import React from "react";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { Button, Row, Col, ListGroup } from "react-bootstrap";
+import { UseCurrentUserContext } from "@/app/context/globalContext";
 
 const UserPanel = ({ session }) => {
   const supabase = createClientComponentClient();
-  const user = session?.user;
+  const { CurrentUser, setCurrentUser } = UseCurrentUserContext();
+  setCurrentUser(session?.user);
+
   const handleSignOut = async () => {
     const { error } = await supabase.auth.signOut();
   };
@@ -14,7 +17,6 @@ const UserPanel = ({ session }) => {
     <div className="form-widget">
       <Row>
         <Col>{session?.user.email}</Col>
-  
         <form action="/auth/signout" method="post">
           <Button
             variant="danger"
@@ -31,5 +33,3 @@ const UserPanel = ({ session }) => {
 };
 
 export default UserPanel;
-
-
