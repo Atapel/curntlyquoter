@@ -1,16 +1,12 @@
 "use client";
-import React, {
-  createContext,
-  useContext,
-  Dispatch,
-  SetStateAction,
-  useState,
-} from "react";
+import React, { createContext, useContext, useState } from "react";
 
 const Configuration_Frame_Context = createContext();
 const Configuration_Breakers_Context = createContext();
 const Items_Lenght_Check_Context = createContext();
 const User_Input_Context = createContext();
+// Experimental
+const Curent_User_Context = createContext();
 
 export const GlobalContextProvider = ({ children }) => {
   const [Selected_Panel, set_Selected_Panel] = useState([]);
@@ -25,6 +21,7 @@ export const GlobalContextProvider = ({ children }) => {
     drawingDate: "",
     drawnBy: "",
   });
+  const [CurrentUser, setCurrentUser] = useState(false);
 
   return (
     <>
@@ -38,7 +35,11 @@ export const GlobalContextProvider = ({ children }) => {
             <Configuration_Breakers_Context.Provider
               value={{ Selected_Breakers, setSelected_Breakers }}
             >
-              {children}
+              <Curent_User_Context.Provider
+                value={{ CurrentUser, setCurrentUser }}
+              >
+                {children}
+              </Curent_User_Context.Provider>
             </Configuration_Breakers_Context.Provider>
           </User_Input_Context.Provider>
         </Items_Lenght_Check_Context.Provider>
@@ -47,10 +48,10 @@ export const GlobalContextProvider = ({ children }) => {
   );
 };
 
-// export const UseGlobalContext = () => useContext()
 export const UseFrameContext = () => useContext(Configuration_Frame_Context);
 export const UseBreakerContext = () =>
   useContext(Configuration_Breakers_Context);
 export const UseUserInputContext = () => useContext(User_Input_Context);
 export const UseLenghtLimitContext = () =>
   useContext(Items_Lenght_Check_Context);
+export const UseCurrentUserContext = () => useContext(Curent_User_Context);
