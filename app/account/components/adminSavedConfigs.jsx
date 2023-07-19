@@ -10,6 +10,7 @@ import {
   ListGroupItem,
   Card,
   Modal,
+  Alert,
 } from "react-bootstrap";
 
 function Saved_Configurations({ session }) {
@@ -77,45 +78,79 @@ function Saved_Configurations({ session }) {
         </ListGroup.Item>
         <ListGroup.Item>
           <Row>
-            {configs.map((configuration) => (
-              <React.Fragment key={configuration.id}>
-                <Card style={{ width: "18rem" }}>
-                  <Card.Img variant="top" src="" />
-                  <Card.Body>
-                    <Card.Title>{configuration.init_project}</Card.Title>
-                    <ListGroup>
-                      <ListGroupItem>{configuration.created_at}</ListGroupItem>
-                      <ListGroupItem>{configuration.init_client}</ListGroupItem>
-                      {expandedConfig === configuration.id && (
-                        <>
-                          <ListGroupItem>{configuration.panel_width}</ListGroupItem>
-                          <ListGroupItem>{configuration.panel_voltage}</ListGroupItem>
-                          <ListGroupItem>{configuration.panel_KAIC_rating}</ListGroupItem>
-                          <ListGroupItem>{configuration.panel_bus_rating}</ListGroupItem>
-                          <ListGroupItem>{JSON.stringify(configuration.selected_breakers)}</ListGroupItem>
-                          <ListGroupItem>{configuration.order_confirmed ? 'Confirmed' : 'Not confirmed'}</ListGroupItem>
-                          <ListGroupItem>{configuration.init_drawn_by}</ListGroupItem>
-                        </>
-                      )}
-                    </ListGroup>
+            {configs.length > 0 ? (
+              configs.map((configuration) => (
+                <React.Fragment key={configuration.id}>
+                  <Card style={{ width: "18rem" }}>
+                    <Card.Img variant="top" src="" />
+                    <Card.Body>
+                      <Card.Title>{configuration.init_project}</Card.Title>
+                      <ListGroup>
+                        <ListGroupItem>
+                          {configuration.created_at}
+                        </ListGroupItem>
+                        <ListGroupItem>
+                          {configuration.init_client}
+                        </ListGroupItem>
+                        {expandedConfig === configuration.id && (
+                          <>
+                            <ListGroupItem>
+                              {configuration.panel_width}
+                            </ListGroupItem>
+                            <ListGroupItem>
+                              {configuration.panel_voltage}
+                            </ListGroupItem>
+                            <ListGroupItem>
+                              {configuration.panel_KAIC_rating}
+                            </ListGroupItem>
+                            <ListGroupItem>
+                              {configuration.panel_bus_rating}
+                            </ListGroupItem>
+                            <ListGroupItem>
+                              {JSON.stringify(configuration.selected_breakers)}
+                            </ListGroupItem>
+                            <ListGroupItem>
+                              {configuration.order_confirmed
+                                ? "Confirmed"
+                                : "Not confirmed"}
+                            </ListGroupItem>
+                            <ListGroupItem>
+                              {configuration.init_drawn_by}
+                            </ListGroupItem>
+                          </>
+                        )}
+                      </ListGroup>
 
-                    <Col>
-                      <Row>
-                        <Button variant="primary" onClick={() => handleExpand(configuration.id)}>
-                          {expandedConfig === configuration.id ? 'Collapse' : 'Expand'}
-                        </Button>
-                      </Row>
+                      <Col>
+                        <Row>
+                          <Button
+                            variant="primary"
+                            onClick={() => handleExpand(configuration.id)}
+                          >
+                            {expandedConfig === configuration.id
+                              ? "Collapse"
+                              : "Expand"}
+                          </Button>
+                        </Row>
 
-                      <Row>
-                        <Button variant="danger" onClick={() => handleDelete(configuration.id)}>
-                          Delete
-                        </Button>
-                      </Row>
-                    </Col>
-                  </Card.Body>
-                </Card>
-              </React.Fragment>
-            ))}
+                        <Row>
+                          <Button
+                            variant="danger"
+                            onClick={() => handleDelete(configuration.id)}
+                          >
+                            Delete
+                          </Button>
+                        </Row>
+                      </Col>
+                    </Card.Body>
+                  </Card>
+                </React.Fragment>
+              ))
+            ) : (
+              <Col>
+                <Alert variant="info">User has no configurations saved.</Alert>
+              </Col>
+            )}
           </Row>
         </ListGroup.Item>
       </ListGroup>
