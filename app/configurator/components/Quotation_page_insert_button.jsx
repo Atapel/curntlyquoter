@@ -2,7 +2,13 @@ import { useState } from "react";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { Button, Alert } from "react-bootstrap";
 
-function SaveConfigurationButton({ CurrentUser, User_Input, Selected_Panel, setInserted }) {
+function SaveConfigurationButton({
+  CurrentUser,
+  User_Input,
+  Selected_Panel,
+  Selected_Breakers,
+  setInserted,
+}) {
   const [operationStatus, setOperationStatus] = useState(null);
   const supabase = createClientComponentClient();
 
@@ -26,7 +32,7 @@ function SaveConfigurationButton({ CurrentUser, User_Input, Selected_Panel, setI
         panel_KAIC_rating: Selected_Panel.KAIC_rating,
         panel_bus_rating: Selected_Panel.Bus_rating,
 
-        selected_breakers: false,
+        selected_breakers: { Selected_Breakers },
 
         order_confirmed: false,
       });
@@ -35,10 +41,10 @@ function SaveConfigurationButton({ CurrentUser, User_Input, Selected_Panel, setI
       }
       console.log("Record inserted successfully!");
       setInserted(true);
-      setOperationStatus('success');
+      setOperationStatus("success");
     } catch (error) {
       console.error(error);
-      setOperationStatus('danger');
+      setOperationStatus("danger");
     }
   }
 
@@ -53,9 +59,9 @@ function SaveConfigurationButton({ CurrentUser, User_Input, Selected_Panel, setI
       </Button>
       {operationStatus && (
         <Alert variant={operationStatus}>
-          {operationStatus === 'success'
-            ? 'Configuration saved successfully!'
-            : 'Failed to save configuration!'}
+          {operationStatus === "success"
+            ? "Configuration saved successfully!"
+            : "Failed to save configuration!"}
         </Alert>
       )}
     </>
@@ -63,4 +69,3 @@ function SaveConfigurationButton({ CurrentUser, User_Input, Selected_Panel, setI
 }
 
 export default SaveConfigurationButton;
-

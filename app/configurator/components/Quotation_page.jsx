@@ -36,6 +36,7 @@ function QuotePage() {
                 CurrentUser={CurrentUser}
                 User_Input={User_Input}
                 Selected_Panel={Selected_Panel}
+                Selected_Breakers={Selected_Breakers}
                 setInserted={setInserted}
               />
             </ListGroup.Item>
