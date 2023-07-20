@@ -87,7 +87,9 @@ function Saved_Configurations({ session }) {
                       <Card.Title>{configuration.init_project}</Card.Title>
                       <ListGroup>
                         <ListGroupItem>
-                          {configuration.created_at}
+                          {configuration.created_at
+                            .substring(0, 19)
+                            .replace("T", " ")}
                         </ListGroupItem>
                         <ListGroupItem>
                           {configuration.init_client}
