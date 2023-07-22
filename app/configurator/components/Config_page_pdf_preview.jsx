@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import {
   UseBreakerContext,
   UseFrameContext,
@@ -12,6 +13,7 @@ import {
 } from "../assets/switch_board.jsx";
 
 const PDF_preview = () => {
+  const supabase = createClientComponentClient();
   const { Selected_Breakers, setSelected_Breakers } = UseBreakerContext();
   const { Selected_Panel, set_Selected_Panel } = UseFrameContext();
   const { User_Input, setUser_Input } = UseUserInputContext();
@@ -35,6 +37,19 @@ const PDF_preview = () => {
       }
     }
   }, [Selected_Panel]);
+
+  let Id = 99
+  async function uploadFile(file) {
+    // env.SUPABASE_CONFIG_BUCKET
+    const { data, error } = await supabase.storage.from('Configuration_Drawings').upload(`Currntly_${Id}`, file)
+    if (error) {
+      // Handle error
+      console.log(error);
+    } else {
+      // Handle success
+      console.log(data);
+    }
+  }
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -108,6 +123,9 @@ const PDF_preview = () => {
     }
 
     pdf.save("Curntly_Config.pdf");
+
+    // Save PDF to cloud
+    uploadFile(pdf)
   };
 
   return (
@@ -126,7 +144,7 @@ const PDF_preview = () => {
               className="w-100"
               onClick={createPdf}
             >
-              Download PDF
+              Save & Download PDF
             </Button>
           </ListGroup.Item>
         </ListGroup>
