@@ -22,7 +22,7 @@ const DisplaySelectedItems = () => {
           <h2>Currently selected breakers: </h2>
         </ListGroup.Item>
         {Selected_Breakers.map((item, index) => (
-          <ListGroup.Item>
+          <ListGroup.Item key={index}>
             <Row>
               <Col>{item.Description}</Col>
 

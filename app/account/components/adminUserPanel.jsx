@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { Button, Row, Col, ListGroup } from "react-bootstrap";
 import { UseCurrentUserContext } from "@/app/context/globalContext";
@@ -11,10 +11,12 @@ const UserPanel = ({ session }) => {
   const handleSignOut = async () => {
     const { error } = await supabase.auth.signOut();
   };
-
-  if (session) {
-    setCurrentUser(session?.user);
-  }
+  
+  useEffect(() => {
+    if (session) {
+      setCurrentUser(session?.user);
+    }
+  }, [session, setCurrentUser]);
 
   return (
     <ListGroup>
@@ -60,3 +62,4 @@ const UserPanel = ({ session }) => {
 };
 
 export default UserPanel;
+

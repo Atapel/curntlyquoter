@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { Col, Row, Tab, Tabs } from "react-bootstrap";
+import { Alert, Col, Row, Tab, Tabs } from "react-bootstrap";
+import Link from "next/link";
 import DisplaySelectedItems from "./components/Config_page_Selected_Breakers_List";
 import PDF_preview from "./components/Config_page_pdf_preview";
 import Select_Breakers_Menu from "./components/Config_page_Breaker_Selection_Menu";
@@ -16,6 +17,12 @@ function configuratorApp() {
     <>
       {/* Header */}
       <Tabs defaultActiveKey="Configure" fill>
+        <Tab eventKey="Back" title="Back">
+          <Alert variant="danger">
+            Please make sure to save the configuration and to download the PDF before returning back
+          </Alert>
+          <Link href="/account">Go Back</Link>
+        </Tab>
         <Tab eventKey="Configure" title="Configurator">
           <Row>
             <Col md={4}>

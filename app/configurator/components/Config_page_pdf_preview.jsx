@@ -4,20 +4,23 @@ import {
   UseBreakerContext,
   UseFrameContext,
   UseUserInputContext,
+  UseCurrentUserContext
 } from "../../context/globalContext";
-import { jsPDF } from "jspdf";
 import { Button, ListGroup } from "react-bootstrap";
 import {
   container_46_w_dimensions_SVG,
   container_36_w_dimensions_SVG,
 } from "../assets/switch_board.jsx";
+import PDF_Generation from "./Config_page_PDF_creation";
+import SaveConfigurationButton from "./Quotation_page_insert_button";
 
 const PDF_preview = () => {
   const supabase = createClientComponentClient();
   const { Selected_Breakers, setSelected_Breakers } = UseBreakerContext();
   const { Selected_Panel, set_Selected_Panel } = UseFrameContext();
   const { User_Input, setUser_Input } = UseUserInputContext();
-
+  const { CurrentUser, setCurrentUser } = UseCurrentUserContext();
+  
   const canvasRef = useRef(null);
 
   const [containerSrc, setContainerSrc] = useState(null);
@@ -37,19 +40,6 @@ const PDF_preview = () => {
       }
     }
   }, [Selected_Panel]);
-
-  let Id = 99
-  async function uploadFile(file) {
-    // env.SUPABASE_CONFIG_BUCKET
-    const { data, error } = await supabase.storage.from('Configuration_Drawings').upload(`Currntly_${Id}`, file)
-    if (error) {
-      // Handle error
-      console.log(error);
-    } else {
-      // Handle success
-      console.log(data);
-    }
-  }
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -88,45 +78,6 @@ const PDF_preview = () => {
     container.src = containerSrc;
   }, [Selected_Breakers, containerSrc]);
 
-  const createPdf = () => {
-    const pdf = new jsPDF({
-      orientation: "landscape",
-      unit: "mm",
-      format: "a4",
-    });
-
-    pdf.addImage(canvasRef.current.toDataURL("image/png"), "PNG", 5, 5);
-    pdf.setFontSize(10);
-    // Set the text color, draw color, and font:
-    pdf.setTextColor(0, 0, 0); // RGB values
-    pdf.setDrawColor(255, 0, 0); // RGB values
-    pdf.setFont("Helvetica", "normal"); // font name, style
-    // Add some text to the document at a specific position:
-    // Define your text lines
-    var lines = [
-      `Project: ${User_Input.project}`,
-      `Client: ${User_Input.client}`,
-      `Equipment: ${User_Input.equipment}`,
-      `Sales Order Number: ${User_Input.salesOrderNumber}`,
-      `Revision: ${User_Input.revision}`,
-      `Drawing Date: ${User_Input.drawingDate}`,
-      `Drawn By: ${User_Input.drawnBy}`,
-    ];
-
-    // Start y-coordinate
-    var y = 170;
-
-    // Print each line separately
-    for (var i = 0; i < lines.length; i++) {
-      pdf.text(lines[i], 240, y);
-      y += 5; // Increment y-coordinate for the new line
-    }
-
-    pdf.save("Curntly_Config.pdf");
-
-    // Save PDF to cloud
-    uploadFile(pdf)
-  };
 
   return (
     <div>
@@ -139,13 +90,16 @@ const PDF_preview = () => {
             <canvas ref={canvasRef} className="m-5" />
           </ListGroup.Item>
           <ListGroup.Item>
-            <Button
-              variant="outline-success"
-              className="w-100"
-              onClick={createPdf}
-            >
-              Save & Download PDF
-            </Button>
+
+            <PDF_Generation canvasRef={canvasRef} />
+
+            <SaveConfigurationButton
+              CurrentUser={CurrentUser}
+              User_Input={User_Input}
+              Selected_Panel={Selected_Panel}
+              Selected_Breakers={Selected_Breakers}
+            />
+
           </ListGroup.Item>
         </ListGroup>
       ) : (

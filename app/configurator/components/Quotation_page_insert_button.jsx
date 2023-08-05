@@ -6,8 +6,7 @@ function SaveConfigurationButton({
   CurrentUser,
   User_Input,
   Selected_Panel,
-  Selected_Breakers,
-  setInserted,
+  Selected_Breakers
 }) {
   const [operationStatus, setOperationStatus] = useState(null);
   const supabase = createClientComponentClient();
@@ -32,7 +31,7 @@ function SaveConfigurationButton({
         panel_KAIC_rating: Selected_Panel.KAIC_rating,
         panel_bus_rating: Selected_Panel.Bus_rating,
 
-        selected_breakers: { Selected_Breakers },
+        selected_breakers: Selected_Breakers,
 
         order_confirmed: false,
       });
@@ -40,7 +39,6 @@ function SaveConfigurationButton({
         throw new Error("Failed to insert record into the database.");
       }
       console.log("Record inserted successfully!");
-      setInserted(true);
       setOperationStatus("success");
     } catch (error) {
       console.error(error);
@@ -53,9 +51,9 @@ function SaveConfigurationButton({
       <Button
         onClick={insertConfigurations}
         variant="outline-info"
-        className="w-50"
+        className="w-100"
       >
-        Save Configuration
+        Save Configuration to Database
       </Button>
       {operationStatus && (
         <Alert variant={operationStatus}>

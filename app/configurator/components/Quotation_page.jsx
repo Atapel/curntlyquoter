@@ -15,7 +15,6 @@ function QuotePage() {
   const { User_Input, setUser_Input } = UseUserInputContext();
   const { CurrentUser, setCurrentUser } = UseCurrentUserContext();
 
-  const [inserted, setInserted] = useState(false);
 
   const showQuoteComponents =
     Selected_Breakers !== 0 && Selected_Panel !== 0 && User_Input !== 0;
@@ -37,7 +36,6 @@ function QuotePage() {
                 User_Input={User_Input}
                 Selected_Panel={Selected_Panel}
                 Selected_Breakers={Selected_Breakers}
-                setInserted={setInserted}
               />
             </ListGroup.Item>
 
@@ -57,7 +55,6 @@ function QuotePage() {
           </ListGroup>
         </>
       )}
-      {inserted && <p>Record inserted successfully!</p>}
     </div>
   );
 }

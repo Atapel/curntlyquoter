@@ -109,6 +109,7 @@ const NewConfigInput = () => {
             </Container>
             <Button
               variant="outline-success"
+              className="w-100"
               type="submit"
               disabled={isFormIncomplete}
             >

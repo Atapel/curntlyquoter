@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from "react";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import {
-  Dropdown,
   Button,
   Row,
   Col,
@@ -12,6 +11,7 @@ import {
   Modal,
   Alert,
 } from "react-bootstrap";
+import MapSelectedBreakers from "./adminSavedConfigsSelectedBreakersMap";
 
 function Saved_Configurations({ session }) {
   const supabase = createClientComponentClient();
@@ -34,6 +34,7 @@ function Saved_Configurations({ session }) {
       if (error) {
         throw new Error("Failed to retrieve data from the database.");
       }
+      console.log("yooooooooo", data);
       setConfigs(data);
     } catch (error) {
       console.error(error);
@@ -84,40 +85,55 @@ function Saved_Configurations({ session }) {
                   <Card style={{ width: "18rem" }}>
                     <Card.Img variant="top" src="" />
                     <Card.Body>
-                      <Card.Title>{configuration.init_project}</Card.Title>
+                      <Card.Title>Overview</Card.Title>
                       <ListGroup>
                         <ListGroupItem>
+                          <strong>Project name:</strong>{" "}
+                          {configuration.init_project}
+                        </ListGroupItem>
+                        <ListGroupItem>
+                          <strong>Created at:</strong>{" "}
                           {configuration.created_at
                             .substring(0, 19)
                             .replace("T", " ")}
                         </ListGroupItem>
                         <ListGroupItem>
+                          <strong>Client:</strong>{" "}
                           {configuration.init_client}
+                        </ListGroupItem>
+                        <ListGroupItem>
+                          <strong>Drawn by:</strong>{" "}
+                          {configuration.init_drawn_by}
                         </ListGroupItem>
                         {expandedConfig === configuration.id && (
                           <>
+                            <Card.Title>Selected Switchboard</Card.Title>
                             <ListGroupItem>
+                              <strong>Width:</strong>{" "}
                               {configuration.panel_width}
                             </ListGroupItem>
                             <ListGroupItem>
+                              <strong>Voltage:</strong>{" "}
                               {configuration.panel_voltage}
                             </ListGroupItem>
                             <ListGroupItem>
+                              <strong>KAIC rating:</strong>{" "}
                               {configuration.panel_KAIC_rating}
                             </ListGroupItem>
                             <ListGroupItem>
+                              <strong>Bus rating:</strong>{" "}
                               {configuration.panel_bus_rating}
                             </ListGroupItem>
+                            <Card.Title>Selected Breakers</Card.Title>
+                            <MapSelectedBreakers
+                              config_state={configuration}
+                            />
+                            <Card.Title>Order Details</Card.Title>
                             <ListGroupItem>
-                              {JSON.stringify(configuration.selected_breakers)}
-                            </ListGroupItem>
-                            <ListGroupItem>
+                              <strong>Order status:</strong>{" "}
                               {configuration.order_confirmed
                                 ? "Confirmed"
                                 : "Not confirmed"}
-                            </ListGroupItem>
-                            <ListGroupItem>
-                              {configuration.init_drawn_by}
                             </ListGroupItem>
                           </>
                         )}
