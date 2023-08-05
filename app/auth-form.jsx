@@ -16,11 +16,11 @@ import {
 export default function AuthForm() {
   const supabase = createClientComponentClient();
 
-    const [loading, setLoading] = useState(false);
-    const [message, setMessage] = useState(false);
-    const [signInEmail, setSignInEmail] = useState("");
-    const [signUpEmail, setSignUpEmail] = useState("");
-    const [signUpPassword, setSignUpPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState(false);
+  const [signInEmail, setSignInEmail] = useState("");
+  const [signUpEmail, setSignUpEmail] = useState("");
+  const [signUpPassword, setSignUpPassword] = useState("");
 
   //   const handleSignIn = async () => {
   //     setLoading(true);
@@ -116,7 +116,7 @@ export default function AuthForm() {
           </Accordion>
         </ListGroup.Item>
 
-        <ListGroup.Item>
+        {/* <ListGroup.Item>
           <h3 className="header">OR...</h3>
         </ListGroup.Item>
 
@@ -135,7 +135,7 @@ export default function AuthForm() {
                   </ListGroup.Item>
                   <ListGroup.Item>
                     <Row>
-                      {/* <Col>
+                      <Col>
                         <Form className="w-50">
                           <Form.Group controlId="email">
                             <Form.Control
@@ -159,7 +159,7 @@ export default function AuthForm() {
                             />
                           </Form.Group>
                         </Form>
-                      </Col> */}
+                      </Col>
                       <Auth
                         supabaseClient={supabase}
                         view="magic_link"
@@ -170,7 +170,7 @@ export default function AuthForm() {
                         redirectTo="http://localhost:3000/auth/callback"
                       />
                       <Col>
-                        {/* <Button
+                        <Button
                           variant="outline-info"
                           size="sm"
                           className="w-25"
@@ -182,7 +182,7 @@ export default function AuthForm() {
                           ) : (
                             <span>Sign Up</span>
                           )}
-                        </Button> */}
+                        </Button>
                       </Col>
                     </Row>
                   </ListGroup.Item>
@@ -190,7 +190,7 @@ export default function AuthForm() {
               </Accordion.Body>
             </Accordion.Item>
           </Accordion>
-        </ListGroup.Item>
+        </ListGroup.Item> */}
         {message === false ? <></> : <Alert variant={"info"}>{message}</Alert>}
       </ListGroup>
     </>
