@@ -15,6 +15,7 @@ function configuratorApp() {
   const { Selected_Breakers, setSelected_Breakers } = UseBreakerContext();
   return (
     <>
+    <title>Curntly Configurator</title>
       {/* Header */}
       <Tabs defaultActiveKey="Configure" fill>
         <Tab eventKey="Back" title="Back">

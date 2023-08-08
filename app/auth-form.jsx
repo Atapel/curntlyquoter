@@ -50,6 +50,7 @@ export default function AuthForm() {
   //   };
   return (
     <>
+    <title>Curntly SignIn</title>
       <ListGroup>
         <ListGroup.Item>
           <h1 className="header">Curntly Configurator</h1>

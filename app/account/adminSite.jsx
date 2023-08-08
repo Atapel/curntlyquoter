@@ -8,6 +8,7 @@ import Saved_Configurations from "./components/adminSavedConfigs";
 export default async function AdminSite({ session }) {
   return (
     <>
+    <title>Curntly Configurator</title>
       <UserPanel session={session} />
       <Row>
         <Col>
