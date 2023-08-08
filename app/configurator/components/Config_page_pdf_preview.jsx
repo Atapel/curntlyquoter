@@ -58,11 +58,18 @@ const PDF_preview = () => {
 
       // Once the container is drawn, proceed with the SVG items
       let currentY = 117; // Start with an offset for y-coordinate
-      let currentX = 78.5; // Start with an offset for x-coordinate
+      // let currentX = 78.5; // Start with an offset for x-coordinate
+      let currentX = null // Start with an offset for x-coordinate
+
 
       Selected_Breakers.forEach((item) => {
         const img = new Image();
         img.onload = () => {
+          if (Selected_Panel.Frame_Size === 36){
+            currentX = 60.5; // Start with an offset for x-coordinate
+          }else if(Selected_Panel.Frame_Size === 46){
+            currentX = 78.5; // Start with an offset for x-coordinate
+          }
           context.drawImage(img, currentX, currentY);
           if (item.Size == 9) {
             currentY += 45; // Increment y-coordinate
