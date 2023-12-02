@@ -1,8 +1,10 @@
 import "./globals.css";
 import { Inter } from "next/font/google";
 import { GlobalContextProvider } from "./context/globalContext";
+import Curntly_Logo from "../public/curntly_slogan.png";
 
 const inter = Inter({ subsets: ["latin"] });
+console.log(Curntly_Logo);
 
 export const metadata = {
   title: "Create Next App",
@@ -13,7 +15,10 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <GlobalContextProvider>
-      <body className={inter.className}>{children}</body>
+        <body className={inter.className}>
+          <img src={Curntly_Logo.src} width="500" height="100"></img>
+          {children}
+        </body>
       </GlobalContextProvider>
     </html>
   );
