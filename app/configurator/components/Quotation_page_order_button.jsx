@@ -21,6 +21,7 @@ function ConfirmOrderButton({ CurrentUser }) {
         created_at: currentTime,
       });
       if (error) {
+        console.error("Supabase error:", error.message, error.details);
         throw new Error("Failed to confirm order.");
       }
       console.log("Order confirmed successfully!");

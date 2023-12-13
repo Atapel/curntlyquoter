@@ -36,6 +36,7 @@ function SaveConfigurationButton({
         order_confirmed: false,
       });
       if (error) {
+        console.error("Supabase error:", error.message, error.details);
         throw new Error("Failed to insert record into the database.");
       }
       console.log("Record inserted successfully!");
