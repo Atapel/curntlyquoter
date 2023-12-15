@@ -15,11 +15,11 @@ export const GlobalContextProvider = ({ children }) => {
   const [User_Input, setUser_Input] = useState({
     client: "",
     project: "",
-    equipment: "-",
-    salesOrderNumber: "-",
-    revision: "-",
-    drawingDate: "",
-    drawnBy: "",
+    // equipment: "-",
+    // salesOrderNumber: "-",
+    // revision: "-",
+    // drawingDate: "",
+    // drawnBy: "",
   });
   const [CurrentUser, setCurrentUser] = useState(false);
 

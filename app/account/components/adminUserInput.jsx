@@ -74,39 +74,6 @@ const NewConfigInput = () => {
               </Form.Group>
             </Container>
 
-            <Container>
-              <Form.Group controlId="formDrawingDate">
-                <Row>
-                  <Col>
-                    <Form.Label>Drawing Date</Form.Label>
-                  </Col>
-                  <Col>
-                    <Form.Control
-                      type="date"
-                      name="drawingDate"
-                      onChange={handleInputChange}
-                    />
-                  </Col>
-                </Row>
-              </Form.Group>
-            </Container>
-
-            <Container>
-              <Form.Group controlId="formDrawnBy">
-                <Row>
-                  <Col>
-                    <Form.Label>Drawn By</Form.Label>
-                  </Col>
-                  <Col>
-                    <Form.Control
-                      type="text"
-                      name="drawnBy"
-                      onChange={handleInputChange}
-                    />
-                  </Col>
-                </Row>
-              </Form.Group>
-            </Container>
             <Button
               variant="outline-success"
               className="w-100"
