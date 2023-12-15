@@ -1,10 +1,37 @@
 "use client"
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
-import React from 'react';
+import { redirect, useRouter, useSearchParams } from 'next/navigation'
 
-const   ConfirmSignUp = (UserID) => {
+const ConfirmSignUp = () => {
     const supabase = createClientComponentClient();
+    const router = useRouter();
+    const searchParams = useSearchParams()
+
+    const tokenFromQuerryParam = searchParams.get('token')
+    const emailFromQuerryParam = searchParams.get('email')
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                // Retrieving Session
+                // const { data, error } = await supabase.auth.verifyOtp({ token_hash: tokenFromQuerryParam, type: 'email' });
+                const { data, error } = await supabase.auth.verifyOtp({ email: emailFromQuerryParam, token: tokenFromQuerryParam, type: 'email' })
+
+                if (error) {
+                    console.error("Supabase error:", error.message, error.details);
+                    throw new Error("Failed to validate OTP token.");
+                }
+
+                console.log("Session retrieved");
+
+            } catch (error) {
+                console.error("Inner try-catch block error:", error);
+            }
+        };
+        fetchData();
+
+    }, []);
 
     const [formData, setFormData] = useState({
         givenName: '',
@@ -24,16 +51,15 @@ const   ConfirmSignUp = (UserID) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        console.log({
-            User_UID: UserID.UserID,
-            Given_Name: formData.givenName,
-            Family_Name: formData.familyName,
-            Company_Name: formData.companyName,
-            Phone_Number: formData.phoneNumber
-        });
         try {
+            const {
+                data: { user },
+            } = await supabase.auth.getUser();
+
+            console.log(user);
+
             const { error } = await supabase.from("User_Metadata").insert({
-                User_UID: UserID.UserID,
+                User_UID: user.id,
                 Given_Name: formData.givenName,
                 Family_Name: formData.familyName,
                 Company_Name: formData.companyName,
@@ -43,15 +69,19 @@ const   ConfirmSignUp = (UserID) => {
             if (error) {
                 console.error("Supabase error:", error.message, error.details);
                 throw new Error("Failed to insert record into the database.");
+            } else {
+                console.log("Record inserted successfully!");
+                // You can handle success here or set a state to update the component
+
+                // Redirect after successful record insertion
+                // redirect("/account");
+                // router.push("/account");
             }
-    
-            console.log("Record inserted successfully!");
-            // You can handle success here or set a state to update the component
+
         } catch (error) {
             console.error("Catch block error:", error);
             // You can handle the error here or set a state to update the component
         }
-
     };
 
     return (
