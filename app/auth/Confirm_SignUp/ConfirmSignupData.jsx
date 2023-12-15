@@ -106,8 +106,10 @@ const ConfirmSignUp = () => {
                     console.error('Supabase error:', insertError.message, insertError.details);
                     throw new Error('Failed to insert record into the database.');
                 } else {
-                    console.log('Record inserted successfully!');
                     setSuccessMsg('Record inserted successfully!');
+
+                    // redirect("/account");
+                    router.push("/account");
                 }
             } catch (error) {
                 console.error('Catch block error:', error);
