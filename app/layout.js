@@ -6,6 +6,7 @@ import { cookies } from 'next/headers';
 import AuthProvider from './context/AuthProvider';
 import { GlobalContextProvider } from "./context/globalContext";
 import Curntly_Logo from "../public/curntly_slogan.png";
+import Curntly_favIcon from "../public/curntly_Icon.png"
 
 export const metadata = {
   title: "Curntly",
@@ -22,6 +23,10 @@ export default async function RootLayout({ children }) {
   return (
     <html lang="en">
       <GlobalContextProvider>
+        {/* The icon causes Hydration issues, please debug */}
+        {/* <head>
+          <link rel="icon" href={Curntly_favIcon} sizes="any" />
+        </head> */}
         <body>
           <img src={Curntly_Logo.src} width="500" height="100"></img>
           <AuthProvider accessToken={session?.access_token}>{children}</AuthProvider>
