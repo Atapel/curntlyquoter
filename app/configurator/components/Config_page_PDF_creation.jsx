@@ -67,7 +67,7 @@ const PDF_Generation = ({ canvasRef }) => {
 
     var lines = [
       `Project: ${User_Input.project}`,
-      `Client: ${User_Input.project}`,
+      `Client: ${User_Input.client}`,
       `Equipment: ${0}`,
       `Sales Order Number: ${0}`,
       `Revision: ${0}`,
