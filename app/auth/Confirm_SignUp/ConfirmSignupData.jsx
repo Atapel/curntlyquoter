@@ -1,37 +1,15 @@
 "use client"
 import React, { useState, useEffect } from 'react';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
-import { redirect, useRouter, useSearchParams } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation';
 
 const ConfirmSignUp = () => {
     const supabase = createClientComponentClient();
     const router = useRouter();
-    const searchParams = useSearchParams()
+    const searchParams = useSearchParams();
 
-    const tokenFromQuerryParam = searchParams.get('token')
-    const emailFromQuerryParam = searchParams.get('email')
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                // Retrieving Session
-                // const { data, error } = await supabase.auth.verifyOtp({ token_hash: tokenFromQuerryParam, type: 'email' });
-                const { data, error } = await supabase.auth.verifyOtp({ email: emailFromQuerryParam, token: tokenFromQuerryParam, type: 'email' })
-
-                if (error) {
-                    console.error("Supabase error:", error.message, error.details);
-                    throw new Error("Failed to validate OTP token.");
-                }
-
-                console.log("Session retrieved");
-
-            } catch (error) {
-                console.error("Inner try-catch block error:", error);
-            }
-        };
-        fetchData();
-
-    }, []);
+    const tokenFromQueryParam = searchParams.get('token');
+    const emailFromQueryParam = searchParams.get('email');
 
     const [formData, setFormData] = useState({
         givenName: '',
@@ -44,107 +22,173 @@ const ConfirmSignUp = () => {
     const [errorMsg, setErrorMsg] = useState(null);
     const [successMsg, setSuccessMsg] = useState(null);
 
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const { data, error } = await supabase.auth.verifyOtp({
+                    email: emailFromQueryParam,
+                    token: tokenFromQueryParam,
+                    type: 'email',
+                });
+
+                if (error) {
+                    console.error('Supabase error:', error.message, error.details);
+                    setErrorMsg('Failed to validate OTP token.');
+                    throw new Error('Failed to validate OTP token.');
+                }
+
+                console.log('Session retrieved');
+            } catch (error) {
+                console.error('Inner try-catch block error:', error);
+                setErrorMsg('An error occurred while retrieving the session.');
+            }
+        };
+        fetchData();
+    }, [emailFromQueryParam, tokenFromQueryParam]);
+
     const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
+        const { name, value } = e.target;
+
+        // Interactive input controls based on input name
+        if (name === 'phoneNumber') {
+            // Allow only numeric input, '+' '*', and '#' symbols
+            const sanitizedValue = value.replace(/[^0-9*#+]/g, '');
+            setFormData({ ...formData, [name]: sanitizedValue });
+        } else if (name === 'givenName' || name === 'familyName') {
+            // Allow only alphabetic input
+            const alphabeticValue = value.replace(/[^A-Za-z]/gi, '');
+            setFormData({ ...formData, [name]: alphabeticValue });
+        } else {
+            setFormData({ ...formData, [name]: value });
+        }
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        try {
-            const {
-                data: { user },
-            } = await supabase.auth.getUser();
+        // Perform form validation
+        const newErrors = {};
 
-            console.log(user);
+        if (!formData.givenName.trim()) {
+            newErrors.givenName = 'Required';
+        }
 
-            const { error } = await supabase.from("User_Metadata").insert({
-                User_UID: user.id,
-                Given_Name: formData.givenName,
-                Family_Name: formData.familyName,
-                Company_Name: formData.companyName,
-                Phone_Number: formData.phoneNumber
-            });
+        if (!formData.familyName.trim()) {
+            newErrors.familyName = 'Required';
+        }
 
-            if (error) {
-                console.error("Supabase error:", error.message, error.details);
-                throw new Error("Failed to insert record into the database.");
-            } else {
-                console.log("Record inserted successfully!");
-                // You can handle success here or set a state to update the component
+        if (!formData.companyName.trim()) {
+            newErrors.companyName = 'Required';
+        }
 
-                // Redirect after successful record insertion
-                // redirect("/account");
-                // router.push("/account");
+        if (!formData.phoneNumber.trim()) {
+            newErrors.phoneNumber = 'Required';
+        }
+
+        setErrors(newErrors);
+
+        // Check if there are any errors before submitting
+        if (Object.keys(newErrors).length === 0) {
+            try {
+                const { data, error } = await supabase.auth.getUser();
+
+                console.log(data);
+
+                const { error: insertError } = await supabase.from('User_Metadata').insert({
+                    User_UID: data.user.id,
+                    Given_Name: formData.givenName,
+                    Family_Name: formData.familyName,
+                    Company_Name: formData.companyName,
+                    Phone_Number: formData.phoneNumber,
+                });
+
+                if (insertError) {
+                    console.error('Supabase error:', insertError.message, insertError.details);
+                    throw new Error('Failed to insert record into the database.');
+                } else {
+                    console.log('Record inserted successfully!');
+                    setSuccessMsg('Record inserted successfully!');
+                }
+            } catch (error) {
+                console.error('Catch block error:', error);
+                setErrorMsg('An error occurred while inserting the record.');
             }
-
-        } catch (error) {
-            console.error("Catch block error:", error);
-            // You can handle the error here or set a state to update the component
         }
     };
 
+    const isSubmitDisabled =
+        !formData.givenName.trim() ||
+        !formData.familyName.trim() ||
+        !formData.companyName.trim() ||
+        !formData.phoneNumber.trim();
+
     return (
-        <div className="card">
-            <h1>Please add Additional data about yourself</h1>
-            <form className="column w-full" onSubmit={handleSubmit}>
-                <label htmlFor="givenName">Given Name</label>
-                <input
-                    className={`input ${errors.givenName && 'bg-red-50'}`}
-                    id="givenName"
-                    name="givenName"
-                    placeholder="John"
-                    type="text"
-                    value={formData.givenName}
-                    onChange={handleChange}
-                />
-                {errors.givenName && <div className="text-red-600">{errors.givenName}</div>}
+        <div className="container d-flex align-items-center justify-content-center mt-5">
+            <div className="card">
+                <h1>Please add additional data about yourself</h1>
+                <form className="column" onSubmit={handleSubmit}>
+                    <label htmlFor="givenName">Given Name</label>
+                    <input
+                        className={`form-control ${errors.givenName && 'is-invalid'}`}
+                        id="givenName"
+                        name="givenName"
+                        placeholder="John"
+                        type="text"
+                        value={formData.givenName}
+                        onChange={handleChange}
+                    />
+                    {errors.givenName && <div className="invalid-feedback">{errors.givenName}</div>}
 
-                <label htmlFor="familyName">Family Name</label>
-                <input
-                    className={`input ${errors.familyName && 'bg-red-50'}`}
-                    id="familyName"
-                    name="familyName"
-                    placeholder="Doe"
-                    type="text"
-                    value={formData.familyName}
-                    onChange={handleChange}
-                />
-                {errors.familyName && <div className="text-red-600">{errors.familyName}</div>}
+                    <label htmlFor="familyName">Family Name</label>
+                    <input
+                        className={`form-control ${errors.familyName && 'is-invalid'}`}
+                        id="familyName"
+                        name="familyName"
+                        placeholder="Doe"
+                        type="text"
+                        value={formData.familyName}
+                        onChange={handleChange}
+                    />
+                    {errors.familyName && <div className="invalid-feedback">{errors.familyName}</div>}
 
-                <label htmlFor="companyName">Company Name</label>
-                <input
-                    className={`input ${errors.companyName && 'bg-red-50'}`}
-                    id="companyName"
-                    name="companyName"
-                    placeholder="ACME Inc."
-                    type="text"
-                    value={formData.companyName}
-                    onChange={handleChange}
-                />
-                {errors.companyName && <div className="text-red-600">{errors.companyName}</div>}
+                    <label htmlFor="companyName">Company Name</label>
+                    <input
+                        className={`form-control ${errors.companyName && 'is-invalid'}`}
+                        id="companyName"
+                        name="companyName"
+                        placeholder="ACME Inc."
+                        type="text"
+                        value={formData.companyName}
+                        onChange={handleChange}
+                    />
+                    {errors.companyName && <div className="invalid-feedback">{errors.companyName}</div>}
 
-                <label htmlFor="phoneNumber">Phone Number</label>
-                <input
-                    className={`input ${errors.phoneNumber && 'bg-red-50'}`}
-                    id="phoneNumber"
-                    name="phoneNumber"
-                    placeholder="1234567890"
-                    type="tel"
-                    value={formData.phoneNumber}
-                    onChange={handleChange}
-                />
-                {errors.phoneNumber && <div className="text-red-600">{errors.phoneNumber}</div>}
+                    <label htmlFor="phoneNumber">Phone Number</label>
+                    <input
+                        className={`form-control ${errors.phoneNumber && 'is-invalid'}`}
+                        id="phoneNumber"
+                        name="phoneNumber"
+                        placeholder="1234567890"
+                        type="tel"
+                        value={formData.phoneNumber}
+                        onChange={handleChange}
+                    />
+                    {errors.phoneNumber && <div className="invalid-feedback">{errors.phoneNumber}</div>}
 
-
-                <button className="button-inverse w-full" type="submit">
-                    Submit
-                </button>
-            </form>
-            {errorMsg && <div className="text-red-600">{errorMsg}</div>}
-            {successMsg && <div className="text-black">{successMsg}</div>}
+                    <button
+                        className="btn btn-primary btn-lg btn-block mt-3"
+                        type="submit"
+                        disabled={isSubmitDisabled}
+                    >
+                        Submit
+                    </button>
+                </form>
+                {errorMsg && <div className="text-danger mt-3">{errorMsg}</div>}
+                {successMsg && <div className="text-success mt-3">{successMsg}</div>}
+            </div>
         </div>
     );
 };
 
 export default ConfirmSignUp;
+
