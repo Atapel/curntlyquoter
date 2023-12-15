@@ -1,8 +1,8 @@
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
-
 export default async function Authenticate() {
     const supabase = createServerComponentClient({ cookies });
     const {
@@ -12,15 +12,21 @@ export default async function Authenticate() {
     if (user) {
         redirect('/account');
     }
-    return (
-        <main>
-            <Link href="/auth/SignIn">
-                <h2>Sign in if you already have an account</h2>
-            </Link>
-            <Link href="/auth/SignUp">
-                <h2>Sign up if youŕe new here</h2>
-            </Link>
 
-        </main>
-    )
+    return (
+        <div className="container mt-5">
+            <div className="row">
+                <div className="col-md-6">
+                    <Link href="/auth/SignIn" className="btn btn-primary btn-lg btn-block">
+                        Sign in if you already have an account
+                    </Link>
+                </div>
+                <div className="col-md-6">
+                    <Link href="/auth/SignUp" className="btn btn-success btn-lg btn-block">
+                        Sign up if you're new here
+                    </Link>
+                </div>
+            </div>
+        </div>
+    );
 }
