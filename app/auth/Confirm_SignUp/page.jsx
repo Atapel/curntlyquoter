@@ -7,12 +7,15 @@ import ConfirmSignUp from './ConfirmSignupData';
 
 export default async function SignUpPage() {
     const supabase = createServerComponentClient({ cookies });
-    const { data } = await supabase.auth.getSession();
 
     const {
-        data: { user },
+      data: { user },
     } = await supabase.auth.getUser();
+  
+    if (user) {
+      redirect('/account');
+    }
 
 
-    return <ConfirmSignUp UserID={user.id} />;
+    return <ConfirmSignUp />;
 }
