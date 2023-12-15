@@ -6,15 +6,15 @@ import React from 'react';
 import ConfirmSignUp from './ConfirmSignupData';
 
 export default async function SignUpPage() {
-    const supabase = createServerComponentClient({ cookies });
+    // const supabase = createServerComponentClient({ cookies });
 
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
+    // const {
+    //   data: { user },
+    // } = await supabase.auth.getUser();
   
-    if (user) {
-      redirect('/account');
-    }
+    // if (user) {
+    //   redirect('/account');
+    // }
 
 
     return <ConfirmSignUp />;
