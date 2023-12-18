@@ -5,12 +5,12 @@ import {
   UseFrameContext,
   UseUserInputContext,
   UseCurrentUserContext
-} from "../../context/globalContext";
+} from "../../../context/globalContext";
 import { Button, ListGroup } from "react-bootstrap";
 import {
   container_46_w_dimensions_SVG,
   container_36_w_dimensions_SVG,
-} from "../assets/switch_board.jsx";
+} from "../../assets/switch_board.jsx";
 import PDF_Generation from "./Config_page_PDF_creation";
 import SaveConfigurationButton from "./Quotation_page_insert_button";
 
@@ -101,7 +101,6 @@ const PDF_preview = () => {
             <PDF_Generation canvasRef={canvasRef} />
 
             <SaveConfigurationButton
-              CurrentUser={CurrentUser}
               User_Input={User_Input}
               Selected_Panel={Selected_Panel}
               Selected_Breakers={Selected_Breakers}

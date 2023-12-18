@@ -6,7 +6,7 @@ import {
   UseCurrentUserContext,
 } from "@/app/context/globalContext";
 import { ListGroup } from "react-bootstrap";
-import SaveConfigurationButton from './Quotation_page_insert_button';
+import SaveConfigurationButton from '../Configuration/Quotation_page_insert_button';
 import ConfirmOrderButton from './Quotation_page_order_button';
 
 function QuotePage() {

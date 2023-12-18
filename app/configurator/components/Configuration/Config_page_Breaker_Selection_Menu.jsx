@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Alert, Dropdown, Button, Row, ListGroup, Col } from "react-bootstrap";
-import { getBreakerDetails } from "../api_requests/fetch_products";
+import { getBreakerDetails } from "../../api_requests/fetch_products";
 import {
   UseFrameContext,
   UseBreakerContext,

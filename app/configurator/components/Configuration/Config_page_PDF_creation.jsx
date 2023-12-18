@@ -1,7 +1,7 @@
 "use client"
 import React, { useEffect, useRef, useState } from "react";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import { UseUserInputContext } from "../../context/globalContext";
+import { UseUserInputContext, UseCurrentUserContext } from "../../../context/globalContext";
 import Curntly_Logo from "public/curntly_slogan.png";
 
 import { jsPDF } from "jspdf";
@@ -10,45 +10,13 @@ import { Alert, Button } from "react-bootstrap";
 const PDF_Generation = ({ canvasRef }) => {
   const supabase = createClientComponentClient();
   const { User_Input, setUser_Input } = UseUserInputContext();
-  const [ProjectMetadata, setProjectMetadata] = useState(null)
+  const { CurrentUser, setCurrentUser } = UseCurrentUserContext();
+
   const [feedback, setFeedback] = useState(null);
   const [feedbackType, setFeedbackType] = useState(null);
 
   const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
   const americanFormatDate = new Date().toLocaleDateString('en-US', options);
-
-
-  useEffect(() => {
-    async function fetchData() {
-      const supabase = createClientComponentClient();
-
-      try {
-        const { data: { user } } = await supabase.auth.getUser();
-        console.log(user);
-        const { data, error } = await supabase
-          .from("User_Metadata")
-          .select('*')
-          .eq('User_UID', user.id); // Replace 'User_UID' with the actual column name
-
-        console.log(data);
-
-        setProjectMetadata(data[0])
-
-        if (error) {
-          console.error("Supabase error:", error.message, error.details);
-          throw new Error("Failed to insert record into the database.");
-          // You can handle success here or set a state to update the component
-        }
-        // Continue with handling data or setting state for success
-      } catch (error) {
-        console.error("Catch block error:", error);
-        // You can handle the error here or set a state to update the component
-      }
-    }
-
-    fetchData();
-  }, []);
-
 
   const createPdf = () => {
     const pdf = new jsPDF({
@@ -56,7 +24,7 @@ const PDF_Generation = ({ canvasRef }) => {
       unit: "mm",
       format: "a4",
     });
-
+    console.log("Current_User from PDF Creator", CurrentUser);
     pdf.addImage(canvasRef.current.toDataURL("image/png"), "PNG", 5, 5);
     pdf.setFontSize(10);
     // Set the text color, draw color, and font:
@@ -72,7 +40,7 @@ const PDF_Generation = ({ canvasRef }) => {
       `Sales Order Number: ${0}`,
       `Revision: ${0}`,
       `Drawing Date: ${americanFormatDate}`,
-      `Drawn By: ${ProjectMetadata.Given_Name + " " + ProjectMetadata.Family_Name}`,
+      `Drawn By: ${CurrentUser.Given_Name + " " + CurrentUser.Family_Name}`,
     ];
 
     // Start y-coordinate
@@ -86,7 +54,7 @@ const PDF_Generation = ({ canvasRef }) => {
 
     pdf.addImage(Curntly_Logo.src, 'PNG', 239, 130, 50, 25);
 
-    pdf.save("Curntly_Config.pdf");
+    pdf.save(`Curntly_Config_${americanFormatDate}.pdf`);
 
     // Save PDF to cloud
     // uploadFile(pdf);
