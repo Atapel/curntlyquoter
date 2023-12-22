@@ -43,7 +43,7 @@ function SaveConfigurationButton({
 
     } catch (error) {
       // Overall error handling
-      console.error("Insert configurations error:", error.message);
+      console.error("Insert configurations error:", error, error.message, error.details);
       setOperationStatus("danger");
     }
   }
