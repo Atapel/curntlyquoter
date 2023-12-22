@@ -13,7 +13,7 @@ export default async function configuratorPage() {
     } = await supabase.auth.getUser();
 
     user = userData; // Assign userData to user
-    // console.log("User ServerSide", user);
+    console.log("User ServerSide", user);
 
     // Redirect if user is unauthenticated
     if (!user) {
@@ -26,12 +26,15 @@ export default async function configuratorPage() {
     }
   } catch (error) {
     // Overall error handling
-    console.error("Insert configurations error:", error.message);
+    console.error("Retrieve User Serverside error:", error, error.message , error.details);
   }
 
   let userMetadata; // Declare userMetadata to store the data from the second block
   
   try {
+    console.log(user.id);
+
+    
     // Retrieve user metadata
     const { data, error } = await supabase
       .from("User_Metadata")
