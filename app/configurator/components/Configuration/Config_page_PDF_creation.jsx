@@ -33,7 +33,7 @@ const PDF_Generation = ({ canvasRef }) => {
     var lines = [
       `Project: ${state.Metadata.Project}`,
       `Client: ${state.Metadata.Client}`,
-      `Equipment: ${0}`,s
+      `Equipment: ${0}`,
       `Sales Order Number: ${0}`,
       `Revision: ${0}`,
       `Drawing Date: ${americanFormatDate}`,
@@ -50,7 +50,6 @@ const PDF_Generation = ({ canvasRef }) => {
     }
 
     pdf.addImage(Curntly_Logo.src, 'PNG', 239, 130, 50, 25);
-
     pdf.save(`Curntly_Config_${americanFormatDate}.pdf`);
   };
 
