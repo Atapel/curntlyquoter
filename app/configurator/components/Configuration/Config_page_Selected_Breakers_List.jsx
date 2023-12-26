@@ -1,23 +1,10 @@
 import React from "react";
 import ListGroup from "react-bootstrap/ListGroup";
 import { Button, Col, Dropdown, Row } from "react-bootstrap";
-import {
-  UseBreakerContext,
-  UseLenghtLimitContext,
-} from "@/app/context/globalContext";
+import { UseConfigurationReducerContext } from "@/app/context/globalContext.jsx";
 
 const DisplaySelectedItems = () => {
-  const { Selected_Breakers, setSelected_Breakers } = UseBreakerContext();
-  const { Length_Limit_Check, setLength_Limit_Check } = UseLenghtLimitContext();
-  
-  const deleteItem = (indexToDelete) => {
-    const itemToDelete = Selected_Breakers[indexToDelete];
-    setLength_Limit_Check(Length_Limit_Check - itemToDelete["Size"]);
-    let newSelected_Breakers = Selected_Breakers.filter(
-      (_, index) => index !== indexToDelete
-    );
-    setSelected_Breakers(newSelected_Breakers);
-  };
+  const { state, dispatch } = UseConfigurationReducerContext();
 
   return (
     <div>
@@ -25,7 +12,7 @@ const DisplaySelectedItems = () => {
         <ListGroup.Item>
           <h2>Currently selected breakers: </h2>
         </ListGroup.Item>
-        {Selected_Breakers.map((item, index) => (
+        {state.Configuration.SelectedBreakers.map((item, index) => (
           <ListGroup.Item key={index}>
             <Row>
               <Col>{item.Description}</Col>
@@ -44,7 +31,9 @@ const DisplaySelectedItems = () => {
               </Col>
 
               <Col>
-                <Button variant="danger" onClick={() => deleteItem(index)}>
+                <Button variant="danger"
+                  onClick={() => dispatch({ type: 'REMOVE_BREAKER', payload: index })}
+                >
                   Delete
                 </Button>
               </Col>
