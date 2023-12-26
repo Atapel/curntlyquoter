@@ -7,7 +7,6 @@ import Curntly_Logo from "public/curntly_slogan.png";
 
 const PDF_Generation = ({ canvasRef }) => {
   const { state, dispatch } = UseConfigurationReducerContext();
-
   const { CurrentUser, setCurrentUser } = UseCurrentUserContext();
 
   const [feedback, setFeedback] = useState(null);
@@ -53,9 +52,6 @@ const PDF_Generation = ({ canvasRef }) => {
     pdf.addImage(Curntly_Logo.src, 'PNG', 239, 130, 50, 25);
 
     pdf.save(`Curntly_Config_${americanFormatDate}.pdf`);
-
-    // Save PDF to cloud
-    // uploadFile(pdf);
   };
 
   return (
