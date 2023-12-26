@@ -1,30 +1,28 @@
 import { useState } from "react";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { Button, Alert } from "react-bootstrap";
-import { UseCurrentUserContext } from "../../../context/globalContext";
-function SaveConfigurationButton({
-  User_Input,
-  Selected_Panel,
-  Selected_Breakers
-}) {
+import { UseCurrentUserContext, UseConfigurationReducerContext } from "../../../context/globalContext";
+
+function SaveConfigurationButton() {
+  const { state, dispatch } = UseConfigurationReducerContext();
   const { CurrentUser, setCurrentUser } = UseCurrentUserContext();
   const [operationStatus, setOperationStatus] = useState(null);
-  const [ProjectMetadata, setProjectMetadata] = useState(null)
+
   const supabase = createClientComponentClient();
   const currentTime = new Date().toISOString().substring(0, 19).replace("T", " ");
 
   async function insertConfigurations() {
     console.log({created_at: currentTime,
       user_id: CurrentUser.User_UID,
-      init_client: User_Input.client,
-      init_project: User_Input.project,
+      init_client: state.Metadata.Client,
+      init_project: state.Metadata.Project,
       init_drawn_by: CurrentUser.Given_Name + " " + CurrentUser.Family_Name,
 
-      panel_width: Selected_Panel.Frame_Size,
-      panel_voltage: Selected_Panel.Voltage,
-      panel_KAIC_rating: Selected_Panel.KAIC_rating,
-      panel_bus_rating: Selected_Panel.Bus_rating,
-      selected_breakers: Selected_Breakers,
+      panel_width: state.Configuration.SelectedFrameSize,
+      panel_voltage: state.Configuration.SelectedVoltage,
+      panel_KAIC_rating: state.Configuration.SelectedKAICRating,
+      panel_bus_rating: state.Configuration.SelectedBusRating,
+      selected_breakers: state.Configuration.SelectedBreakers,
       order_confirmed: false,});
     try {
       
@@ -32,15 +30,15 @@ function SaveConfigurationButton({
       const { error: insertError } = await supabase.from("Configurations").insert({
         created_at: currentTime,
         user_id: CurrentUser.User_UID,
-        init_client: User_Input.client,
-        init_project: User_Input.project,
+        init_client: state.Metadata.Client,
+        init_project: state.Metadata.Project,
         init_drawn_by: CurrentUser.Given_Name + " " + CurrentUser.Family_Name,
 
-        panel_width: Selected_Panel.Frame_Size,
-        panel_voltage: Selected_Panel.Voltage,
-        panel_KAIC_rating: Selected_Panel.KAIC_rating,
-        panel_bus_rating: Selected_Panel.Bus_rating,
-        selected_breakers: Selected_Breakers,
+        panel_width: state.Configuration.SelectedFrameSize,
+        panel_voltage: state.Configuration.SelectedVoltage,
+        panel_KAIC_rating: state.Configuration.SelectedKAICRating,
+        panel_bus_rating: state.Configuration.SelectedBusRating,
+        selected_breakers: state.Configuration.SelectedBreakers,
         order_confirmed: false,
       });
 
