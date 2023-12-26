@@ -1,15 +1,13 @@
 "use client"
-import React, { useEffect, useRef, useState } from "react";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import { UseUserInputContext, UseCurrentUserContext } from "../../../context/globalContext";
-import Curntly_Logo from "public/curntly_slogan.png";
-
+import React, { useState } from "react";
 import { jsPDF } from "jspdf";
 import { Alert, Button } from "react-bootstrap";
+import { UseConfigurationReducerContext, UseCurrentUserContext } from "../../../context/globalContext";
+import Curntly_Logo from "public/curntly_slogan.png";
 
 const PDF_Generation = ({ canvasRef }) => {
-  const supabase = createClientComponentClient();
-  const { User_Input, setUser_Input } = UseUserInputContext();
+  const { state, dispatch } = UseConfigurationReducerContext();
+
   const { CurrentUser, setCurrentUser } = UseCurrentUserContext();
 
   const [feedback, setFeedback] = useState(null);
@@ -34,9 +32,9 @@ const PDF_Generation = ({ canvasRef }) => {
     // Add some text to the document at a specific position:
 
     var lines = [
-      `Project: ${User_Input.project}`,
-      `Client: ${User_Input.client}`,
-      `Equipment: ${0}`,
+      `Project: ${state.Metadata.Project}`,
+      `Client: ${state.Metadata.Client}`,
+      `Equipment: ${0}`,s
       `Sales Order Number: ${0}`,
       `Revision: ${0}`,
       `Drawing Date: ${americanFormatDate}`,
