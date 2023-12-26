@@ -1,12 +1,9 @@
-import React, { useContext } from "react";
-import ListGroup from "react-bootstrap/ListGroup";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import Button from "react-bootstrap/Button";
-import { UseFrameContext } from "@/app/context/globalContext";
+import React from "react";
+import {Button, Col, ListGroup, Row} from "react-bootstrap";
+import { UseConfigurationReducerContext } from "@/app/context/globalContext.jsx";
 
 const DisplaySelectedFrame = () => {
-  const { Selected_Panel, set_Selected_Panel } = UseFrameContext();
+  const { state, dispatch } = UseConfigurationReducerContext();
 
   return (
     <div>
@@ -19,7 +16,7 @@ const DisplaySelectedFrame = () => {
             <Col>
               <h5>Selected Frame Size:</h5>
             </Col>
-            <Col>{Selected_Panel.Frame_Size}" Inch</Col>
+            <Col>{state.Configuration.SelectedFrameSize}" Inch</Col>
           </Row>
         </ListGroup.Item>
         <ListGroup.Item>
@@ -27,7 +24,7 @@ const DisplaySelectedFrame = () => {
             <Col>
               <h5>Selected Voltage:</h5>
             </Col>
-            <Col>{Selected_Panel.Voltage}</Col>
+            <Col>{state.Configuration.SelectedVoltage}</Col>
           </Row>
         </ListGroup.Item>
 
@@ -36,7 +33,7 @@ const DisplaySelectedFrame = () => {
             <Col>
               <h5>Selected KAIC rating:</h5>
             </Col>
-            <Col>{Selected_Panel.KAIC_rating}</Col>
+            <Col>{state.Configuration.SelectedKAICRating}</Col>
           </Row>
         </ListGroup.Item>
 
@@ -45,7 +42,7 @@ const DisplaySelectedFrame = () => {
             <Col>
               <h5>Selected Bus rating:</h5>
             </Col>
-            <Col>{Selected_Panel.Bus_rating}</Col>
+            <Col>{state.Configuration.SelectedBusRating}</Col>
           </Row>
         </ListGroup.Item>
 
@@ -53,9 +50,9 @@ const DisplaySelectedFrame = () => {
           <Button
             variant="outline-danger"
             className="w-100"
-            onClick={() => set_Selected_Panel([])}
+            onClick={() => dispatch({ type: 'RESET_CONFIGURATION'})}
           >
-            Delete
+            Reset
           </Button>
         </ListGroup.Item>
       </ListGroup>
