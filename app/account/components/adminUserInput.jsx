@@ -1,36 +1,36 @@
 "use client";
-import React, { useState, useContext } from "react";
+import React, {useState} from "react";
 import Link from "next/link";
-import { Form, Button } from "react-bootstrap";
-import { Row, Col, Container, ListGroup } from "react-bootstrap";
-import { UseUserInputContext } from "../../context/globalContext";
+import { Form, Button, Row, Col, Container, ListGroup } from "react-bootstrap";
+import { UseConfigurationReducerContext } from "@/app/context/globalContext.jsx";
 
 const NewConfigInput = () => {
-  const { User_Input, setUser_Input } = UseUserInputContext();
-  const [showAlert, setShowAlert] = useState(false);
+  const { state, dispatch } = UseConfigurationReducerContext();
+  const [formData, setFormData] = useState({
+    client: "",
+    project: "",
+  });
+  const [isFormIncomplete, setIsFormIncomplete] = useState(true);
 
-  // const router = useRouter();
-
-  const handleInputChange = (event) => {
-    setUser_Input({
-      ...User_Input,
-      [event.target.name]: event.target.value,
-    });
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+    setIsFormIncomplete(value === "");
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    if (Object.values(User_Input).some((value) => value === "")) {
-      setShowAlert(true);
-    } else {
-      setShowAlert(false);
-      console.log(User_Input);
+  const handleSubmit = () => {
+    if (isFormIncomplete) {
+      alert("Please fill out all fields");
+      return;
     }
-  };
 
-  const isFormIncomplete = Object.values(User_Input).some(
-    (value) => value === ""
-  );
+    console.log(formData);
+    dispatch({ type: "SET_CLIENT", payload: formData.client });
+    dispatch({ type: "SET_PROJECT", payload: formData.project });
+  };
 
   return (
     <>
@@ -39,7 +39,7 @@ const NewConfigInput = () => {
           <h2>New configuration</h2>
         </ListGroup.Item>
         <ListGroup.Item>
-          <Form onSubmit={handleSubmit}>
+          <Form>
             <Container>
               <Form.Group controlId="formClient">
                 <Row>
@@ -50,7 +50,8 @@ const NewConfigInput = () => {
                     <Form.Control
                       type="text"
                       name="client"
-                      onChange={handleInputChange}
+                      value={formData.client}
+                      onChange={handleChange}
                     />
                   </Col>
                 </Row>
@@ -67,21 +68,24 @@ const NewConfigInput = () => {
                     <Form.Control
                       type="text"
                       name="project"
-                      onChange={handleInputChange}
+                      value={formData.project}
+                      onChange={handleChange}
                     />
                   </Col>
                 </Row>
               </Form.Group>
             </Container>
 
-            <Button
-              variant="outline-success"
-              className="w-100"
-              type="submit"
-              disabled={isFormIncomplete}
-            >
-              <Link href="/configurator">Launch Configurator</Link>
-            </Button>
+            <Link href="/configurator">
+              <Button
+                variant="outline-success"
+                className="w-100"
+                onClick={handleSubmit} // Use onClick to trigger the function
+                disabled={isFormIncomplete}
+              >
+                Launch Configurator
+              </Button>
+            </Link>
           </Form>
         </ListGroup.Item>
       </ListGroup>
@@ -90,3 +94,4 @@ const NewConfigInput = () => {
 };
 
 export default NewConfigInput;
+
