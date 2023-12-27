@@ -11,6 +11,7 @@ import {
   Modal,
   Alert,
 } from "react-bootstrap";
+import ResumeDraftButton from "./adminSavedConfigsResumeDraft"
 import MapSelectedBreakers from "./adminSavedConfigsSelectedBreakersMap";
 
 function Saved_Configurations({ session }) {
@@ -34,7 +35,7 @@ function Saved_Configurations({ session }) {
       if (error) {
         throw new Error("Failed to retrieve data from the database.");
       }
-      console.log("yooooooooo", data);
+
       setConfigs(data);
     } catch (error) {
       console.error(error);
@@ -150,7 +151,12 @@ function Saved_Configurations({ session }) {
                               : "Expand"}
                           </Button>
                         </Row>
-
+                        <Row>
+                          <ResumeDraftButton
+                            configFromDb={configuration}
+                          >
+                          </ResumeDraftButton>
+                        </Row>
                         <Row>
                           <Button
                             variant="danger"
