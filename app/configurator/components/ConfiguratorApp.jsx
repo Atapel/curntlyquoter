@@ -1,18 +1,19 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect,useState } from "react";
 import { Alert, Col, Row, Tab, Tabs } from "react-bootstrap";
 import Link from "next/link";
 import DisplaySelectedItems from "./Configuration/Config_page_Selected_Breakers_List";
 import PDF_preview from "./Configuration/Config_page_pdf_preview";
 import Select_Breakers_Menu from "./Configuration/Config_page_Breaker_Selection_Menu";
 import Select_Panel_Menu from "./Configuration/Config_page_Frame_Selection_Menu";
-import InsertButton from "./Quotation/Quotation_page";
-import { UseFrameContext, UseBreakerContext, UseCurrentUserContext } from "../../context/globalContext";
+// import InsertButton from "./Quotation/Quotation_page";
+import { UseCurrentUserContext, UseConfigurationReducerContext } from "../../context/globalContext";
 
 export default function configuratorApp(userMetadata) {
-  const { Selected_Panel, set_Selected_Panel } = UseFrameContext();
-  const { Selected_Breakers, setSelected_Breakers } = UseBreakerContext();
   const { CurrentUser, setCurrentUser } = UseCurrentUserContext();
+  const { state, dispatch } = UseConfigurationReducerContext();
+
+  const [ panelSelected, setPanelSelected ] = useState(false)
 
   useEffect(() => {
     setCurrentUser(userMetadata.usermetadata[0])
@@ -32,23 +33,24 @@ export default function configuratorApp(userMetadata) {
         <Tab eventKey="Configure" title="Configurator">
           <Row>
             <Col md={4}>
-              <Select_Panel_Menu />
-              {Selected_Panel.length !== 0 ? (
+              <Select_Panel_Menu renderstate={[panelSelected, setPanelSelected]}/>
+              {panelSelected === true ? (
                 <div>
                   <Select_Breakers_Menu />
-                  {Selected_Breakers.length !== 0 ? (
+                  {state.Configuration.SelectedBreakers.length !== 0 ? (
                     <DisplaySelectedItems />
                   ) : null}
                 </div>
               ) : null}
             </Col>
             <Col md={8}>
-              <PDF_preview />
+              <PDF_preview renderstate={[panelSelected, setPanelSelected]} />
             </Col>
           </Row>
         </Tab>
         <Tab eventKey="Quote" title="Get Quote">
-          <InsertButton></InsertButton>
+          {/* <InsertButton></InsertButton> */}
+          
         </Tab>
       </Tabs>
     </>
