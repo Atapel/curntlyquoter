@@ -10,7 +10,8 @@ export const initialConfiguration = {
   },
   Metadata: {
     Client: 'Enter Client Name',
-    Project: 'Enter Project Address'
+    Project: 'Enter Project Address',
+    DatabaseID: null
   },
   Pricing: {}
 };
@@ -45,7 +46,8 @@ export const reducer = (state, action) => {
         },
         Metadata: {
           Client: action.payload.init_client,
-          Project: action.payload.init_project
+          Project: action.payload.init_project,
+          DatabaseID: action.payload.id
         },
         Pricing: {}
       }
