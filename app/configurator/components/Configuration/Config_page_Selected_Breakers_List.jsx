@@ -3,9 +3,17 @@ import ListGroup from "react-bootstrap/ListGroup";
 import { Button, Col, Dropdown, Row } from "react-bootstrap";
 import { UseConfigurationReducerContext } from "@/app/context/globalContext.jsx";
 
-const DisplaySelectedItems = () => {
+const DisplaySelectedItems = (props) => {
   const { state, dispatch } = UseConfigurationReducerContext();
+  const [renderSelectedBrakers, setrenderSelectedBrakers] = props.renderstate
 
+  const deleteItem = (indexToDelete) => {
+    if(state.Configuration.SelectedBreakers.length === 1){
+      setrenderSelectedBrakers(false)
+      // console.log("renderSelectedBrakers",renderSelectedBrakers);
+    }
+    dispatch({ type: 'REMOVE_BREAKER', payload: indexToDelete })
+  };
   return (
     <div>
       <ListGroup>
@@ -32,7 +40,7 @@ const DisplaySelectedItems = () => {
 
               <Col>
                 <Button variant="danger"
-                  onClick={() => dispatch({ type: 'REMOVE_BREAKER', payload: index })}
+                  onClick={() => deleteItem(index)}
                 >
                   Delete
                 </Button>
