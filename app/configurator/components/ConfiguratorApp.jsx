@@ -1,8 +1,7 @@
 "use client";
-import React, { useEffect,useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Alert, Col, Row, Tab, Tabs } from "react-bootstrap";
 import Link from "next/link";
-import DisplaySelectedItems from "./Configuration/Config_page_Selected_Breakers_List";
 import PDF_preview from "./Configuration/Config_page_pdf_preview";
 import Select_Breakers_Menu from "./Configuration/Config_page_Breaker_Selection_Menu";
 import Select_Panel_Menu from "./Configuration/Config_page_Frame_Selection_Menu";
@@ -13,7 +12,8 @@ export default function configuratorApp(userMetadata) {
   const { CurrentUser, setCurrentUser } = UseCurrentUserContext();
   const { state, dispatch } = UseConfigurationReducerContext();
 
-  const [ panelSelected, setPanelSelected ] = useState(false)
+  // Rendering Variables
+  const [panelSelected, setPanelSelected] = useState(false)
 
   useEffect(() => {
     setCurrentUser(userMetadata.usermetadata[0])
@@ -33,14 +33,9 @@ export default function configuratorApp(userMetadata) {
         <Tab eventKey="Configure" title="Configurator">
           <Row>
             <Col md={4}>
-              <Select_Panel_Menu renderstate={[panelSelected, setPanelSelected]}/>
+              <Select_Panel_Menu renderstate={[panelSelected, setPanelSelected]} />
               {panelSelected === true ? (
-                <div>
-                  <Select_Breakers_Menu />
-                  {state.Configuration.SelectedBreakers.length !== 0 ? (
-                    <DisplaySelectedItems />
-                  ) : null}
-                </div>
+                <Select_Breakers_Menu />
               ) : null}
             </Col>
             <Col md={8}>
@@ -50,7 +45,7 @@ export default function configuratorApp(userMetadata) {
         </Tab>
         <Tab eventKey="Quote" title="Get Quote">
           {/* <InsertButton></InsertButton> */}
-          
+
         </Tab>
       </Tabs>
     </>
