@@ -1,12 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import {
-  UseBreakerContext,
-  UseFrameContext,
-  UseUserInputContext,
-  UseCurrentUserContext
-} from "../../../context/globalContext";
-import { Button, ListGroup } from "react-bootstrap";
+import { UseConfigurationReducerContext } from "../../../context/globalContext";
+import { ListGroup } from "react-bootstrap";
 import {
   container_46_w_dimensions_SVG,
   container_36_w_dimensions_SVG,
@@ -14,32 +8,27 @@ import {
 import PDF_Generation from "./Config_page_PDF_creation";
 import SaveConfigurationButton from "./Quotation_page_insert_button";
 
-const PDF_preview = () => {
-  const supabase = createClientComponentClient();
-  const { Selected_Breakers, setSelected_Breakers } = UseBreakerContext();
-  const { Selected_Panel, set_Selected_Panel } = UseFrameContext();
-  const { User_Input, setUser_Input } = UseUserInputContext();
-  const { CurrentUser, setCurrentUser } = UseCurrentUserContext();
-  
+const PDF_preview = (props) => {
+  const [panelSelected, setPanelSelected] = props.renderstate;
+  const [containerSrc, setContainerSrc] = useState(null);
+  const { state, dispatch } = UseConfigurationReducerContext();
   const canvasRef = useRef(null);
 
-  const [containerSrc, setContainerSrc] = useState(null);
-
   useEffect(() => {
-    if (Selected_Panel.length !== 0) {
-      if (Selected_Panel.Frame_Size === 36) {
+    if (panelSelected === false) {
+      if (state.Configuration.SelectedFrameSize === 36) {
         setContainerSrc(
           "data:image/svg+xml," +
-            encodeURIComponent(container_36_w_dimensions_SVG)
+          encodeURIComponent(container_36_w_dimensions_SVG)
         );
-      } else if (Selected_Panel.Frame_Size === 46) {
+      } else if (state.Configuration.SelectedFrameSize === 46) {
         setContainerSrc(
           "data:image/svg+xml," +
-            encodeURIComponent(container_46_w_dimensions_SVG)
+          encodeURIComponent(container_46_w_dimensions_SVG)
         );
       }
     }
-  }, [Selected_Panel]);
+  }, [state.Configuration]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -62,12 +51,12 @@ const PDF_preview = () => {
       let currentX = null // Start with an offset for x-coordinate
 
 
-      Selected_Breakers.forEach((item) => {
+      state.Configuration.SelectedBreakers.forEach((item) => {
         const img = new Image();
         img.onload = () => {
-          if (Selected_Panel.Frame_Size === 36){
+          if (state.Configuration.SelectedFrameSize === 36) {
             currentX = 60.5; // Start with an offset for x-coordinate
-          }else if(Selected_Panel.Frame_Size === 46){
+          } else if (state.Configuration.SelectedFrameSize === 46) {
             currentX = 78.5; // Start with an offset for x-coordinate
           }
           context.drawImage(img, currentX, currentY);
@@ -83,12 +72,12 @@ const PDF_preview = () => {
       });
     };
     container.src = containerSrc;
-  }, [Selected_Breakers, containerSrc]);
+  }, [state.Configuration.SelectedBreakers, containerSrc]);
 
 
   return (
     <div>
-      {Selected_Panel.length !== 0 ? (
+      {panelSelected === true ? (
         <ListGroup>
           <ListGroup.Item>
             <h2>Configure Panel: </h2>
@@ -97,15 +86,8 @@ const PDF_preview = () => {
             <canvas ref={canvasRef} className="m-5" />
           </ListGroup.Item>
           <ListGroup.Item>
-
             <PDF_Generation canvasRef={canvasRef} />
-
-            <SaveConfigurationButton
-              User_Input={User_Input}
-              Selected_Panel={Selected_Panel}
-              Selected_Breakers={Selected_Breakers}
-            />
-
+            <SaveConfigurationButton />
           </ListGroup.Item>
         </ListGroup>
       ) : (
