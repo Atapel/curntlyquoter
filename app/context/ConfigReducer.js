@@ -26,13 +26,22 @@ export const reducer = (state, action) => {
       };
 
     case 'LOAD_CONFIGURATION_FROM_DB':
+      // Calculate current Breaker Size
+      let sizeArray = []
+      action.payload.selected_breakers.forEach(breaker => {
+        sizeArray.push(breaker["Size"])
+      });
+      let newBreakersSize = sizeArray.reduce((total, num) => total + num, 0)
+
       return {
         Configuration: {
           SelectedFrameSize: action.payload.panel_width,
           SelectedVoltage: action.payload.panel_voltage,
-          SelectedKAICRating: action.panel_KAIC_rating,
+          SelectedKAICRating: action.payload.panel_KAIC_rating,
           SelectedBusRating: action.payload.panel_bus_rating,
-          SelectedBreakers: action.payload.selected_breakers
+          SelectedBreakers: action.payload.selected_breakers,
+          CurrentBreakersSize: newBreakersSize,
+          MaxBreakerSize: 45
         },
         Metadata: {
           Client: action.payload.init_client,
@@ -78,30 +87,6 @@ export const reducer = (state, action) => {
         }
       };
 
-    // case 'ADD_BREAKER':
-    //   let newItemSize = action.payload.Size;
-
-    //   // Calculate the total size of existing breakers in the array
-    //   let currentSize = state.Configuration.SelectedBreakers.reduce((totalSize, breaker) => {
-    //     return totalSize + breaker.Size;
-    //   }, 0);
-
-    //   // Check if adding the new breaker would exceed the maximum size
-    //   if (currentSize + newItemSize <= 45) {
-    //     // If validation passes, update the state
-    //     return {
-    //       ...state,
-    //       Configuration: {
-    //         ...state.Configuration,
-    //         SelectedBreakers: [...state.Configuration.SelectedBreakers, action.payload]
-    //       }
-    //     };
-    //   } else {
-    //     // If validation fails, return the current state
-    //     console.warn('Cannot add breaker. Exceeds maximum size.');
-    //     return state;
-    //   }
-
     case 'ADD_BREAKER':
       newSize = state.Configuration.CurrentBreakersSize + action.payload['Size']
 
@@ -115,35 +100,16 @@ export const reducer = (state, action) => {
           }
         };
       } else {
+        console.warn("couldnt add breaker")
         return { ...state }
       }
-
-    // case 'REMOVE_BREAKER':
-    //   // IMPLEMENT LOGIC TO SUBSTRACT FROM ITEMSIZE 
-    //   const delItemSize = action.payload.Size;
-
-    //   // Calculate the total size of existing breakers in the array
-    //   currentSize = state.Configuration.SelectedBreakers.reduce((totalSize, breaker) => {
-    //     return totalSize - breaker.Size;
-    //   }, 0);
-    //   // Ensure to use slice to create a new array instead of modifying the existing one
-    //   const updatedBreakers = state.Configuration.SelectedBreakers.slice();
-    //   updatedBreakers.splice(action.payload, 1);
-    //   return {
-    //     ...state,
-    //     Configuration: {
-    //       ...state.Configuration,
-    //       SelectedBreakers: updatedBreakers
-    //     }
-    //   };
 
     case 'REMOVE_BREAKER':
       let newSelected_Breakers = state.Configuration.SelectedBreakers.filter(
         (_, index) => index !== action.payload
       );
 
-      newSize = state.Configuration.CurrentBreakersSize - state.Configuration.SelectedBreakers[action.payload['Size']]
-
+      newSize = state.Configuration.CurrentBreakersSize - state.Configuration.SelectedBreakers[action.payload]['Size']
       return {
         ...state,
         Configuration: {
