@@ -1,39 +1,48 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Alert, Dropdown, Button, Row, ListGroup, Col } from "react-bootstrap";
 import { getBreakerDetails } from "../../api_requests/fetch_products";
-import {
-  UseFrameContext,
-  UseBreakerContext,
-  UseLenghtLimitContext,
-} from "@/app/context/globalContext";
+import { UseConfigurationReducerContext } from "@/app/context/globalContext.jsx";
+import DisplaySelectedItems from "./Config_page_Selected_Breakers_List";
 
 const Select_Breakers_Menu = () => {
-  const { Selected_Breakers, setSelected_Breakers } = UseBreakerContext();
-  const { Selected_Panel, set_Selected_Panel } = UseFrameContext();
-  const { Length_Limit_Check, setLength_Limit_Check } = UseLenghtLimitContext();
+  const { state, dispatch } = UseConfigurationReducerContext();
 
-  const [Warning_Display, setWarning_Display] = useState(false);
-  const [Selected_Breaker_Size, setSelected_Breaker_Size] = useState(
-    "Select Breaker Size"
-  );
-  const [Currently_Selected_Breaker, setCurrently_Selected_Breaker] = useState({
-    Description: "Select Breaker",
-  });
+  const [renderSelectedBrakers, setrenderSelectedBrakers] = useState(false);
+  const [disableButtonState, setDisableButtonState] = useState(false)
+  const [maxBreakerMsg, setMaxBreakerMsg] = useState(false)
+  const [Selected_Size, setSelected_Size] = useState("Select Breaker Size");
+  const [Selected_Breaker, setSelected_Breaker] = useState({ Description: "Select Breaker" });
 
   const handleProductSelect = (product) => {
-    if (Length_Limit_Check + product["Size"] <= 45) {
-      // Append selected specs to selected item
-      setSelected_Breakers([...Selected_Breakers, product]);
-      setLength_Limit_Check(Length_Limit_Check + product["Size"]);
-      setWarning_Display(false);
-
-      // reset the states back to original
-      setSelected_Breaker_Size("Select Breaker Size");
-      setCurrently_Selected_Breaker({ Description: "Select Breaker" });
-    } else {
-      setWarning_Display(true);
-    }
+    dispatch({ type: 'ADD_BREAKER', payload: product })
+    // Checking on when to display the max breaker message
+    // console.log(maxBreakerMsg, state.Configuration.CurrentBreakersSize);
+    // if (product["size"] + state.Configuration.CurrentBreakersSize > state.Configuration.MaxBreakerSize) {
+    //   console.log(maxBreakerMsg);
+    //   setMaxBreakerMsg(true)
+    // }
+    
+    setrenderSelectedBrakers(true)
+    // reset the states back to original
+    setSelected_Size("Select Breaker Size");
+    setSelected_Breaker({ Description: "Select Breaker" });
   };
+
+
+  useEffect(() => {
+    // Checking on wether to disable the Add Breaker Button or not
+    if (
+      state.Configuration.CurrentBreakersSize + Selected_Size >
+      state.Configuration.MaxBreakerSize
+      || Selected_Size === "Select Breaker Size"
+      || Selected_Breaker.Description === "Select Breaker"
+    ) {
+      setDisableButtonState(true)
+    } else {
+      setDisableButtonState(false)
+    }
+  }, [Selected_Breaker, Selected_Size])
+
 
   let products = [];
 
@@ -42,22 +51,22 @@ const Select_Breakers_Menu = () => {
     Double_breakers_46,
     Single_breakers_36,
     Double_breakers_36,
-  } = getBreakerDetails(Selected_Panel);
-  if (Selected_Breaker_Size == "Single" && Selected_Panel.Frame_Size === 46) {
+  } = getBreakerDetails(state.Configuration);
+  if (Selected_Size == "Single" && state.Configuration.SelectedFrameSize === 46) {
     products = Single_breakers_46;
   } else if (
-    Selected_Breaker_Size == "Single" &&
-    Selected_Panel.Frame_Size === 36
+    Selected_Size == "Single" &&
+    state.Configuration.SelectedFrameSize === 36
   ) {
     products = Single_breakers_36;
   } else if (
-    Selected_Breaker_Size == "Double" &&
-    Selected_Panel.Frame_Size === 46
+    Selected_Size == "Double" &&
+    state.Configuration.SelectedFrameSize === 46
   ) {
     products = Double_breakers_46;
   } else if (
-    Selected_Breaker_Size == "Double" &&
-    Selected_Panel.Frame_Size === 36
+    Selected_Size == "Double" &&
+    state.Configuration.SelectedFrameSize === 36
   ) {
     products = Double_breakers_36;
   }
@@ -78,7 +87,7 @@ const Select_Breakers_Menu = () => {
               </Col>
               <Col>
                 <Dropdown.Toggle variant="primary" id="dropdown-basic">
-                  {Selected_Breaker_Size}
+                  {Selected_Size}
                 </Dropdown.Toggle>
               </Col>
             </Row>
@@ -89,7 +98,7 @@ const Select_Breakers_Menu = () => {
                   variant="outline-info"
                   size="sm"
                   className="w-100"
-                  onClick={() => setSelected_Breaker_Size("Single")}
+                  onClick={() => setSelected_Size("Single")}
                 >
                   Single
                 </Button>
@@ -99,7 +108,7 @@ const Select_Breakers_Menu = () => {
                   variant="outline-info"
                   size="sm"
                   className="w-100"
-                  onClick={() => setSelected_Breaker_Size("Double")}
+                  onClick={() => setSelected_Size("Double")}
                 >
                   Double
                 </Button>
@@ -119,9 +128,9 @@ const Select_Breakers_Menu = () => {
                 <Dropdown.Toggle
                   variant="primary"
                   id="dropdown-basic"
-                  disabled={Selected_Breaker_Size === "Select Breaker Size"}
+                  disabled={Selected_Size === "Select Breaker Size"}
                 >
-                  {Currently_Selected_Breaker.Description}
+                  {Selected_Breaker.Description}
                 </Dropdown.Toggle>
               </Col>
             </Row>
@@ -132,8 +141,8 @@ const Select_Breakers_Menu = () => {
                     variant="outline-info"
                     size="sm"
                     className="w-100"
-                    onClick={() => setCurrently_Selected_Breaker(product)}
-                    disabled={Length_Limit_Check > 45}
+                    onClick={() => setSelected_Breaker(product)}
+                    disabled={state.Configuration.CurrentBreakersSize > state.Configuration.MaxBreakerSize}
                   >
                     {product.Description}
                   </Button>
@@ -145,32 +154,27 @@ const Select_Breakers_Menu = () => {
 
         <ListGroup.Item>
           {/* Add Breaker to Preview */}
-          {Warning_Display === false ? (
-            <Button
-              variant="outline-info"
-              size="sm"
-              className="w-100"
-              onClick={() => handleProductSelect(Currently_Selected_Breaker)}
-              disabled={Length_Limit_Check > 45}
-            >
-              Add
-            </Button>
-          ) : (
-            <div>
-              <Alert variant="warning">Max ammount of breakers selected</Alert>
-              <Button
-                variant="outline-info"
-                size="sm"
-                className="w-100"
-                onClick={() => handleProductSelect(Currently_Selected_Breaker)}
-                disabled={Length_Limit_Check > 45}
-              >
-                Add
-              </Button>
-            </div>
-          )}
+          <Button
+            variant="outline-info"
+            size="sm"
+            className="w-100"
+            onClick={() => handleProductSelect(Selected_Breaker)}
+            disabled={disableButtonState}
+          >
+            Add
+          </Button>
+          {maxBreakerMsg === true ? (<Alert variant="warning">
+            No more Breakers available
+          </Alert>) : (null)}
         </ListGroup.Item>
       </ListGroup>
+
+      {renderSelectedBrakers === true ? (
+        <DisplaySelectedItems renderstate={[renderSelectedBrakers, setrenderSelectedBrakers]} />
+      ) : (
+        null
+      )}
+
     </div>
   );
 };
