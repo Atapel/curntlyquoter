@@ -6,7 +6,7 @@ import {
   container_36_w_dimensions_SVG,
 } from "../../assets/switch_board.jsx";
 import PDF_Generation from "./Config_page_PDF_creation";
-import SaveConfigurationButton from "./Quotation_page_insert_button";
+import SaveConfigurationButton from "./Config_page_insert_button";
 
 const PDF_preview = (props) => {
   const [panelSelected, setPanelSelected] = props.renderstate;
