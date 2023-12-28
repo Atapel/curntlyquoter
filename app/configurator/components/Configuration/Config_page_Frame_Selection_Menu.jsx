@@ -258,7 +258,7 @@ function Select_Panel_Menu(props) {
               </ListGroupItem>
             </ListGroup>
           ) : (
-            <DisplaySelectedFrame />
+            <DisplaySelectedFrame renderstate={[panelSelected, setPanelSelected]}/>
           )}
     </div>
   );
