@@ -1,9 +1,15 @@
 import React from "react";
-import {Button, Col, ListGroup, Row} from "react-bootstrap";
+import { Button, Col, ListGroup, Row } from "react-bootstrap";
 import { UseConfigurationReducerContext } from "@/app/context/globalContext.jsx";
 
-const DisplaySelectedFrame = () => {
+const DisplaySelectedFrame = (props) => {
   const { state, dispatch } = UseConfigurationReducerContext();
+  const [panelSelected, setPanelSelected] = props.renderstate;
+
+  const handleReset = () => {
+    dispatch({ type: 'RESET_CONFIGURATION' })
+    setPanelSelected(false)
+  }
 
   return (
     <div>
@@ -50,7 +56,7 @@ const DisplaySelectedFrame = () => {
           <Button
             variant="outline-danger"
             className="w-100"
-            onClick={() => dispatch({ type: 'RESET_CONFIGURATION'})}
+            onClick={() => handleReset()}
           >
             Reset
           </Button>
