@@ -15,27 +15,24 @@ const PDF_preview = (props) => {
   const canvasRef = useRef(null);
 
   useEffect(() => {
-    if (panelSelected === false) {
-      if (state.Configuration.SelectedFrameSize === 36) {
-        setContainerSrc(
-          "data:image/svg+xml," +
-          encodeURIComponent(container_36_w_dimensions_SVG)
-        );
-      } else if (state.Configuration.SelectedFrameSize === 46) {
-        setContainerSrc(
-          "data:image/svg+xml," +
-          encodeURIComponent(container_46_w_dimensions_SVG)
-        );
-      }
+    if (state.Configuration.SelectedFrameSize === 36) {
+      setContainerSrc(
+        "data:image/svg+xml," +
+        encodeURIComponent(container_36_w_dimensions_SVG)
+      );
+    } else if (state.Configuration.SelectedFrameSize === 46) {
+      setContainerSrc(
+        "data:image/svg+xml," +
+        encodeURIComponent(container_46_w_dimensions_SVG)
+      );
     }
-  }, [state.Configuration]);
+  }, [state.Configuration.SelectedFrameSize]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas || !containerSrc) return;
 
     const context = canvas.getContext("2d");
-
     // Load and draw the container SVG first
     const container = new Image();
     container.onload = () => {
@@ -72,7 +69,7 @@ const PDF_preview = (props) => {
       });
     };
     container.src = containerSrc;
-  }, [state.Configuration.SelectedBreakers, containerSrc]);
+  }, [state.Configuration.SelectedBreakers, panelSelected, containerSrc]);
 
 
   return (
