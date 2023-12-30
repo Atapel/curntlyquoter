@@ -163,7 +163,7 @@ function Select_Panel_Menu(props) {
                             variant="outline-info"
                             size="sm"
                             className="w-100"
-                            onClick={() => setSelected_KAIC_rating(35)}
+                            onClick={() => dispatch({ type: 'SET_KAIC_RATING', payload: 35 })}
                           >
                             35
                           </Button>
@@ -173,7 +173,7 @@ function Select_Panel_Menu(props) {
                             variant="outline-info"
                             size="sm"
                             className="w-100"
-                            onClick={() => setSelected_KAIC_rating(65)}
+                            onClick={() => dispatch({ type: 'SET_KAIC_RATING', payload: 65 })}
                           >
                             65
                           </Button>
@@ -183,7 +183,7 @@ function Select_Panel_Menu(props) {
                             variant="outline-info"
                             size="sm"
                             className="w-100"
-                            onClick={() => setSelected_KAIC_rating(100)}
+                            onClick={() => dispatch({ type: 'SET_KAIC_RATING', payload: 100 })}
                           >
                             100
                           </Button>
