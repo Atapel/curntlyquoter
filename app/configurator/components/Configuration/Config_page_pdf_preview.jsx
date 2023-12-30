@@ -5,7 +5,9 @@ import {
   container_46_w_dimensions_SVG,
   container_36_w_dimensions_SVG,
 } from "../../assets/switch_board.jsx";
-import PDF_Generation from "./Config_page_PDF_creation";
+import {sideViewBreaker, sideViewFrame} from "../../assets/SideViewBoard"
+import {technicalViewBreaker, technicalViewFrame} from "../../assets/TechnicalView"
+import PDF_Generation from "../PDF_creation/Config_page_PDF_creation";
 import SaveConfigurationButton from "./Config_page_insert_button";
 
 const PDF_preview = (props) => {
@@ -26,6 +28,9 @@ const PDF_preview = (props) => {
         encodeURIComponent(container_46_w_dimensions_SVG)
       );
     }
+
+
+
   }, [state.Configuration.SelectedFrameSize]);
 
   useEffect(() => {
@@ -35,13 +40,19 @@ const PDF_preview = (props) => {
     const context = canvas.getContext("2d");
     // Load and draw the container SVG first
     const container = new Image();
+    const techview = new Image();
+    const sideview = new Image()
+
     container.onload = () => {
       // Set the canvas size to match the container image size
-      canvas.width = container.width;
-      canvas.height = container.height;
+      // canvas.width = container.width;
+      // canvas.height = container.height;
+      canvas.width = 800;
+      canvas.height =500;
 
       context.drawImage(container, 0, 0);
-
+      context.drawImage(sideview, 300, 50)
+      context.drawImage(techview, 500, 50)
       // Once the container is drawn, proceed with the SVG items
       let currentY = 117; // Start with an offset for y-coordinate
       // let currentX = 78.5; // Start with an offset for x-coordinate
@@ -69,6 +80,8 @@ const PDF_preview = (props) => {
       });
     };
     container.src = containerSrc;
+    techview.src = "data:image/svg+xml," + encodeURIComponent(technicalViewFrame);
+    sideview.src = "data:image/svg+xml," + encodeURIComponent(sideViewFrame);
   }, [state.Configuration.SelectedBreakers, panelSelected, containerSrc]);
 
 
