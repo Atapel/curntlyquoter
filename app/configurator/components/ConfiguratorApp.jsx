@@ -5,7 +5,7 @@ import Link from "next/link";
 import PDF_preview from "./Configuration/Config_page_pdf_preview";
 import Select_Breakers_Menu from "./Configuration/Config_page_Breaker_Selection_Menu";
 import Select_Panel_Menu from "./Configuration/Config_page_Frame_Selection_Menu";
-// import InsertButton from "./Quotation/Quotation_page";
+import QuotePage from "./Quotation/Quotation_page";
 import { UseCurrentUserContext, UseConfigurationReducerContext } from "../../context/globalContext";
 
 export default function configuratorApp(userMetadata) {
@@ -44,7 +44,7 @@ export default function configuratorApp(userMetadata) {
           </Row>
         </Tab>
         <Tab eventKey="Quote" title="Get Quote">
-          {/* <InsertButton></InsertButton> */}
+          <QuotePage />
 
         </Tab>
       </Tabs>
