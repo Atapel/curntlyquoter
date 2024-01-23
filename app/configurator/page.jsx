@@ -13,7 +13,6 @@ export default async function configuratorPage() {
     } = await supabase.auth.getUser();
 
     user = userData; // Assign userData to user
-    console.log("User ServerSide", user);
 
     // Redirect if user is unauthenticated
     if (!user) {
@@ -32,9 +31,6 @@ export default async function configuratorPage() {
   let userMetadata; // Declare userMetadata to store the data from the second block
   
   try {
-    console.log(user.id);
-
-    
     // Retrieve user metadata
     const { data, error } = await supabase
       .from("User_Metadata")
@@ -42,7 +38,6 @@ export default async function configuratorPage() {
       .eq('User_UID', user.id);
 
     userMetadata = data; // Assign data to userMetadata
-    console.log("UserMetadata ServerSide", userMetadata);
 
     // Handle user retrieval error
     if (error) {
