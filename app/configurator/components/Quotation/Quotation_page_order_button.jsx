@@ -2,7 +2,7 @@ import { useState } from "react";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { Button, Alert } from "react-bootstrap";
 
-function ConfirmOrderButton({ CurrentUser }) {
+function ConfirmOrderButton() {
   const [operationStatus, setOperationStatus] = useState(null);
   const supabase = createClientComponentClient();
 
