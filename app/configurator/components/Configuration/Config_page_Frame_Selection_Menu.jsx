@@ -217,7 +217,7 @@ function Select_Panel_Menu(props) {
                         variant="outline-info"
                         size="sm"
                         className="w-100"
-                        onClick={() => dispatch({ type: 'SET_BUS_RATING', payload: "750A" })}
+                        onClick={() => dispatch({ type: 'SET_BUS_RATING', payload: "800A" })}
                       >
                         750A
                       </Button>
