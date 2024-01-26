@@ -1,8 +1,9 @@
 const { google } = require("googleapis");
-
+// Dev Acces at
+// http://localhost:3000/configurator/api_requests/google_sheet_call/pricing
 export async function GET() {
 
-  const spreadsheetId = process.env.GOOGLESHEETS_ID;
+  const spreadsheetId = process.env.MASTER_QUOTE_SHEET_ID;
   const range = "A1:A5"; // Change this to the range you want to retrieve
   const credentialsFilePath = "app/configurator/api_requests/google_sheet_call/credentials.json"
 
