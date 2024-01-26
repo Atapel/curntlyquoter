@@ -27,9 +27,6 @@ function QuotePage() {
             <h2>Quote Overview: </h2>
           </ListGroup.Item>
           <ListGroup.Item>
-            <p>All details regarding the quotation will be listed here</p>
-          </ListGroup.Item>
-          <ListGroup.Item>
             <PriceDisplayComponent />
           </ListGroup.Item>
           <ListGroup.Item>
