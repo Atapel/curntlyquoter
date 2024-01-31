@@ -40,7 +40,7 @@ const PDF_preview = (props) => {
     const context = canvas.getContext("2d");
     // Load and draw the container SVG first
     const container = new Image();
-    const techview = new Image();
+    // const techview = new Image();
     const sideview = new Image()
 
     container.onload = () => {
@@ -52,7 +52,8 @@ const PDF_preview = (props) => {
 
       context.drawImage(container, 0, 0);
       context.drawImage(sideview, 300, 50)
-      context.drawImage(techview, 500, 50)
+      // context.drawImage(techview, 500, 50)
+      
       // Once the container is drawn, proceed with the SVG items
       let currentY = 117; // Start with an offset for y-coordinate
       // let currentX = 78.5; // Start with an offset for x-coordinate
@@ -80,7 +81,7 @@ const PDF_preview = (props) => {
       });
     };
     container.src = containerSrc;
-    techview.src = "data:image/svg+xml," + encodeURIComponent(technicalViewFrame);
+    // techview.src = "data:image/svg+xml," + encodeURIComponent(technicalViewFrame);
     sideview.src = "data:image/svg+xml," + encodeURIComponent(sideViewFrame);
   }, [state.Configuration.SelectedBreakers, panelSelected, containerSrc]);
 
