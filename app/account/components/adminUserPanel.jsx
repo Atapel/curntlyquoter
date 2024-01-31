@@ -18,7 +18,7 @@ const UserPanel = ({ session }) => {
 
               <Col>User: {session?.user.email}</Col>
               <Col>
-              <UserFeedbackForm></UserFeedbackForm>
+              <UserFeedbackForm session={session} />
               </Col>
               <Col>
                 <SignOut />

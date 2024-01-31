@@ -1,71 +1,89 @@
-"use client"
-import React, { useState } from 'react';
-import { Button, Form, Alert } from 'react-bootstrap';
+import React, { useState, useEffect } from "react";
+import { Form, Button, Alert } from "react-bootstrap";
 
-function UserFeedbackForm() {
-  const [showForm, setShowForm] = useState(false);
-  const [feedback, setFeedback] = useState('');
-  const [submitted, setSubmitted] = useState(false);
+const FeedbackForm = ({ session }) => {
 
-  const handleFeedbackChange = (event) => {
-    setFeedback(event.target.value);
+  const [formData, setFormData] = useState({
+    // A: "John",
+    // B: "Doe",
+    C: session?.user.email,
+    D: new Date().toLocaleDateString(),
+  });
+
+  const [feedbackMessage, setFeedbackMessage] = useState("");
+  const [formSubmitted, setFormSubmitted] = useState(false);
+
+  useEffect(() => {
+    // const request = new Request("https://example.com", {
+    //   method: "POST",
+    //   body: formData,
+    // });
+    const submitFeedback = async () => {
+      try {
+        const response = await fetch("http://localhost:3000/configurator/api_requests/google_sheet_call/feedback", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        });
+
+        if (response.ok) {
+          setFeedbackMessage("Feedback submitted successfully");
+        } else {
+          const errorData = await response.json();
+          setFeedbackMessage(`Error submitting feedback: ${errorData.message}`);
+        }
+      } catch (error) {
+        setFeedbackMessage(`Error submitting feedback: ${error.message}`);
+      }
+    };
+
+    if (formSubmitted) {
+      submitFeedback();
+    }
+  }, [formSubmitted]);
+
+  const handleInputChange = (e) => {
+    const { value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      E: value,
+    }));
   };
 
-  const handleSubmit = () => {
-    // You can implement email sending logic here
-    // For demonstration purposes, let's log the feedback to the console
-    console.log('Feedback submitted:', feedback);
-
-    // You can use a service like email.js or your server to send an email
-    // In this example, we are not sending an actual email
-
-    // Set the submitted state to true
-    setSubmitted(true);
-
-    // Optionally, reset the feedback state
-    setFeedback('');
-  };
-
-  const handleShowForm = () => {
-    // Reset the submitted state when showing the form again
-    setSubmitted(false);
-
-    setShowForm(true);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setFormSubmitted(true);
   };
 
   return (
-    <>
-      {!showForm && !submitted && (
-        <Button variant="primary" onClick={handleShowForm}>
-          Please give us feedback
-        </Button>
-      )}
-
-      {showForm && !submitted && (
-        <Form>
-          <Form.Group controlId="userFeedback">
-            <Form.Label>Your Feedback</Form.Label>
+    <div>
+      {!formSubmitted && (
+        <Form onSubmit={handleSubmit}>
+          <Form.Group controlId="formFeedback">
+            <Form.Label>Feedback:</Form.Label>
             <Form.Control
               as="textarea"
               rows={3}
-              value={feedback}
-              onChange={handleFeedbackChange}
+              value={formData.feedback}
+              onChange={handleInputChange}
             />
           </Form.Group>
-          <Button variant="primary" onClick={handleSubmit}>
-            Submit Feedback
-          </Button>
+          <Button type="submit">Submit Feedback</Button>
         </Form>
       )}
 
-      {submitted && (
-        <Alert variant="success" onClose={() => setShowForm(false)} dismissible>
-          Thank you for your feedback!
+      {formSubmitted && (
+        <Alert variant={feedbackMessage.includes("successfully") ? "success" : "danger"}>
+          {feedbackMessage}
         </Alert>
       )}
-    </>
+    </div>
   );
-}
+};
 
-export default UserFeedbackForm;
+export default FeedbackForm;
+
+
 
