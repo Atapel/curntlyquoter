@@ -1,79 +1,78 @@
 const { google } = require("googleapis");
+const getGoogleSheetsClient = require("./modules/sheetsClient")
+const getRequestsObject = require("./modules/getSheetSchema")
+const getPricingSheet = require("./modules/getPricing")
+const writePricingSheet = require("./modules/writePricing")
+
 // Dev Acces at
 // http://localhost:3000/configurator/api_requests/google_sheet_call/pricing
+// export async function GET() {
 export async function GET() {
-  let cellValidationValues = []
-  let cellValues = []
-
-  const spreadsheetId = process.env.MASTER_QUOTE_SHEET_ID;
-  const range = "A:B"; // Change this to the range you want to retrieve
-  const credentialsFilePath = "app/configurator/api_requests/google_sheet_call/credentials.json"
-
-  const auth = new google.auth.GoogleAuth({
-    keyFile: credentialsFilePath,
-    scopes: "https://www.googleapis.com/auth/spreadsheets",
-  });
-
-  // Instance of Google Sheets API
-  const googleSheets = google.sheets({ version: "v4", auth });
-
-  // Retrieve data validation rules
-  const response = await googleSheets.spreadsheets.get({
-    auth: auth,
-    spreadsheetId: spreadsheetId,
-    ranges: [range],
-    fields: 'sheets/data/rowData/values/dataValidation'
-  });
-  const rowData = response.data.sheets[0].data[0].rowData;
-
-  for (let rowIndex = 0; rowIndex < rowData.length; rowIndex++) {
-    if (!rowData[rowIndex].values) continue; // Skip empty rows
-    const row = rowData[rowIndex];
-    const rowValues = row.values;
-
-    for (let colIndex = 0; colIndex < rowValues.length; colIndex++) {
-      const cell = rowValues[colIndex];
-      const dataValidation = cell.dataValidation;
-      if (!dataValidation) continue; // Skip cells without data validation rules
-      if (dataValidation) {
-        const rowNumber = rowIndex + 1;  // Adjust for 1-based index
-        const colLetter = String.fromCharCode('A'.charCodeAt(0) + colIndex);
-        const cellAddress = `${colLetter}${rowNumber}`;
-        let validationVal = []
-        dataValidation.condition.values.forEach(element => {
-          validationVal.push(element.userEnteredValue)
-        })
-        cellValidationValues.push({
-          Cell: cellAddress,
-          Validation: validationVal
-        })
+  // Get Config Object
+  let configObject = {
+    "SelectedFrameSize": 36,
+    "SelectedVoltage": "208Y/120V",
+    "SelectedKAICRating": 65,
+    "SelectedBusRating": "800A",
+    "SeletedPanelHeight": 90,
+    "FeedThruLugs": false,
+    "MainLug": false,
+    "SericeOrDistribution": "Service",
+    "SelectedFeedPosition": "Select Feed Position",
+    "SelectedBreakers": [
+      {
+        "Description": "UTS150",
+        "Max_Amperage": 150,
+        "BreakerSize": "Single",
+        "Size": 4,
+        "SVG_str": "<svg width=\"132\" height=\"22\" viewBox=\"0 0 132 22\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M67.9942 7.52307L68.0004 14.5097M69.0671 14.5088L69.8138 14.5081M70.8271 14.5072L70.8208 7.52053M59.4074 7.53079L80.2607 7.51205L80.267 14.4987L59.4137 14.5175L59.4074 7.53079ZM1.12585 20.7033L130.832 20.5867L130.815 1.33336L1.10855 1.44995L1.12585 20.7033Z\" stroke=\"black\" stroke-width=\"1.28\" stroke-miterlimit=\"10\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>"
       }
-    }
+    ],
+    "CurrentBreakersSize": 4,
+    "MaxBreakerSize": 45
   }
 
-  let values;
-  try {
-    // Make the API request to retrieve data
-    const response = await googleSheets.spreadsheets.values.get({
-      spreadsheetId,
-      range,
-    });
+  // Load Sheet Id
 
-    values = response.data.values;
+  // process.env.FEEDBACK_SHEET_ID
+  // FeedbackSheet
+  // const pricingSheetID = '1jYuxdy8_uFlbtAZTdcnZA-7DWOweSpreRuTQ1NL6CX8'
+  // "1jIr6_Noj8-M_Y3LiKkZH_c0bmt8TuimrrGuaj4Zxsq4";
 
-    if (values.length) {
-      console.log("Data from the spreadsheet:");
-      values.forEach((row) => {
-        console.log(row.join("\t"));
-        cellValues.push(row.join("\t"))
-      });
-      // return values
+  const pricingSheetID = process.env.MASTER_QUOTE_SHEET_ID
 
-    } else {
-      console.log("No data found.");
-    }
-  } catch (error) {
-    console.error("Error retrieving data:", error.message);
+  // Transform Config object into sheets batch request  
+  const batchUpdateRequest = getRequestsObject(configObject, pricingSheetID)
+
+  // Initialize Google Sheets Client
+  const googleSheets = getGoogleSheetsClient()
+
+  // Maybe clone the sheet or reset all values
+
+
+
+
+  // Write Configuration values into the sheet
+  let sheetWriteRequest = await writePricingSheet(googleSheets, batchUpdateRequest)
+
+  // Implement checking if fetched successfull and returns 200 status then continiue
+
+  // Read Sheet and get Pricing Data
+  let pricingSheet = await getPricingSheet(googleSheets, pricingSheetID)
+
+  // Transform Pricing Data values
+
+  let pannelPriceRAW = pricingSheet[14][1]
+  const price = {
+    pannel: parseFloat(pannelPriceRAW.replace(/[$,]/g, '')),
+    breakers: parseFloat(pricingSheet[28][1]),
+
   }
-  return new Response(values);
+
+  price.total = price.pannel + price.breakers
+
+  return new Response(
+    pricingSheet,
+    price
+  );
 }
