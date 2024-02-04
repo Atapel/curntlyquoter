@@ -20,7 +20,7 @@ const getRequestsObject = (configObject, spreadsheetId) => {
     },
     {
       // CellName: 'ServiceorDistribution',
-      values: [[configObject.SericeOrDistribution]],
+      values: [[configObject.SelectedServiceDistribution]],
       range: `${cells.SheetName}!B3`
     },
     {
