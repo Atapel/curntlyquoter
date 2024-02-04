@@ -4,8 +4,14 @@ export const initialConfiguration = {
     SelectedVoltage: 'Select Voltage',
     SelectedKAICRating: 'Select KAIC Rating',
     SelectedBusRating: 'Select Bus Rating',
+    SelectedPanelHeight: 'Select Height',
+    SelectedServiceDistribution: 'Select Service or Distribution',
+    FeedThruLugs: false,
+    SelectedFeedType: "Select Feed Type",
+    SelectedFeedPosition: "Select Feed Position",
     SelectedBreakers: [],
     CurrentBreakersSize: 0,
+    // MaxBreakeSize is not Static, rather depending on FrameSize, BusRating and PanelHeight
     MaxBreakerSize: 45
   },
   Metadata: {
@@ -88,6 +94,51 @@ export const reducer = (state, action) => {
           SelectedBusRating: action.payload
         }
       };
+
+    case 'SET_PANEL_HEIGHT':
+      return {
+        ...state,
+        Configuration: {
+          ...state.Configuration,
+          SelectedPanelHeight: action.payload
+        }
+      };
+
+    case 'SET_SERVICE_OR_DISTRIBUTION':
+      return {
+        ...state,
+        Configuration: {
+          ...state.Configuration,
+          SelectedServiceDistribution: action.payload
+        }
+      };
+
+    case 'SET_FEED_THRU_LUGS':
+      return {
+        ...state,
+        Configuration: {
+          ...state.Configuration,
+          FeedThruLugs: action.payload
+        }
+      }
+
+    case 'SET_FEED_TYPE':
+      return {
+        ...state,
+        Configuration: {
+          ...state.Configuration,
+          SelectedFeedType: action.payload
+        }
+      }
+
+    case 'SET_FEED_POSITION':
+      return {
+        ...state,
+        Configuration: {
+          ...state.Configuration,
+          SelectedFeedPosition: action.payload
+        }
+      }
 
     case 'ADD_BREAKER':
       newSize = state.Configuration.CurrentBreakersSize + action.payload['Size']
