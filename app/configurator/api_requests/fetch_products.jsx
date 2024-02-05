@@ -4,7 +4,7 @@ function getBreakerDetails(Panel) {
       Description: "UTS1200",
       Max_Amperage: 1200,
       BreakerSize: "Single",
-      Polesoptions: [
+      PolesOptions: [
         '3p'
       ],
       AmperageOptions: [
@@ -18,7 +18,7 @@ function getBreakerDetails(Panel) {
       Description: "UTS800",
       Max_Amperage: 800,
       BreakerSize: "Single",
-      Polesoptions: [
+      PolesOptions: [
          '3p'
       ],
       AmperageOptions: [
@@ -32,7 +32,7 @@ function getBreakerDetails(Panel) {
       Description: "UTS600",
       Max_Amperage: 600,
       BreakerSize: "Single",
-      Polesoptions: [
+      PolesOptions: [
         '2p', '3p'
       ],
       AmperageOptions: [
@@ -46,7 +46,7 @@ function getBreakerDetails(Panel) {
       Description: "UTS400",
       Max_Amperage: 400,
       BreakerSize: "Single",
-      Polesoptions: [
+      PolesOptions: [
         '2p', '3p'
       ],
       AmperageOptions: [
@@ -60,7 +60,7 @@ function getBreakerDetails(Panel) {
       Description: "UTS250",
       Max_Amperage: 250,
       BreakerSize: "Single",
-      Polesoptions: [
+      PolesOptions: [
         '2p', '3p'
       ],
       AmperageOptions: [
@@ -74,7 +74,7 @@ function getBreakerDetails(Panel) {
       Description: "UTS150",
       Max_Amperage: 150,
       BreakerSize: "Single",
-      Polesoptions: [
+      PolesOptions: [
         '2p', '3p'
       ],
       AmperageOptions: [
@@ -99,7 +99,7 @@ function getBreakerDetails(Panel) {
       Description: "UTS400",
       Max_Amperage: 400,
       BreakerSize: "Double",
-      Polesoptions: [
+      PolesOptions: [
         '2p', '3p'
       ],
       AmperageOptions: [
@@ -113,7 +113,7 @@ function getBreakerDetails(Panel) {
       Description: "UTS250",
       Max_Amperage: 250,
       BreakerSize: "Double",
-      Polesoptions: [
+      PolesOptions: [
         '2p', '3p'
       ],
       AmperageOptions: [
@@ -127,7 +127,7 @@ function getBreakerDetails(Panel) {
       Description: "UTS150",
       Max_Amperage: 150,
       BreakerSize: "Double",
-      Polesoptions: [
+      PolesOptions: [
         '2p', '3p'
       ],
       AmperageOptions: [
@@ -152,7 +152,7 @@ function getBreakerDetails(Panel) {
       Description: "UTS1200",
       Max_Amperage: 1200,
       BreakerSize: "Single",
-      Polesoptions: [
+      PolesOptions: [
         '3p'
       ],
       AmperageOptions: [
@@ -166,7 +166,7 @@ function getBreakerDetails(Panel) {
       Description: "UTS800",
       Max_Amperage: 800,
       BreakerSize: "Single",
-      Polesoptions: [
+      PolesOptions: [
          '3p'
       ],
       AmperageOptions: [
@@ -180,7 +180,7 @@ function getBreakerDetails(Panel) {
       Description: "UTS600",
       Max_Amperage: 600,
       BreakerSize: "Single",
-      Polesoptions: [
+      PolesOptions: [
         '2p', '3p'
       ],
       AmperageOptions: [
@@ -194,7 +194,7 @@ function getBreakerDetails(Panel) {
       Description: "UTS400",
       Max_Amperage: 400,
       BreakerSize: "Single",
-      Polesoptions: [
+      PolesOptions: [
         '2p', '3p'
       ],
       AmperageOptions: [
@@ -208,7 +208,7 @@ function getBreakerDetails(Panel) {
       Description: "UTS250",
       Max_Amperage: 250,
       BreakerSize: "Single",
-      Polesoptions: [
+      PolesOptions: [
         '2p', '3p'
       ],
       AmperageOptions: [
@@ -222,7 +222,7 @@ function getBreakerDetails(Panel) {
       Description: "UTS150",
       Max_Amperage: 150,
       BreakerSize: "Single",
-      Polesoptions: [
+      PolesOptions: [
         '2p', '3p'
       ],
       AmperageOptions: [
@@ -247,7 +247,7 @@ function getBreakerDetails(Panel) {
       Description: "UTS400",
       Max_Amperage: 400,
       BreakerSize: "Double",
-      Polesoptions: [
+      PolesOptions: [
         '2p', '3p'
       ],
       AmperageOptions: [
@@ -261,7 +261,7 @@ function getBreakerDetails(Panel) {
       Description: "UTS250",
       Max_Amperage: 250,
       BreakerSize: "Double",
-      Polesoptions: [
+      PolesOptions: [
         '2p', '3p'
       ],
       AmperageOptions: [
@@ -275,7 +275,7 @@ function getBreakerDetails(Panel) {
       Description: "UTS150",
       Max_Amperage: 150,
       BreakerSize: "Double",
-      Polesoptions: [
+      PolesOptions: [
         '2p', '3p'
       ],
       AmperageOptions: [
