@@ -189,104 +189,111 @@ const Select_Breakers_Menu = () => {
         {/* Conditionally rendering the next 3 menu items only if a breaker has been selected above */}
 
 
-        {breakerState.SelectedBreaker.Description ==! "Select Breaker" ? 
-        (<>
-          <p>YEEEEEEEEEEEEEE</p>
-        </>) : (<>
-          <p>NOOOOOOOOOOO</p>
-        </>)}
+        {breakerState.SelectedBreaker.Description !== "Select Breaker" ?
+          (<>
+            <ListGroup.Item>
+              {/* Dropdown for the Breaker Amperage */}
+              <Dropdown>
+                <Row>
+                  <Col>
+                    <h5>Breaker Amperage:</h5>
+                  </Col>
+                  <Col>
+                    <Dropdown.Toggle variant="primary" id="dropdown-basic">
+                      {breakerState.SelectedBreakerAmp}
+                    </Dropdown.Toggle>
+                  </Col>
+                </Row>
 
+                <Dropdown.Menu>
 
-        <ListGroup.Item>
-          {/* Dropdown for the Breaker Amperage */}
-          <Dropdown>
-            <Row>
-              <Col>
-                <h5>Breaker Amperage:</h5>
-              </Col>
-              <Col>
-                <Dropdown.Toggle variant="primary" id="dropdown-basic">
-                  {breakerState.SelectedBreakerAmp}
-                </Dropdown.Toggle>
-              </Col>
-            </Row>
+                  {breakerState.SelectedBreaker.AmperageOptions.map((amperage, index) => (
 
-            <Dropdown.Menu>
-              <Dropdown.Item>
-                <Button
-                  onClick={() => breakerDispatch({ type: 'SET_SELECTED_BREAKER_AMP', payload: 69 })}
-                  variant="outline-info"
-                  size="sm"
-                  className="w-100"
-                // onClick={() => setSelectedBreakerAmp(600)}
-                >
+                    <Dropdown.Item>
+                      <Button
+                        onClick={() => breakerDispatch({ type: 'SET_SELECTED_BREAKER_AMP', payload: amperage })}
+                        variant="outline-info"
+                        size="sm"
+                        className="w-100"
+                      >
+                        {amperage}
+                      </Button>
+                    </Dropdown.Item>
 
-                </Button>
-              </Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
-        </ListGroup.Item>
+                  ))}
 
-        <ListGroup.Item>
-          {/* Dropdown for the Breaker Poles */}
-          <Dropdown>
-            <Row>
-              <Col>
-                <h5>Breaker Poles:</h5>
-              </Col>
-              <Col>
-                <Dropdown.Toggle variant="primary" id="dropdown-basic">
-                  {breakerState.SelectedBreakerPoles}
-                </Dropdown.Toggle>
-              </Col>
-            </Row>
+                </Dropdown.Menu>
+              </Dropdown>
+            </ListGroup.Item>
 
-            <Dropdown.Menu>
-              <Dropdown.Item>
-                <Button
-                  onClick={() => breakerDispatch({ type: 'SET_SELECTED_BREAKER_AMP', payload: 69 })}
-                  variant="outline-info"
-                  size="sm"
-                  className="w-100"
-                // onClick={() => setSelectedBreakerAmp(600)}
-                >
+            <ListGroup.Item>
+              {/* Dropdown for the Breaker Poles */}
+              <Dropdown>
+                <Row>
+                  <Col>
+                    <h5>Breaker Poles:</h5>
+                  </Col>
+                  <Col>
+                    <Dropdown.Toggle variant="primary" id="dropdown-basic">
+                      {breakerState.SelectedBreakerPoles}
+                    </Dropdown.Toggle>
+                  </Col>
+                </Row>
 
-                </Button>
-              </Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
-        </ListGroup.Item>
+                <Dropdown.Menu>
 
-        <ListGroup.Item>
-          {/* Dropdown for the Breaker Trip */}
-          <Dropdown>
-            <Row>
-              <Col>
-                <h5>Add Feature:</h5>
-              </Col>
-              <Col>
-                <Dropdown.Toggle variant="primary" id="dropdown-basic">
-                  {breakerState.SelectedFeature}
-                </Dropdown.Toggle>
-              </Col>
-            </Row>
+                  {breakerState.SelectedBreaker.PolesOptions.map((pole, index) => (
 
-            <Dropdown.Menu>
-              <Dropdown.Item>
-                <Button
-                  onClick={() => breakerDispatch({ type: 'SET_SELECTED_FEATURE', payload: 69 })}
-                  variant="outline-info"
-                  size="sm"
-                  className="w-100"
-                // onClick={() => setSelectedFeature("Shunt trip selected")}
-                >
-                  Add Shunt Trip
-                </Button>
-              </Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
-        </ListGroup.Item>
-        {/* ##################################################################### */}
+                    <Dropdown.Item>
+                      <Button
+                        onClick={() => breakerDispatch({ type: 'SET_SELECTED_BREAKER_POLES', payload: pole })}
+                        variant="outline-info"
+                        size="sm"
+                        className="w-100"
+                      // onClick={() => setSelectedBreakerAmp(600)}
+                      >
+                        {pole}
+                      </Button>
+                    </Dropdown.Item>
+
+                  ))}
+
+                </Dropdown.Menu>
+              </Dropdown>
+            </ListGroup.Item>
+
+            <ListGroup.Item>
+              {/* Dropdown for the Breaker Trip */}
+              <Dropdown>
+                <Row>
+                  <Col>
+                    <h5>Add Feature:</h5>
+                  </Col>
+                  <Col>
+                    <Dropdown.Toggle variant="primary" id="dropdown-basic">
+                      {breakerState.SelectedFeature}
+                    </Dropdown.Toggle>
+                  </Col>
+                </Row>
+
+                <Dropdown.Menu>
+                  <Dropdown.Item>
+                    <Button
+                      onClick={() => breakerDispatch({ type: 'SET_SELECTED_FEATURE', payload: 69 })}
+                      variant="outline-info"
+                      size="sm"
+                      className="w-100"
+                    // onClick={() => setSelectedFeature("Shunt trip selected")}
+                    >
+                      Add Shunt Trip
+                    </Button>
+                  </Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+            </ListGroup.Item>
+
+          </>) :
+          (<></>)}
 
         <ListGroup.Item>
           {/* Add Breaker to Preview */}
