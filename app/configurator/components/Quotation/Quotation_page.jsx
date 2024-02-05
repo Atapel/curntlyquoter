@@ -2,6 +2,7 @@
 import { ListGroup } from "react-bootstrap";
 import SaveConfigurationButton from '../Configuration/Config_page_insert_button';
 import ConfirmOrderButton from './Quotation_page_order_button';
+import ConfigReview from './Quotation_page_list_configuration_specs';
 import PriceDisplayComponent from './Quotation_page_price';
 import { UseCurrentUserContext, UseConfigurationReducerContext } from "../../../context/globalContext";
 
@@ -17,7 +18,7 @@ function QuotePage() {
             <h2>Configuration Overview: </h2>
           </ListGroup.Item>
           <ListGroup.Item>
-            <p>A summary of the configuration will be here</p>
+            <ConfigReview configuration={state.Configuration} />
           </ListGroup.Item>
           <ListGroup.Item>
             <SaveConfigurationButton />
