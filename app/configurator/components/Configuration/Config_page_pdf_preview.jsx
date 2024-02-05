@@ -6,7 +6,7 @@ import {
   container_36_w_dimensions_SVG,
 } from "../../assets/switch_board.jsx";
 import {sideViewBreaker, sideViewFrame} from "../../assets/SideViewBoard"
-import {technicalViewBreaker, technicalViewFrame} from "../../assets/TechnicalView"
+// import {technicalViewBreaker, technicalViewFrame} from "../../assets/TechnicalView"
 import PDF_Generation from "../PDF_creation/Config_page_PDF_creation";
 import SaveConfigurationButton from "./Config_page_insert_button";
 
@@ -29,8 +29,6 @@ const PDF_preview = (props) => {
       );
     }
 
-
-
   }, [state.Configuration.SelectedFrameSize]);
 
   useEffect(() => {
@@ -51,7 +49,7 @@ const PDF_preview = (props) => {
       canvas.height =500;
 
       context.drawImage(container, 0, 0);
-      context.drawImage(sideview, 300, 50)
+      context.drawImage(sideview, 300, 0)
       // context.drawImage(techview, 500, 50)
       
       // Once the container is drawn, proceed with the SVG items
