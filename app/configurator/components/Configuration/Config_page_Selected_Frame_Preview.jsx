@@ -11,20 +11,31 @@ const DisplaySelectedFrame = (props) => {
     setPanelSelected(false)
   }
 
+  console.log(state.Configuration);
   return (
     <div>
       <ListGroup>
         <ListGroup.Item>
-          <h2>Currently selected frame: </h2>
+          <h2>Currently Selected Frame: </h2>
         </ListGroup.Item>
         <ListGroup.Item>
           <Row>
             <Col>
-              <h5>Selected Frame Size:</h5>
+              <h5>Selected Width:</h5>
             </Col>
-            <Col>{state.Configuration.SelectedFrameSize}" Inch</Col>
+            <Col>{state.Configuration.SelectedFrameSize}"</Col>
           </Row>
         </ListGroup.Item>
+
+        <ListGroup.Item>
+          <Row>
+            <Col>
+              <h5>Selected Height:</h5>
+            </Col>
+            <Col>{state.Configuration.SelectedPanelHeight}"</Col>
+          </Row>
+        </ListGroup.Item>
+
         <ListGroup.Item>
           <Row>
             <Col>
@@ -51,6 +62,45 @@ const DisplaySelectedFrame = (props) => {
             <Col>{state.Configuration.SelectedBusRating}</Col>
           </Row>
         </ListGroup.Item>
+
+        <ListGroup.Item>
+          <Row>
+            <Col>
+              <h5>Service or Distribution:</h5>
+            </Col>
+            <Col>{state.Configuration.SelectedServiceDistribution}</Col>
+          </Row>
+        </ListGroup.Item>
+
+        <ListGroup.Item>
+          <Row>
+            <Col>
+              <h5>Feed Type:</h5>
+            </Col>
+            <Col>{state.Configuration.SelectedFeedType}</Col>
+          </Row>
+        </ListGroup.Item>
+
+        <ListGroup.Item>
+          <Row>
+            <Col>
+              <h5>Feed Position:</h5>
+            </Col>
+            <Col>{state.Configuration.SelectedFeedPosition}</Col>
+          </Row>
+        </ListGroup.Item>
+
+
+        {/* <ListGroup.Item>
+          <Row>
+            <Col>
+              <h5>Feed thru lugs:</h5>
+            </Col>
+            <Col>
+              {state.Configuration.FeedThruLungs ? "Yes" : "No"}
+            </Col>
+          </Row>
+        </ListGroup.Item> */}
 
         <ListGroup.Item>
           <Button
