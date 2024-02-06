@@ -1,14 +1,14 @@
 import React, { useEffect, useRef, useState } from "react";
-import { UseConfigurationReducerContext } from "../../../context/globalContext";
 import { ListGroup } from "react-bootstrap";
 import {
   container_46_w_dimensions_SVG,
   container_36_w_dimensions_SVG,
 } from "../../assets/switch_board.jsx";
-import {sideViewBreaker, sideViewFrame} from "../../assets/SideViewBoard"
+import { UseConfigurationReducerContext } from "@/app/context/globalContext.jsx";
+import {sideViewBreaker, sideViewFrame, sideViewServiceDimensions, sideViewMainLug} from "../../assets/SideViewBoard.js"
 // import {technicalViewBreaker, technicalViewFrame} from "../../assets/TechnicalView"
-import PDF_Generation from "../PDF_creation/Config_page_PDF_creation";
-import SaveConfigurationButton from "./Config_page_insert_button";
+import PDF_Generation from "./Config_page_PDF_creation.jsx";
+import SaveConfigurationButton from "../Configuration/Config_page_insert_button.jsx";
 
 const PDF_preview = (props) => {
   const [panelSelected, setPanelSelected] = props.renderstate;
@@ -79,8 +79,22 @@ const PDF_preview = (props) => {
       });
     };
     container.src = containerSrc;
+    
+    let sideViewSource = sideViewFrame;
+
+    if (state.Configuration.SelectedFeedType === "Main Lug") {
+      sideViewSource = sideViewSource + sideViewMainLug;
+      console.log('Rendering Main Lug', sideViewSource);
+    }
+
+    if (state.Configuration.SelectedServiceDistribution === "Service") {
+      sideViewSource = sideViewSource + sideViewServiceDimensions;
+      console.log('Rendering Serie', sideViewSource);
+    }
+
+    sideview.src = "data:image/svg+xml," + encodeURIComponent(sideViewSource+'</svg>');
+
     // techview.src = "data:image/svg+xml," + encodeURIComponent(technicalViewFrame);
-    sideview.src = "data:image/svg+xml," + encodeURIComponent(sideViewFrame);
   }, [state.Configuration.SelectedBreakers, panelSelected, containerSrc]);
 
 
