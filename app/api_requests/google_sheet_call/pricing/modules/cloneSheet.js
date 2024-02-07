@@ -1,6 +1,10 @@
 const clonePricingSheet = async (clienObject,configObject,spreadsheetId) => {
     let response;
-
+    
+    // const cells = {
+    //     SheetName: "Panel"
+    //   }
+    
     //Untiil da6atabase id is implemented generate a dummy string and using it as sheet nameS 
     const randomNumber = String(
       Math.floor(Math.random() * (100000 - 1 + 1)) + 1
