@@ -7,11 +7,12 @@ const PriceDisplayComponent = () => {
   const [data, setData] = useState('');
   const [loading, setLoading] = useState(false);
 
+  const urlPath = process.env.NEXT_PUBLIC_PRICING_SHEET_ROUTEHANDLER_URL
 
   const fetchData = async () => {
     try {
       setLoading(true);
-      const response = await fetch("http://localhost:3000/configurator/api_requests/google_sheet_call/pricing", {
+      const response = await fetch(`http://localhost:3000${urlPath}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
