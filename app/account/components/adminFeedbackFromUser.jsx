@@ -4,23 +4,22 @@ import { Form, Button, Alert } from "react-bootstrap";
 const FeedbackForm = ({ session }) => {
 
   const [formData, setFormData] = useState({
-    // A: "John",
-    // B: "Doe",
+    A: "",
+    B: "",
     C: session?.user.email,
     D: new Date().toLocaleDateString(),
   });
+
+  const urlPath = process.env.NEXT_PUBLIC_FEEDBACK_SHEET_ROUTEHANDLER_URL
 
   const [feedbackMessage, setFeedbackMessage] = useState("");
   const [formSubmitted, setFormSubmitted] = useState(false);
 
   useEffect(() => {
-    // const request = new Request("https://example.com", {
-    //   method: "POST",
-    //   body: formData,
-    // });
+
     const submitFeedback = async () => {
       try {
-        const response = await fetch("http://localhost:3000/configurator/api_requests/google_sheet_call/feedback", {
+        const response = await fetch(`http://localhost:3000${urlPath}`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
