@@ -271,7 +271,7 @@ function Select_Panel_Menu(props) {
                         variant="outline-info"
                         size="sm"
                         className="w-100"
-                        onClick={() => dispatch({ type: 'SET_BUS_RATING', payload: "800A" })}
+                        onClick={() => dispatch({ type: 'SET_BUS_RATING', payload: 800 })}
                       >
                         800A
                       </Button>
@@ -281,7 +281,7 @@ function Select_Panel_Menu(props) {
                         variant="outline-info"
                         size="sm"
                         className="w-100"
-                        onClick={() => dispatch({ type: 'SET_BUS_RATING', payload: "1500A" })}
+                        onClick={() => dispatch({ type: 'SET_BUS_RATING', payload: 1500 })}
                       >
                         1500A
                       </Button>
@@ -291,7 +291,7 @@ function Select_Panel_Menu(props) {
                         variant="outline-info"
                         size="sm"
                         className="w-100"
-                        onClick={() => dispatch({ type: 'SET_BUS_RATING', payload: "2250A" })}
+                        onClick={() => dispatch({ type: 'SET_BUS_RATING', payload: 2250 })}
                       >
                         2250A
                       </Button>

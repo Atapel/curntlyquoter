@@ -59,7 +59,7 @@ const DisplaySelectedFrame = (props) => {
             <Col>
               <h5>Selected Bus rating:</h5>
             </Col>
-            <Col>{state.Configuration.SelectedBusRating}</Col>
+            <Col>{state.Configuration.SelectedBusRating}A</Col>
           </Row>
         </ListGroup.Item>
 
