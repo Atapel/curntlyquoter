@@ -3,7 +3,7 @@ module.exports = {
     async headers() {
       return [
         {
-          source: '/api_requests',
+          source: '/api_requests/*',
 
           headers: [
             {
