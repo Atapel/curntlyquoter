@@ -8,6 +8,7 @@ const PriceDisplayComponent = () => {
   const [loading, setLoading] = useState(false);
 
   const urlPath = process.env.NEXT_PUBLIC_PRICING_SHEET_ROUTEHANDLER_URL
+  console.log(urlPath);
 
   const fetchData = async () => {
     try {
