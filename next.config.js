@@ -4,6 +4,7 @@ module.exports = {
       return [
         {
           source: '/api_requests/*',
+          
           headers: [
             {
               key: 'Access-Control-Allow-Credentials',
