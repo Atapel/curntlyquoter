@@ -9,6 +9,8 @@ export async function POST(dataObject) {
   const range = "A:E"; // Change this to the range you want to write to
   const credentialsFilePath = process.env.GOOGLE_SHEETS_CREDENTIALS_FILE_PATH
 
+  console.log("Request_Payload: ",body, "spreadsheetId: ", spreadsheetId, "credentialsFilePath: ", credentialsFilePath);
+
   const auth = new google.auth.GoogleAuth({
     keyFile: credentialsFilePath,
     scopes: "https://www.googleapis.com/auth/spreadsheets",

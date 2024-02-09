@@ -19,6 +19,8 @@ export async function POST(configObjectRAW) {
     // Initialize Google Sheets Client
     const googleSheets = getGoogleSheetsClient();
 
+    console.log("Request_Payload: ",configObject, "pricingSheetID: ", pricingSheetID);
+
     // Clone the sheet
     let clonedSheet;
     try {

@@ -2,6 +2,7 @@ const { google } = require("googleapis");
 const getGoogleSheetsClient = () => {
     // const credentialsFilePath = "credentials.json"
     const credentialsFilePath = process.env.GOOGLE_SHEETS_CREDENTIALS_FILE_PATH
+    console.log("credentialsFilePath: ", credentialsFilePath);
 
     const auth = new google.auth.GoogleAuth({
         keyFile: credentialsFilePath,
