@@ -11,6 +11,9 @@ const FeedbackForm = ({ session }) => {
   });
 
   const urlPath = process.env.NEXT_PUBLIC_FEEDBACK_SHEET_ROUTEHANDLER_URL
+  const port = process.env.PORT;
+
+  console.log(urlPath, VERCEL_URL, port);
 
   const [feedbackMessage, setFeedbackMessage] = useState("");
   const [formSubmitted, setFormSubmitted] = useState(false);
