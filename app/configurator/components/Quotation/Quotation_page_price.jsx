@@ -36,10 +36,6 @@ const PriceDisplayComponent = () => {
     }
   };
 
-  useEffect(() => {
-    fetchData();
-  }, []);
-
   return (
     <div>
       <div>
