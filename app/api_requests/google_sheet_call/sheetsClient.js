@@ -25,7 +25,7 @@ const getGoogleSheetsClient = () => {
     return googleSheets;
   } catch (error) {
     console.error("Error initializing Google Sheets client:", error);
-    console.log('ProessENV log::::'
+    console.log('ProessENV log::::',
       {
         project_id: process.env.GOOGLE_SHEETS_PROJECT_ID,
         private_key_id: process.env.GOOGLE_SHEETS_PRIVATE_KEY_ID,
