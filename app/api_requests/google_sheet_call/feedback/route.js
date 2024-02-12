@@ -1,5 +1,5 @@
 const { google } = require("googleapis");
-
+const getGoogleSheetsClient = require("../sheetsClient")
 // Dev Acces at http://localhost:3000/configurator/api_requests/google_sheet_call/feedback
 export async function POST(dataObject) {
   
@@ -7,18 +7,12 @@ export async function POST(dataObject) {
 
   const spreadsheetId = process.env.FEEDBACK_SHEET_ID;
   const range = "A:E"; // Change this to the range you want to write to
-  const credentialsFilePath = process.env.GOOGLE_SHEETS_CREDENTIALS_FILE_PATH
 
-  console.log("Request_Payload: ",body, "spreadsheetId: ", spreadsheetId, "credentialsFilePath: ", credentialsFilePath);
-
-  const auth = new google.auth.GoogleAuth({
-    keyFile: credentialsFilePath,
-    scopes: "https://www.googleapis.com/auth/spreadsheets",
-  });
-
-  // Instance of Google Sheets API
-  const googleSheets = google.sheets({ version: "v4", auth });
-
+  console.log("Request_Payload: ",body, "spreadsheetId: ", spreadsheetId);
+  
+  // Initialize Google Sheets Client
+  const googleSheets = getGoogleSheetsClient();
+  
   let response;
 
   try {

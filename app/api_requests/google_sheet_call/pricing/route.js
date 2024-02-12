@@ -1,5 +1,5 @@
 const { google } = require("googleapis");
-const getGoogleSheetsClient = require("./modules/sheetsClient")
+const getGoogleSheetsClient = require("../sheetsClient")
 const doesSheetExist = require("./modules/doesSheetExist")
 const getRequestsObject = require("./modules/getSheetSchema")
 const getPricingSheet = require("./modules/getPricing")
