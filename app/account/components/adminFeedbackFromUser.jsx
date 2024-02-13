@@ -11,10 +11,9 @@ const FeedbackForm = ({ session }) => {
     D: new Date().toLocaleDateString(),
   });
 
-  const urlPath = process.env.NEXT_PUBLIC_FEEDBACK_SHEET_ROUTEHANDLER_URL
-  const port = process.env.PORT;
+  const urlPath = process.env.NEXT_PUBLIC_VERCEL_URL+process.env.NEXT_PUBLIC_FEEDBACK_SHEET_ROUTEHANDLER_URL
 
-  console.log(urlPath, port);
+  console.log('urlPath Feedback: ',urlPath);
 
   const [feedbackMessage, setFeedbackMessage] = useState("");
   const [formSubmitted, setFormSubmitted] = useState(false);
@@ -23,7 +22,7 @@ const FeedbackForm = ({ session }) => {
 
     const submitFeedback = async () => {
       try {
-        const response = await fetch(`http://localhost:3000${urlPath}`, {
+        const response = await fetch(`${urlPath}`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
