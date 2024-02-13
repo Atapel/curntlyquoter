@@ -351,79 +351,6 @@ function Select_Panel_Menu(props) {
               </ListGroup.Item>
 
               <ListGroup.Item>
-                <Row>
-                  <Col>
-                    <h5>Feed Thru Lugs</h5>
-                  </Col>
-                  <Col>
-                    <Form.Check
-                      type="checkbox"
-                      onClick={() => {
-                        const currentValue = state.Configuration.FeedThruLugs;
-                        dispatch({
-                          type: 'SET_FEED_THRU_LUGS',
-                          payload: !currentValue
-                        });
-                      }}
-                    />
-                  </Col>
-                </Row>
-              </ListGroup.Item>
-
-              <ListGroup.Item>
-                {/* Dropdown for Feed Position */}
-                <Dropdown>
-                  <Row>
-                    <Col>
-                      <h5>Selected Feed Position:</h5>
-                    </Col>
-                    <Col>
-                      <Dropdown.Toggle
-                        variant="primary"
-                        id="dropdown-basic"
-                        // disabled={state.Configuration.MainLug === false}
-                      >
-                        {state.Configuration.SelectedFeedPosition}
-                      </Dropdown.Toggle>
-                    </Col>
-                  </Row>
-                  <Dropdown.Menu>
-                    <Dropdown.Item>
-                      <Button
-                        variant="outline-info"
-                        size="sm"
-                        className="w-100"
-                        onClick={() => dispatch({ type: 'SET_FEED_POSITION', payload: "Top" })}
-                      >
-                        Top
-                      </Button>
-                    </Dropdown.Item>
-                    <Dropdown.Item>
-                      <Button
-                        variant="outline-info"
-                        size="sm"
-                        className="w-100"
-                        onClick={() => dispatch({ type: 'SET_FEED_POSITION', payload: "Bottom" })}
-                      >
-                        Bottom
-                      </Button>
-                    </Dropdown.Item>
-                    <Dropdown.Item>
-                      <Button
-                        variant="outline-info"
-                        size="sm"
-                        className="w-100"
-                        onClick={() => dispatch({ type: 'SET_FEED_POSITION', payload: "FeedThru" })}
-                      >
-                        Feed Thru (Top/Bottom)
-                      </Button>
-                    </Dropdown.Item>
-
-                  </Dropdown.Menu>
-                </Dropdown>
-              </ListGroup.Item>
-
-              <ListGroup.Item>
                 {/* Dropdown for Feed Type */}
                 <Dropdown>
                   <Row>
@@ -434,7 +361,7 @@ function Select_Panel_Menu(props) {
                       <Dropdown.Toggle
                         variant="primary"
                         id="dropdown-basic"
-                        // disabled={}
+                        disabled={state.Configuration.SelectedServiceDistribution === ("Select Service or Distribution")}
                       >
                         {state.Configuration.SelectedFeedType}
                       </Dropdown.Toggle>
@@ -465,17 +392,100 @@ function Select_Panel_Menu(props) {
                 </Dropdown>
               </ListGroup.Item>
 
+
+              
+              {state.Configuration.SelectedFeedType === "Main Lug" ? (
+                  
+                <ListGroup.Item>
+                  {/* Dropdown for Feed Position */}
+                  <Dropdown>
+                    <Row>
+                      <Col>
+                        <h5>Selected Feed Position:</h5>
+                      </Col>
+                      <Col>
+                        <Dropdown.Toggle
+                          variant="primary"
+                          id="dropdown-basic"
+                          // disabled={state.Configuration.MainLug === false}
+                        >
+                          {state.Configuration.SelectedFeedPosition}
+                        </Dropdown.Toggle>
+                      </Col>
+                    </Row>
+                    <Dropdown.Menu>
+                      <Dropdown.Item>
+                        <Button
+                          variant="outline-info"
+                          size="sm"
+                          className="w-100"
+                          onClick={() => dispatch({ type: 'SET_FEED_POSITION', payload: "Top" })}
+                        >
+                          Top
+                        </Button>
+                      </Dropdown.Item>
+                      <Dropdown.Item>
+                        <Button
+                          variant="outline-info"
+                          size="sm"
+                          className="w-100"
+                          onClick={() => dispatch({ type: 'SET_FEED_POSITION', payload: "Bottom" })}
+                        >
+                          Bottom
+                        </Button>
+                      </Dropdown.Item>
+                      <Dropdown.Item>
+                        <Button
+                          variant="outline-info"
+                          size="sm"
+                          className="w-100"
+                          onClick={() => dispatch({ type: 'SET_FEED_POSITION', payload: "FeedThru" })}
+                        >
+                          Feed Thru (Top/Bottom)
+                        </Button>
+                      </Dropdown.Item>
+  
+                    </Dropdown.Menu>
+                  </Dropdown>
+                </ListGroup.Item>
+
+
+                ) : state.Configuration.SelectedFeedType === "Main Breaker" ? (
+                  <ListGroup.Item>
+                  <Row>
+                    <Col>
+                      <h5>Feed Thru Lugs</h5>
+                    </Col>
+                    <Col>
+                      <Form.Check
+                        type="checkbox"
+                        onClick={() => {
+                          const currentValue = state.Configuration.FeedThruLugs;
+                          dispatch({
+                            type: 'SET_FEED_THRU_LUGS',
+                            payload: !currentValue
+                          });
+                        }}
+                      />
+                    </Col>
+                  </Row>
+                </ListGroup.Item>
+                ) : (
+                  <>
+                  </>
+                )}
+
               <ListGroupItem>
                 <Button
                   variant="outline-info"
                   size="sm"
                   className="w-100"
                   onClick={() => setPanelSelected(true)}
-                  disabled={state.Configuration.SelectedBusRating === "Select Bus Rating"}
+                  disabled={(state.Configuration.SelectedFeedPosition === "Select Feed Position" && state.Configuration.SelectedFeedType === "Main Lug") || (state.Configuration.SelectedFeedType === "Select Feed Type") }
                 >
                   Add
                 </Button>
-              </ListGroupItem>
+              </ListGroupItem>  
 
             </ListGroup>
           ) : (

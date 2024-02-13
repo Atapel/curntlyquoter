@@ -312,7 +312,9 @@ const Select_Breakers_Menu = () => {
         </ListGroup.Item>
       </ListGroup>
 
-      {renderSelectedBrakers === true ? (
+      {/* Below line fixes the conditional rendering error, but introduces new TypeError, to be continued... */}
+      {/* {(renderSelectedBrakers === true && state.Configuration.SelectedBreakers.length() == 0 )? ( */}
+      {(renderSelectedBrakers === true)? (
         <DisplaySelectedItems renderstate={[renderSelectedBrakers, setrenderSelectedBrakers]} />
       ) : (
         null
@@ -322,4 +324,4 @@ const Select_Breakers_Menu = () => {
   );
 };
 
-export default Select_Breakers_Menu;
+export default Select_Breakers_Menu;  
