@@ -7,7 +7,7 @@ const PriceDisplayComponent = () => {
   const [data, setData] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const urlPath = process.env.NEXT_PUBLIC_VERCEL_URL+process.env.NEXT_PUBLIC_PRICING_SHEET_ROUTEHANDLER_URL
+  const urlPath = process.env.NEXT_PUBLIC_PRICING_SHEET_ROUTEHANDLER_URL
   console.log('urlPath Pricing: ',urlPath);
 
   const fetchData = async () => {

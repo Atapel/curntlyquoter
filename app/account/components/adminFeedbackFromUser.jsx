@@ -11,7 +11,7 @@ const FeedbackForm = ({ session }) => {
     D: new Date().toLocaleDateString(),
   });
 
-  const urlPath = process.env.NEXT_PUBLIC_VERCEL_URL+process.env.NEXT_PUBLIC_FEEDBACK_SHEET_ROUTEHANDLER_URL
+  const urlPath = process.env.NEXT_PUBLIC_FEEDBACK_SHEET_ROUTEHANDLER_URL
 
   console.log('urlPath Feedback: ',urlPath);
 
