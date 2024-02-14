@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { Card, ListGroup, ListGroupItem } from 'react-bootstrap'; // Make sure to import necessary Bootstrap components
-import MapSelectedBreakers from '../../../account/components/adminSavedConfigsSelectedBreakersMap'; // Assuming MapSelectedBreakers is a valid component
-
+import { Card, ListGroup, ListGroupItem, Row, Col, Dropdown } from 'react-bootstrap'; // Make sure to import necessary Bootstrap components
+import ConfirmOrderButton from './Quotation_page_order_button';
 const ConfigReview = ({ configuration }) => {
     const [expandedConfig, setExpandedConfig] = useState(null);
 
@@ -15,7 +14,8 @@ const ConfigReview = ({ configuration }) => {
                 Overview
             </Card.Title>
             <ListGroup>
-                <>
+                <Row>
+                <Col>
                     <Card.Title>Selected Switchboard</Card.Title>
                     <ListGroupItem>
                         <strong>Width:</strong> {configuration.SelectedFrameSize}
@@ -29,16 +29,58 @@ const ConfigReview = ({ configuration }) => {
                     <ListGroupItem>
                         <strong>Bus rating:</strong> {configuration.SelectedBusRating}
                     </ListGroupItem>
+                    <ListGroupItem>
+                        <strong>Panel Height:</strong> {configuration.SelectedPanelHeight}
+                    </ListGroupItem>
+                    <ListGroupItem>
+                        <strong>Service Distribution:</strong>{' '}
+                        {configuration.SelectedServiceDistribution}
+                    </ListGroupItem>
+                    <ListGroupItem>
+                        <strong>Feed Thru Lugs:</strong> {configuration.FeedThruLugs.toString()}
+                    </ListGroupItem>
+                    <ListGroupItem>
+                        <strong>Feed Type:</strong> {configuration.SelectedFeedType}
+                    </ListGroupItem>
+                    <ListGroupItem>
+                        <strong>Feed Position:</strong> {configuration.SelectedFeedPosition}
+                    </ListGroupItem>
+                </Col>
+
+                    <Col>
                     <Card.Title>Selected Breakers</Card.Title>
-                    {/* <MapSelectedBreakers config_state={configuration.SelectedBreakers} /> */}
+
+                    {configuration.SelectedBreakers.map((item, index) => (
+                        <ListGroup.Item key={index}>
+                        <Row>
+                            <Col>{item.Description}</Col>
+
+                            <Col>
+                            <Dropdown>
+                                <Dropdown.Toggle variant="primary" id="dropdown-basic">
+                                Details
+                                </Dropdown.Toggle>
+                                <Dropdown.Menu>
+                                <Dropdown.Item>Max Amp: {item.Max_Amperage}</Dropdown.Item>
+                                </Dropdown.Menu>
+                            </Dropdown>
+                            </Col>
+                        </Row>
+                        </ListGroup.Item>
+                    ))}
+
+                    </Col>
+                    <Col>
                     <Card.Title>Order Details</Card.Title>
                     <ListGroupItem>
                         <strong>Order status:</strong>{' '}
-                        {configuration.order_confirmed ? 'Confirmed' : 'Not confirmed'}
+                        {configuration.order_confirmed ? <p>Confirmed</p> : <Col><Row><p>Not Confirmed yet</p></Row><Row><ConfirmOrderButton></ConfirmOrderButton></Row></Col>}
                     </ListGroupItem>
-                </>
+                    </Col>
+                </Row>
 
             </ListGroup>
+            
         </Card>
     );
 };

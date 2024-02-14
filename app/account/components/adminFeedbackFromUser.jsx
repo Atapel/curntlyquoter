@@ -1,6 +1,6 @@
 "use client"
 import React, { useState, useEffect } from "react";
-import { Form, Button, Alert } from "react-bootstrap";
+import { Form, Button, Alert, Row, Col } from "react-bootstrap";
 
 const FeedbackForm = ({ session }) => {
 
@@ -63,7 +63,9 @@ const FeedbackForm = ({ session }) => {
     <div>
       {!formSubmitted && (
         <Form onSubmit={handleSubmit}>
-          <Form.Group controlId="formFeedback">
+          <Row>
+            <Col>
+            <Form.Group controlId="formFeedback">
             <Form.Label>Feedback:</Form.Label>
             <Form.Control
               as="textarea"
@@ -72,7 +74,13 @@ const FeedbackForm = ({ session }) => {
               onChange={handleInputChange}
             />
           </Form.Group>
-          <Button type="submit">Submit Feedback</Button>
+            </Col>
+            <Col>
+              <Button type="submit">Submit Feedback</Button>
+            </Col>
+          </Row>
+          
+          
         </Form>
       )}
 
