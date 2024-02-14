@@ -10,9 +10,9 @@ const ConfigReview = ({ configuration }) => {
     
     return (
         <Card>
-            <Card.Title onClick={() => toggleExpansion(configuration.id)}>
+            {/* <Card.Title onClick={() => toggleExpansion(configuration.id)}>
                 Overview
-            </Card.Title>
+            </Card.Title> */}
             <ListGroup>
                 <Row>
                 <Col>

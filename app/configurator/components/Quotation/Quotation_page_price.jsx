@@ -54,8 +54,8 @@ const PriceDisplayComponent = () => {
           <Col>
           {buttonPressed && (
           <>
-            <p>Pannel Price: ${Math.ceil(data.pannel)}</p>
-            <p>Breakers Price: ${Math.ceil(data.breakers)}</p>
+            {/* <p>Pannel Price: ${Math.ceil(data.pannel)}</p>
+            <p>Breakers Price: ${Math.ceil(data.breakers)}</p> */}
             <p>Total Price: ${Math.ceil(data.total)}</p>
           </>
         )}
