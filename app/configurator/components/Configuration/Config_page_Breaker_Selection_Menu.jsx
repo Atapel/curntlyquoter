@@ -3,6 +3,7 @@ import { Alert, Dropdown, Button, Row, ListGroup, Col, ListGroupItem } from "rea
 import { getBreakerDetails } from "../../../api_requests/fetch_products";
 import { UseConfigurationReducerContext, UseBreakerReducerContext } from "@/app/context/globalContext.jsx";
 import DisplaySelectedItems from "./Config_page_Selected_Breakers_List";
+import BreakerMappings from "./BreakerMappings";
 
 const Select_Breakers_Menu = () => {
   const { state, dispatch } = UseConfigurationReducerContext();
@@ -12,18 +13,12 @@ const Select_Breakers_Menu = () => {
   const [disableButtonState, setDisableButtonState] = useState(false)
   const [maxBreakerMsg, setMaxBreakerMsg] = useState(false)
 
+  const [showAddButton, setShowAddButton] = useState(true)
+
 
 
   const handleProductSelect = (product) => {
     dispatch({ type: 'ADD_BREAKER', payload: product })
-    // Checking on when to display the max breaker message
-
-    // console.log(maxBreakerMsg, state.Configuration.CurrentBreakersSize);
-    // if (product["size"] + state.Configuration.CurrentBreakersSize > state.Configuration.MaxBreakerSize) {
-    //   console.log(maxBreakerMsg);
-    //   setMaxBreakerMsg(true)
-    // }
-
     // Ativate the Component that lists the selected Breakers
     setrenderSelectedBrakers(true)
     // reset the states back to original
@@ -32,19 +27,19 @@ const Select_Breakers_Menu = () => {
   };
 
 
+
+  // Checking on wether to disable the Add Breaker Button or not
   // useEffect(() => {
-  //   // Checking on wether to disable the Add Breaker Button or not
+  //   
   //   if (
-  //     state.Configuration.CurrentBreakersSize + breakerState.SelectedSize >
-  //     state.Configuration.MaxBreakerSize
-  //     || breakerState.SelectedSize === "Select Breaker Size"
-  //     || Selected_Breaker.Description === "Select Breaker"
+  //     breakerState.SelectedSize === "Select Breaker Size"
   //   ) {
   //     setDisableButtonState(true)
   //   } else {
   //     setDisableButtonState(false)
   //   }
   // }, [breakerState.SelectedBreaker, breakerState.SelectedSize])
+
 
 
   let products = [];
@@ -293,10 +288,13 @@ const Select_Breakers_Menu = () => {
             </ListGroup.Item>
 
           </>) :
-          (<></>)}
+        (
+          null
+        )}
 
         <ListGroup.Item>
           {/* Add Breaker to Preview */}
+          {showAddButton === true ? (
           <Button
             variant="outline-info"
             size="sm"
@@ -306,10 +304,13 @@ const Select_Breakers_Menu = () => {
           >
             Add
           </Button>
-          {maxBreakerMsg === true ? (<Alert variant="warning">
+        ):(
+          <Alert variant="warning">
             No more Breakers available
-          </Alert>) : (null)}
+          </Alert>
+        )}
         </ListGroup.Item>
+
       </ListGroup>
 
       {/* Below line fixes the conditional rendering error, but introduces new TypeError, to be continued... */}
