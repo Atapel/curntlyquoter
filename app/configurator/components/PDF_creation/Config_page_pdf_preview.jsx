@@ -1,35 +1,39 @@
 import React, { useEffect, useRef, useState } from "react";
 import { ListGroup } from "react-bootstrap";
-import {
-  container_46_w_dimensions_SVG,
-  container_36_w_dimensions_SVG,
-} from "../../assets/switch_board.jsx";
 import { UseConfigurationReducerContext } from "@/app/context/globalContext.jsx";
-import {sideViewBreaker, sideViewFrame, sideViewServiceDimensions, sideViewMainLug} from "../../assets/SideViewBoard.js"
-// import {technicalViewBreaker, technicalViewFrame} from "../../assets/TechnicalView"
 import PDF_Generation from "./Config_page_PDF_creation.jsx";
 import SaveConfigurationButton from "../Configuration/Config_page_insert_button.jsx";
+import { frontViewSvgSource, sideViewSvgSource } from "./SvgSourceGenerator.jsx";
 
 const PDF_preview = (props) => {
   const [panelSelected, setPanelSelected] = props.renderstate;
+
   const [containerSrc, setContainerSrc] = useState(null);
+  const [sideViewSrc, setSideViewSrc] = useState(null);
+  // const [techViewSrc, setTechViewSrc] = useState(null);
+
   const { state, dispatch } = UseConfigurationReducerContext();
   const canvasRef = useRef(null);
 
-  useEffect(() => {
-    if (state.Configuration.SelectedFrameSize === 36) {
-      setContainerSrc(
-        "data:image/svg+xml," +
-        encodeURIComponent(container_36_w_dimensions_SVG)
-      );
-    } else if (state.Configuration.SelectedFrameSize === 46) {
-      setContainerSrc(
-        "data:image/svg+xml," +
-        encodeURIComponent(container_46_w_dimensions_SVG)
-      );
-    }
+    // Set FrontView SRC
+    useEffect(() => {
+      let frontViewSource = frontViewSvgSource(state.Configuration)
+      setContainerSrc(frontViewSource)
+      console.log();
+    }, [state.Configuration.SelectedFrameSize]);
+  
+    // Set SideView SRC
+    useEffect(() => {
+      setSideViewSrc(null)
+      let sideViewSource = sideViewSvgSource(state.Configuration)
+      setSideViewSrc(sideViewSource)
+      console.log('sideViewSrc: ',sideViewSrc);
+    }, [state.Configuration.SelectedFeedType, state.Configuration.SelectedFeedPosition]);
 
-  }, [state.Configuration.SelectedFrameSize]);
+    // Set TechView SRC
+    // useEffect(() => {
+
+    // }, [  ])
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -78,23 +82,11 @@ const PDF_preview = (props) => {
         img.src = "data:image/svg+xml," + encodeURIComponent(item.SVG_str);
       });
     };
-    container.src = containerSrc;
     
-    let sideViewSource = sideViewFrame;
+    container.src = containerSrc;
+    sideview.src = sideViewSrc;
+    // techview.src = techViewSrc
 
-    if (state.Configuration.SelectedFeedType === "Main Lug") {
-      sideViewSource = sideViewSource + sideViewMainLug;
-      console.log('Rendering Main Lug', sideViewSource);
-    }
-
-    if (state.Configuration.SelectedServiceDistribution === "Service") {
-      sideViewSource = sideViewSource + sideViewServiceDimensions;
-      console.log('Rendering Serie', sideViewSource);
-    }
-
-    sideview.src = "data:image/svg+xml," + encodeURIComponent(sideViewSource+'</svg>');
-
-    // techview.src = "data:image/svg+xml," + encodeURIComponent(technicalViewFrame);
   }, [state.Configuration.SelectedBreakers, panelSelected, containerSrc]);
 
 
