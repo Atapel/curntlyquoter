@@ -9,7 +9,6 @@ const PriceDisplayComponent = () => {
   const [buttonPressed, setButtonPressed] = useState(false);
 
   const urlPath = process.env.NEXT_PUBLIC_PRICING_SHEET_ROUTEHANDLER_URL;
-  console.log('urlPath Pricing: ',urlPath);
 
   const fetchData = async () => {
     try {

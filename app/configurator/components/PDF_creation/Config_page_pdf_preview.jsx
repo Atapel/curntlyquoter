@@ -19,7 +19,6 @@ const PDF_preview = (props) => {
     useEffect(() => {
       let frontViewSource = frontViewSvgSource(state.Configuration)
       setContainerSrc(frontViewSource)
-      console.log();
     }, [state.Configuration.SelectedFrameSize]);
   
     // Set SideView SRC
@@ -27,7 +26,7 @@ const PDF_preview = (props) => {
       setSideViewSrc(null)
       let sideViewSource = sideViewSvgSource(state.Configuration)
       setSideViewSrc(sideViewSource)
-      console.log('sideViewSrc: ',sideViewSrc);
+      // console.log('sideViewSrc: ',sideViewSrc);
     }, [state.Configuration.SelectedFeedType, state.Configuration.SelectedFeedPosition]);
 
     // Set TechView SRC
