@@ -439,7 +439,7 @@ function Select_Panel_Menu(props) {
                           variant="outline-info"
                           size="sm"
                           className="w-100"
-                          onClick={() => dispatch({ type: 'SET_FEED_POSITION', payload: "FeedThru" })}
+                          onClick={() => dispatch({ type: 'SET_FEED_POSITION', payload: "FeedThru (Top/Bottom)" })}
                         >
                           Feed Thru (Top/Bottom)
                         </Button>
@@ -460,10 +460,9 @@ function Select_Panel_Menu(props) {
                       <Form.Check
                         type="checkbox"
                         onClick={() => {
-                          const currentValue = state.Configuration.FeedThruLugs;
                           dispatch({
                             type: 'SET_FEED_THRU_LUGS',
-                            payload: !currentValue
+                            payload: (!state.Configuration.FeedThruLugs)
                           });
                         }}
                       />

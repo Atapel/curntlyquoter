@@ -11,7 +11,6 @@ const DisplaySelectedFrame = (props) => {
     setPanelSelected(false)
   }
 
-  console.log(state.Configuration);
   return (
     <div>
       <ListGroup>
@@ -81,27 +80,29 @@ const DisplaySelectedFrame = (props) => {
           </Row>
         </ListGroup.Item>
 
-        <ListGroup.Item>
-          <Row>
-            <Col>
-              <h5>Feed Position:</h5>
-            </Col>
-            <Col>{state.Configuration.SelectedFeedPosition}</Col>
-          </Row>
-        </ListGroup.Item>
-
-
-        {/* <ListGroup.Item>
-          <Row>
-            <Col>
-              <h5>Feed thru lugs:</h5>
-            </Col>
-            <Col>
-              {state.Configuration.FeedThruLungs ? "Yes" : "No"}
-            </Col>
-          </Row>
-        </ListGroup.Item> */}
-
+        {state.Configuration.SelectedFeedType === "Main Breaker" ? (
+          <ListGroup.Item>
+            <Row>
+              <Col>
+                <h5>Feed thru lugs:</h5>
+              </Col>
+              <Col>
+                {state.Configuration.FeedThruLugs ? "Yes" : "No"}
+              </Col>
+            </Row>
+          </ListGroup.Item>
+        ): state.Configuration.SelectedFeedType === "Main Lug" ? (
+          <ListGroup.Item>
+            <Row>
+              <Col>
+                <h5>Feed Position:</h5>
+              </Col>
+              <Col>{state.Configuration.SelectedFeedPosition}</Col>
+            </Row>
+          </ListGroup.Item>
+        ):
+        (null)}
+      
         <ListGroup.Item>
           <Button
             variant="outline-danger"
