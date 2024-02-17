@@ -22,6 +22,8 @@ export default function BreakerMappings(props) {
       }
       return false
     }
+
+    console.log('Fired');
     
     let {
       Single_breakers_46,
@@ -59,24 +61,26 @@ export default function BreakerMappings(props) {
       setAvailableBreakers(filtered)
     }
     
-  },[state.Configuration.SelectedBreakers])
+  },[state.Configuration.SelectedBreakers, breakerState.SelectedSize])
 
   // Check if the smallest breaker + the current breakerSize/X is bigger than the max breaker size
   useEffect(() => {
-    // Find smallest breaker in available breakers
-    const smallestX = availableBreakers.reduce((smallest, current) => (
-      current.Size < (smallest || Infinity) ? current.Size : smallest
-    ), Infinity);
-    // For smallest breaker filter
-    console.log('smallestX',smallestX,"smallestX + state.Configuration.CurrentBreakersSize",smallestX + state.Configuration.CurrentBreakersSize, 'MaxBrekrSize',state.Configuration.MaxBreakerSize);
-    if(Number.isFinite(smallestX) && smallestX + state.Configuration.CurrentBreakersSize >= state.Configuration.MaxBreakerSize) {
-      console.log('Smallest breaker is bigger than max breaker size, hide add button and display max breaker message');
-      setShowAddButton(false)
-    } else {
-      setShowAddButton(true)
+    if (availableBreakers.length !== 0) {
+      // Find smallest breaker in available breakers
+      const smallestX = availableBreakers.reduce((smallest, current) => (
+        current.Size < (smallest || Infinity) ? current.Size : smallest
+      ), Infinity);
+      // For smallest breaker filter
+      console.log('smallestX',smallestX,"smallestX + state.Configuration.CurrentBreakersSize",smallestX + state.Configuration.CurrentBreakersSize, 'MaxBrekrSize',state.Configuration.MaxBreakerSize);
+      if(Number.isFinite(smallestX) && smallestX + state.Configuration.CurrentBreakersSize >= state.Configuration.MaxBreakerSize) {
+        console.log('Smallest breaker is bigger than max breaker size, hide add button and display max breaker message');
+        setShowAddButton(false)
+      } else {
+        setShowAddButton(true)
+      }
     }
     
-  },[state.Configuration.SelectedBreakers])
+  },[state.Configuration.SelectedBreakers, availableBreakers])
 
     return (
       <Dropdown.Menu>
