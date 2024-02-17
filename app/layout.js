@@ -1,5 +1,4 @@
 import './globals.css'
-
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
 
@@ -28,7 +27,10 @@ export default async function RootLayout({ children }) {
           <link rel="icon" href={Curntly_favIcon} sizes="any" />
         </head> */}
         <body>
-          <img src={Curntly_Logo.src} width="500" height="100"></img>
+          <div className='flex flex-row'>
+            <img src={Curntly_Logo.src} width="500" height="100"></img>
+            {/* <h1>Configurator Tool (Alpha Version)</h1> */}
+          </div>
           <AuthProvider accessToken={session?.access_token}>{children}</AuthProvider>
           {/*...*/}
         </body>
