@@ -2,17 +2,11 @@ import React, { useState } from 'react';
 import { Card, ListGroup, ListGroupItem, Row, Col, Dropdown } from 'react-bootstrap'; // Make sure to import necessary Bootstrap components
 import ConfirmOrderButton from './Quotation_page_order_button';
 const ConfigReview = ({ configuration }) => {
-    const [expandedConfig, setExpandedConfig] = useState(null);
 
-    const toggleExpansion = (configId) => {
-        setExpandedConfig(expandedConfig === configId ? null : configId);
-    };
-    
+    // Fix bug where Breake gets added from Breaker state to config.selected breakers rather than just pushing the product element from the products array
+    console.log(configuration);
     return (
         <Card>
-            {/* <Card.Title onClick={() => toggleExpansion(configuration.id)}>
-                Overview
-            </Card.Title> */}
             <ListGroup>
                 <Row>
                 <Col>
@@ -60,7 +54,7 @@ const ConfigReview = ({ configuration }) => {
                         <ListGroup.Item key={index}>
                         <Row>
                             <Col>{item.Description}</Col>
-
+                            <Col>{item.BreakerSize}</Col>
                             <Col>
                             <Dropdown>
                                 <Dropdown.Toggle variant="primary" id="dropdown-basic">

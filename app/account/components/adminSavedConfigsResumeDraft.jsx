@@ -9,7 +9,6 @@ function ResumeDraftButton(props) {
 
     const loadConfigurationIntoState = (configObject) => {
         dispatch({ type: 'LOAD_CONFIGURATION_FROM_DB', payload: configObject })
-
     }
 
     return (
