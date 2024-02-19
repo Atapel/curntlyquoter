@@ -26,6 +26,10 @@ export const reducer = (state, action) => {
   let newSize
 
   switch (action.type) {
+    
+    case 'TOTAL_RESET':
+      return initialConfiguration;
+
     case 'RESET_CONFIGURATION':
       return {
         ...state,
@@ -53,7 +57,8 @@ export const reducer = (state, action) => {
         Metadata: {
           Client: action.payload.init_client,
           Project: action.payload.init_project,
-          DatabaseID: action.payload.id
+          DatabaseID: action.payload.id,
+          ResumeDraft: true
         },
         Pricing: {}
       }
@@ -189,6 +194,15 @@ export const reducer = (state, action) => {
           Project: action.payload
         }
       };
+
+    case 'SET_DATABASE_ID_NEW_CONFIG':
+      return {
+        ...state,
+        Metadata: {
+          ...state.Metadata,
+          DatabaseID: action.payload
+        }
+      }
 
     default:
       return state;
