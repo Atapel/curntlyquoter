@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Dropdown,
   Button,
@@ -15,9 +15,18 @@ import DisplaySelectedFrame from "./Config_page_Selected_Frame_Preview.jsx";
 function Select_Panel_Menu(props) {
   const [panelSelected, setPanelSelected] = props.renderstate;
   const { state, dispatch } = UseConfigurationReducerContext();
-
+  
+  useEffect(()=> {
+    if (state.Metadata.ResumeDraft) {
+      setPanelSelected(true);
+    }
+    
+    console.log(panelSelected);
+  },[])
+  
+  console.log(panelSelected);
   return (
-    <div>
+    <div>      
       {
         panelSelected === false
           ? (

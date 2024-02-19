@@ -26,10 +26,17 @@ const NewConfigInput = () => {
       alert("Please fill out all fields");
       return;
     }
+    
+    // Potentiallsoelogithatchecks if thee state is in init state, and if not banner pops up
+    // with a please save your old configuration or discard
 
-    console.log(formData);
+    dispatch({ type: 'TOTAL_RESET' })
     dispatch({ type: "SET_CLIENT", payload: formData.client });
     dispatch({ type: "SET_PROJECT", payload: formData.project });
+    // Save configuration and return config id 
+
+    // and then write it into the state
+    // dispatch({ type: "SET_DATABASE_ID_NEW_CONFIG", payload: databaseID})
   };
 
   return (
@@ -94,4 +101,3 @@ const NewConfigInput = () => {
 };
 
 export default NewConfigInput;
-
