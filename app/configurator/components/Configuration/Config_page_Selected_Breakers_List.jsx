@@ -1,11 +1,11 @@
 import React from "react";
 import ListGroup from "react-bootstrap/ListGroup";
-import { Button, Col, Dropdown, Row } from "react-bootstrap";
+import { Alert, Button, Col, Dropdown, Row } from "react-bootstrap";
 import { UseConfigurationReducerContext } from "@/app/context/globalContext.jsx";
 
 const DisplaySelectedItems = (props) => {
   const { state, dispatch } = UseConfigurationReducerContext();
-  const [renderSelectedBrakers, setrenderSelectedBrakers] = props.renderstate
+  // const [renderSelectedBrakers, setrenderSelectedBrakers] = props.renderstate
 
   const deleteItem = (indexToDelete) => {
     if(state.Configuration.SelectedBreakers.length === 1){
@@ -17,9 +17,19 @@ const DisplaySelectedItems = (props) => {
   return (
     <div>
       <ListGroup>
-        <ListGroup.Item>
-          <h2>Currently selected breakers: </h2>
-        </ListGroup.Item>
+
+        { state.Configuration.SelectedBreakers.length === 0 ? (
+          // <Alert variant="info">
+          //   Please select some breakers
+          // </Alert>
+          null
+        ):(
+          //null
+          <ListGroup.Item>
+          <h2>Selected breakers: </h2>
+          </ListGroup.Item>
+        )}
+
         {state.Configuration.SelectedBreakers.map((item, index) => (
           <ListGroup.Item key={index}>
             <Row>

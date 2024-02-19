@@ -15,7 +15,7 @@ const Select_Breakers_Menu = () => {
   const handleProductSelect = (product) => {
     dispatch({ type: 'ADD_BREAKER', payload: product })
     // Ativate the Component that lists the selected Breakers
-    setrenderSelectedBrakers(true)
+    // setrenderSelectedBrakers(true)
     // reset the states back to original
     breakerDispatch({ type: 'RESET_BREAKER_STATE' })
 
@@ -265,11 +265,13 @@ const Select_Breakers_Menu = () => {
 
       {/* Below line fixes the conditional rendering error, but introduces new TypeError, to be continued... */}
       {/* {(renderSelectedBrakers === true && state.Configuration.SelectedBreakers.length() == 0 )? ( */}
-      {(renderSelectedBrakers === true)? (
-        <DisplaySelectedItems renderstate={[renderSelectedBrakers, setrenderSelectedBrakers]} />
-      ) : (
+      
+      {/* {(renderSelectedBrakers === true)? ( */}
+        <DisplaySelectedItems />
+        {/* renderstate={[renderSelectedBrakers, setrenderSelectedBrakers]} */}
+      {/* ) : (
         null
-      )}
+      )} */}
 
     </div>
   );
