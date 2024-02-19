@@ -37,14 +37,20 @@ const ConfigReview = ({ configuration }) => {
                         {configuration.SelectedServiceDistribution}
                     </ListGroupItem>
                     <ListGroupItem>
-                        <strong>Feed Thru Lugs:</strong> {configuration.FeedThruLugs.toString()}
-                    </ListGroupItem>
-                    <ListGroupItem>
                         <strong>Feed Type:</strong> {configuration.SelectedFeedType}
                     </ListGroupItem>
-                    <ListGroupItem>
-                        <strong>Feed Position:</strong> {configuration.SelectedFeedPosition}
-                    </ListGroupItem>
+                    
+                    {configuration.SelectedFeedType === "Main Breaker" ? (
+                        <ListGroupItem>
+                            <strong>Feed Thru Lugs:</strong> {configuration.FeedThruLugs ? "Yes" : "No"}
+                        </ListGroupItem>
+                    ): configuration.SelectedFeedType === "Main Lug" ? (
+                        <ListGroupItem>
+                            <strong>Feed Position:</strong> {configuration.SelectedFeedPosition}
+                        </ListGroupItem>
+                    ):
+                    (null)}
+
                 </Col>
 
                     <Col>
