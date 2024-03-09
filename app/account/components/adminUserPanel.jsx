@@ -2,7 +2,7 @@
 import React from "react";
 import { Button, Row, Col, ListGroup } from "react-bootstrap";
 import UserFeedbackForm from "./adminFeedbackFromUser"
-import SignOut from "../../auth/SignOut"
+import SignOut from "../../auth/SignOutButton"
 
 const UserPanel = ({ session }) => {
 

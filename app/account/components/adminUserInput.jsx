@@ -2,7 +2,7 @@
 import React, {useState} from "react";
 import Link from "next/link";
 import { Form, Button, Row, Col, Container, ListGroup } from "react-bootstrap";
-import { UseConfigurationReducerContext } from "@/app/context/globalContext.jsx";
+import { UseConfigurationReducerContext } from "../../context/globalContext";
 
 const NewConfigInput = () => {
   const { state, dispatch } = UseConfigurationReducerContext();

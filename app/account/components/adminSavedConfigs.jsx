@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+// import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { createClient } from '../../utils/supabase/clients'
 import {
   Button,
   Row,
@@ -15,7 +16,7 @@ import ResumeDraftButton from "./adminSavedConfigsResumeDraft"
 import MapSelectedBreakers from "./adminSavedConfigsSelectedBreakersMap";
 
 function Saved_Configurations({ session }) {
-  const supabase = createClientComponentClient();
+  const supabase = createClient();
   const [configs, setConfigs] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [selectedConfig, setSelectedConfig] = useState(null);
