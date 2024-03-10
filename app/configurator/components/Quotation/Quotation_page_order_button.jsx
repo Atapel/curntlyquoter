@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { createClient } from '../../../utils/supabase/clients'
 import { Button, Alert } from "react-bootstrap";
 
 function ConfirmOrderButton() {
   const [operationStatus, setOperationStatus] = useState(null);
-  const supabase = createClientComponentClient();
+  const supabase = createClient();
 
   async function confirmOrder() {
     const currentTime = new Date()

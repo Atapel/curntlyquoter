@@ -9,15 +9,15 @@ import QuotePage from "./Quotation/Quotation_page";
 import { UseCurrentUserContext, UseConfigurationReducerContext } from "../../context/globalContext";
 
 export default function configuratorApp(userMetadata) {
-  const { CurrentUser, setCurrentUser } = UseCurrentUserContext();
+  // const { CurrentUser, setCurrentUser } = UseCurrentUserContext();
   const { state, dispatch } = UseConfigurationReducerContext();
 
   // Rendering Variables
   const [panelSelected, setPanelSelected] = useState(false)
 
-  useEffect(() => {
-    setCurrentUser(userMetadata.usermetadata[0])
-  }, []);
+  // useEffect(() => {
+  //   setCurrentUser(userMetadata.usermetadata[0])
+  // }, []);
 
   return (
     <>

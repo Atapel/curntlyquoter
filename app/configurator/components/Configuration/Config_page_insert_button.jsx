@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { createClient } from '../../../utils/supabase/clients'
 import { Button, Alert } from "react-bootstrap";
 import { UseCurrentUserContext, UseConfigurationReducerContext } from "../../../context/globalContext";
 
@@ -8,7 +8,7 @@ function SaveConfigurationButton() {
   const { CurrentUser, setCurrentUser } = UseCurrentUserContext();
   const [operationStatus, setOperationStatus] = useState(null);
 
-  const supabase = createClientComponentClient();
+  const supabase = createClient();
   const currentTime = new Date().toISOString().substring(0, 19).replace("T", " ");
 
   async function insertConfigurations() {
