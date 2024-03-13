@@ -1,3 +1,4 @@
+import {insertConfigurationInit}  from '../api_requests/supabase/actions'
 export const initialConfiguration = {
   Configuration: {
     SelectedFrameSize: 'Select Width',
@@ -177,34 +178,23 @@ export const reducer = (state, action) => {
         }
       };
 
-    case 'SET_CLIENT':
+    case 'INIT_NEW_CONFIG':
+      // TODO: Get User first and last name, then pass them 
+      // into insertConfigurationInit
+      const databaseId = insertConfigurationInit({
+        Client: action.payload.client,
+        Project: action.payload.project,
+        // DrawnByName: 0
+      })
+
       return {
+        // initialConfiguration,
         ...state,
         Metadata: {
-          ...state.Metadata,
-          Client: action.payload
+          Client: action.payload.client,
+          Project: action.payload.project,
+          DatabaseID: databaseId
         }
-      };
-
-    case 'SET_PROJECT':
-      return {
-        ...state,
-        Metadata: {
-          ...state.Metadata,
-          Project: action.payload
-        }
-      };
-
-    case 'SET_DATABASE_ID_NEW_CONFIG':
-      return {
-        ...state,
-        Metadata: {
-          ...state.Metadata,
-          DatabaseID: action.payload
-        }
-      }
-
-    default:
-      return state;
+      } 
   }
 };
