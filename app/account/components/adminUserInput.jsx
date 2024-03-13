@@ -31,12 +31,11 @@ const NewConfigInput = () => {
     // with a please save your old configuration or discard
 
     dispatch({ type: 'TOTAL_RESET' })
-    dispatch({ type: "SET_CLIENT", payload: formData.client });
-    dispatch({ type: "SET_PROJECT", payload: formData.project });
-    // Save configuration and return config id 
+    dispatch({ type: 'INIT_NEW_CONFIG', payload: {
+      client: formData.client,
+      project: formData.project
+    }})
 
-    // and then write it into the state
-    // dispatch({ type: "SET_DATABASE_ID_NEW_CONFIG", payload: databaseID})
   };
 
   return (
@@ -83,6 +82,7 @@ const NewConfigInput = () => {
               </Form.Group>
             </Container>
 
+            {/* TODO: Grey out button when no input in both fields */}
             <Link href="/configurator">
               <Button
                 variant="outline-success"
@@ -93,6 +93,7 @@ const NewConfigInput = () => {
                 Launch Configurator
               </Button>
             </Link>
+
           </Form>
         </ListGroup.Item>
       </ListGroup>
