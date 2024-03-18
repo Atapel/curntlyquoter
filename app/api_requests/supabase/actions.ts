@@ -5,12 +5,14 @@ export async function insertConfigurationInit(configState: any) {
   const currentTime = new Date().toISOString().substring(0, 19).replace("T", " ");
   const supabase = createClient()
   const currentUser = await supabase.auth.getUser()
+  // User Name from DB in Variable
+  // cons UserName = currentUser.data.user.user_metadata.name;  
   const objectToInsert = {
     created_at: currentTime,
     user_id: currentUser.data.user.id,
     init_client: configState.Client,
     init_project: configState.Project,
-    init_drawn_by: configState.DrawnByName
+    init_drawn_by: 'USER_1'
   }
 
   let data;
