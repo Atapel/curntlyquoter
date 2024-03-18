@@ -3,6 +3,7 @@ import React, {useState} from "react";
 import Link from "next/link";
 import { Form, Button, Row, Col, Container, ListGroup } from "react-bootstrap";
 import { UseConfigurationReducerContext } from "../../context/globalContext";
+import {insertConfigurationInit}  from '../../api_requests/supabase/actions'
 
 const NewConfigInput = () => {
   const { state, dispatch } = UseConfigurationReducerContext();
@@ -21,21 +22,25 @@ const NewConfigInput = () => {
     setIsFormIncomplete(value === "");
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (isFormIncomplete) {
       alert("Please fill out all fields");
       return;
     }
     
-    // Potentiallsoelogithatchecks if thee state is in init state, and if not banner pops up
-    // with a please save your old configuration or discard
-
+    // add error handling
+    const Id = await insertConfigurationInit({
+      Client: formData.client,
+      Project: formData.project
+    })
+    
     dispatch({ type: 'TOTAL_RESET' })
     dispatch({ type: 'INIT_NEW_CONFIG', payload: {
       client: formData.client,
-      project: formData.project
-    }})
-
+      project: formData.project,
+      databaseId: Id
+    }}) 
+    
   };
 
   return (
