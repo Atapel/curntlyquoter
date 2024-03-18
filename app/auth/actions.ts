@@ -41,7 +41,7 @@ export async function signup(formData: FormData) {
     throw new Error('Signup failed');
   }
   else {
-    redirect('/private')
+    redirect('/account')
   }
 }
 
@@ -69,6 +69,6 @@ export async function resetPassword(formData: FormData) {
     console.log(error);
   }
   else {
-    redirect('/private')
+    redirect('/account')
   }
 }

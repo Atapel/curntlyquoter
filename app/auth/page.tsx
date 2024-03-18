@@ -10,7 +10,7 @@ export default async function authPage() {
     data: { user },
   } = await supabase.auth.getUser();
   if (user) {
-    redirect('/private');
+    redirect('/account');
   }
   return (
     <div className="container mt-5">
