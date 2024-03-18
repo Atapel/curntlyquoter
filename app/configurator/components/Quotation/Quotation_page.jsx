@@ -2,7 +2,7 @@
 import { ListGroup } from "react-bootstrap";
 import ConfigReview from './Quotation_page_list_configuration_specs';
 import PriceDisplayComponent from './Quotation_page_price';
-import { UseCurrentUserContext, UseConfigurationReducerContext } from "../../../context/globalContext";
+import { UseConfigurationReducerContext } from "../../../context/globalContext";
 
 function QuotePage() {
   const { state, dispatch } = UseConfigurationReducerContext();

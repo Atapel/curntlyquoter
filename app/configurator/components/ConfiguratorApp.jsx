@@ -6,18 +6,11 @@ import PDF_preview from "./PDF_creation/Config_page_pdf_preview";
 import Select_Breakers_Menu from "./Configuration/Config_page_Breaker_Selection_Menu";
 import Select_Panel_Menu from "./Configuration/Config_page_Frame_Selection_Menu";
 import QuotePage from "./Quotation/Quotation_page";
-import { UseCurrentUserContext, UseConfigurationReducerContext } from "../../context/globalContext";
+import { UseConfigurationReducerContext } from "../../context/globalContext";
 
 export default function configuratorApp(userMetadata) {
-  // const { CurrentUser, setCurrentUser } = UseCurrentUserContext();
-  const { state, dispatch } = UseConfigurationReducerContext();
-
   // Rendering Variables
   const [panelSelected, setPanelSelected] = useState(false)
-
-  // useEffect(() => {
-  //   setCurrentUser(userMetadata.usermetadata[0])
-  // }, []);
 
   return (
     <>
