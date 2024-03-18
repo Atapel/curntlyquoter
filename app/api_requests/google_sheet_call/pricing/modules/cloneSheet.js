@@ -27,11 +27,8 @@ const clonePricingSheet = async (clienObject,configObject,spreadsheetId) => {
         // Getting the Sheet id of the newly created sheet
         const newSheetId = response.data.replies[0].duplicateSheet.properties.sheetId
 
-        // Return new sheet name, id
-        return {
-            sheetName: configObject.Metadata.DatabaseID,
-            sheetId: newSheetId
-        }
+        // Return new sheet name
+        return configObject.Metadata.DatabaseID
 
     } catch (error) {
         console.error("Error updating sheet", error);
