@@ -1,4 +1,3 @@
-import {insertConfigurationInit}  from '../api_requests/supabase/actions'
 export const initialConfiguration = {
   Configuration: {
     SelectedFrameSize: 'Select Width',
@@ -179,21 +178,14 @@ export const reducer = (state, action) => {
       };
 
     case 'INIT_NEW_CONFIG':
-      // TODO: Get User first and last name, then pass them 
-      // into insertConfigurationInit
-      const databaseId = insertConfigurationInit({
-        Client: action.payload.client,
-        Project: action.payload.project,
-        // DrawnByName: 0
-      })
-
+      console.log(action);
       return {
         // initialConfiguration,
         ...state,
         Metadata: {
           Client: action.payload.client,
           Project: action.payload.project,
-          DatabaseID: databaseId
+          DatabaseID: action.payload.databaseId
         }
       } 
   }
