@@ -7,23 +7,23 @@ export default function BreakerMappings(props) {
     const { breakerState, breakerDispatch } = UseBreakerReducerContext()
     const [availableBreakers, setAvailableBreakers] = useState([]);
     const [showAddButton, setShowAddButton] = props.addButtonState
-  useEffect(() => {
+  
+    useEffect(() => {
+      console.log(availableBreakers);
     // Making sure that breaker.size < state.Configuration.MaxBreakerSize
     const filterByBreakerSize = (breaker) => {
       if (breaker.Size + state.Configuration.CurrentBreakersSize < state.Configuration.MaxBreakerSize) {
-        console.log('filter condition: ',
-        // breaker,
-        breaker.Size + state.Configuration.CurrentBreakersSize < state.Configuration.MaxBreakerSize,
-        breaker.Size,
-        state.Configuration.CurrentBreakersSize,
-        state.Configuration.MaxBreakerSize
-        );
+        // console.log('filter condition: ',
+        // // breaker,
+        // breaker.Size + state.Configuration.CurrentBreakersSize < state.Configuration.MaxBreakerSize,
+        // breaker.Size,
+        // state.Configuration.CurrentBreakersSize,
+        // state.Configuration.MaxBreakerSize
+        // );
         return true;
       }
       return false
     }
-
-    console.log('Fired');
     
     let {
       Single_breakers_46,
@@ -34,7 +34,7 @@ export default function BreakerMappings(props) {
     if (breakerState.SelectedSize == "Single" && state.Configuration.SelectedFrameSize === 46) {
       
       let filtered = Single_breakers_46.filter(breaker => filterByBreakerSize(breaker));
-      console.log('Filtered Breakers', filtered, Single_breakers_46, state.Configuration.CurrentBreakersSize);
+      // console.log('Filtered Breakers', filtered, Single_breakers_46, state.Configuration.CurrentBreakersSize);
       setAvailableBreakers(filtered)
     } else if (
       breakerState.SelectedSize == "Single" &&
@@ -42,7 +42,7 @@ export default function BreakerMappings(props) {
     ) {
       
       let filtered = Single_breakers_36.filter(breaker => filterByBreakerSize(breaker));
-      console.log('Filtered Breakers', Single_breakers_36, state.Configuration.CurrentBreakersSize);
+      // console.log('Filtered Breakers', Single_breakers_36, state.Configuration.CurrentBreakersSize);
       setAvailableBreakers(filtered)
     } else if (
       breakerState.SelectedSize == "Double" &&
@@ -50,7 +50,7 @@ export default function BreakerMappings(props) {
     ) {
       
       let filtered = Double_breakers_46.filter(breaker => filterByBreakerSize(breaker));
-      console.log('Filtered Breakers', filtered,Double_breakers_46, state.Configuration.CurrentBreakersSize);
+      // console.log('Filtered Breakers', filtered,Double_breakers_46, state.Configuration.CurrentBreakersSize);
       setAvailableBreakers(filtered)
     } else if (
       breakerState.SelectedSize == "Double" &&
@@ -71,9 +71,9 @@ export default function BreakerMappings(props) {
         current.Size < (smallest || Infinity) ? current.Size : smallest
       ), Infinity);
       // For smallest breaker filter
-      console.log('smallestX',smallestX,"smallestX + state.Configuration.CurrentBreakersSize",smallestX + state.Configuration.CurrentBreakersSize, 'MaxBrekrSize',state.Configuration.MaxBreakerSize);
+      // console.log('smallestX',smallestX,"smallestX + state.Configuration.CurrentBreakersSize",smallestX + state.Configuration.CurrentBreakersSize, 'MaxBrekrSize',state.Configuration.MaxBreakerSize);
       if(Number.isFinite(smallestX) && smallestX + state.Configuration.CurrentBreakersSize >= state.Configuration.MaxBreakerSize) {
-        console.log('Smallest breaker is bigger than max breaker size, hide add button and display max breaker message');
+        // console.log('Smallest breaker is bigger than max breaker size, hide add button and display max breaker message');
         setShowAddButton(false)
       } else {
         setShowAddButton(true)
