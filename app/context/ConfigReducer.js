@@ -146,8 +146,8 @@ export const reducer = (state, action) => {
       }
 
     case 'ADD_BREAKER':
-      newSize = state.Configuration.CurrentBreakersSize + action.payload['Size']
-
+      newSize = state.Configuration.CurrentBreakersSize + action.payload['BreakerSize']
+      
       if (newSize < state.Configuration.MaxBreakerSize) {
         return {
           ...state,
