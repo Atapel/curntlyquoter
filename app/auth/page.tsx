@@ -17,8 +17,8 @@ export default async function authPage() {
         <div className="row justify-content-center align-items-center">
             <div className="col-md-4">
               <SignIn />
-              {/* <SignUp /> */}
-              {/* <ResetPassword /> */}
+              <SignUp />
+              <ResetPassword />
             </div>
         </div>
     </div>
