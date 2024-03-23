@@ -8,10 +8,10 @@ const DisplaySelectedItems = (props) => {
   // const [renderSelectedBrakers, setrenderSelectedBrakers] = props.renderstate
 
   const deleteItem = (indexToDelete) => {
-    if(state.Configuration.SelectedBreakers.length === 1){
-      setrenderSelectedBrakers(false)
-      // console.log("renderSelectedBrakers",renderSelectedBrakers);
-    }
+    // if(state.Configuration.SelectedBreakers.length === 1){
+    //   setrenderSelectedBrakers(false)
+    //   // console.log("renderSelectedBrakers",renderSelectedBrakers);
+    // }
     dispatch({ type: 'REMOVE_BREAKER', payload: indexToDelete })
   };
   return (
@@ -33,7 +33,7 @@ const DisplaySelectedItems = (props) => {
         {state.Configuration.SelectedBreakers.map((item, index) => (
           <ListGroup.Item key={index}>
             <Row>
-              <Col>{item.Description}</Col>
+              <Col>{item.Name}</Col>
 
               <Col>
                 <Dropdown>
