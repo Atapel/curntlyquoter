@@ -2,6 +2,7 @@
 import React from 'react';
 // import { createClient } from '../utils/supabase/server'
 import { createClient } from '../utils/supabase/clients'
+import { redirect } from 'next/navigation'
 const SignOut = () => {
     const supabase = createClient()
     async function handleSignOut() {
@@ -10,6 +11,7 @@ const SignOut = () => {
             // eslint-disable-next-line no-console
             console.error('ERROR:', error);
         }
+        redirect('/auth')
     }
     return (
         <div className="container d-flex align-items-center justify-content-center mt-5">
