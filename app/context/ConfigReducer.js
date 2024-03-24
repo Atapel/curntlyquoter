@@ -146,8 +146,8 @@ export const reducer = (state, action) => {
       }
 
     case 'ADD_BREAKER':
-      newSize = state.Configuration.CurrentBreakersSize + action.payload['Size']
-
+      newSize = state.Configuration.CurrentBreakersSize + action.payload['BreakerSize']
+      
       if (newSize < state.Configuration.MaxBreakerSize) {
         return {
           ...state,
@@ -177,34 +177,16 @@ export const reducer = (state, action) => {
         }
       };
 
-    case 'SET_CLIENT':
+    case 'INIT_NEW_CONFIG':
+      console.log(action);
       return {
+        // initialConfiguration,
         ...state,
         Metadata: {
-          ...state.Metadata,
-          Client: action.payload
+          Client: action.payload.client,
+          Project: action.payload.project,
+          DatabaseID: action.payload.databaseId
         }
-      };
-
-    case 'SET_PROJECT':
-      return {
-        ...state,
-        Metadata: {
-          ...state.Metadata,
-          Project: action.payload
-        }
-      };
-
-    case 'SET_DATABASE_ID_NEW_CONFIG':
-      return {
-        ...state,
-        Metadata: {
-          ...state.Metadata,
-          DatabaseID: action.payload
-        }
-      }
-
-    default:
-      return state;
+      } 
   }
 };

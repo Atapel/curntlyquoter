@@ -13,7 +13,7 @@ const Select_Breakers_Menu = () => {
   const [showAddButton, setShowAddButton] = useState(true)
 
   const handleProductSelect = (product) => {
-    dispatch({ type: 'ADD_BREAKER', payload: product })
+    dispatch({ type: 'ADD_BREAKER', payload: breakerState })
     // Ativate the Component that lists the selected Breakers
     // setrenderSelectedBrakers(true)
     // reset the states back to original
@@ -249,7 +249,7 @@ const Select_Breakers_Menu = () => {
             variant="outline-info"
             size="sm"
             className="w-100"
-            onClick={() => handleProductSelect(breakerState.SelectedBreaker)}
+            onClick={() => handleProductSelect()}
             disabled={breakerState.SelectedBreakerPoles==="Select Poles"}
           >
             Add

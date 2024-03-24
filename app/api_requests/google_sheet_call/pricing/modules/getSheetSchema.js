@@ -4,29 +4,29 @@
 // 
 
 // range: "B2", merge with "B2" of Schema
-const getRequestsObject = (configObject, spreadsheetId, clonedSheet) => {
+const getRequestsObject = (configObject, spreadsheetId, sheetName) => {
 
   // Define Sheet Schema
   let Schema = [
     {
       // CellName: 'Amperage',
       values: [[configObject.SelectedBusRating]],
-      range: `${clonedSheet.sheetName}!B2`
+      range: `${sheetName}!B2`
     },
     {
       // CellName: 'ServiceorDistribution',
       values: [[configObject.SelectedServiceDistribution]],
-      range: `${clonedSheet.sheetName}!B3`
+      range: `${sheetName}!B3`
     },
     {
       // CellName: 'Voltage',
       values: [[configObject.SelectedVoltage]],
-      range: `${clonedSheet.sheetName}!B4`
+      range: `${sheetName}!B4`
     },
     {
       // CellName: 'Interrupt',
       values: [[configObject.SelectedKAICRating+'KAIC']],
-      range: `${clonedSheet.sheetName}!B5`
+      range: `${sheetName}!B5`
     }]
 
   // for (let sheetRow = 18; sheetRow <= 28; ++sheetRow) {
@@ -43,11 +43,11 @@ const getRequestsObject = (configObject, spreadsheetId, clonedSheet) => {
       {
         // CellName: 'Breaker',
         values: [[configObject.SelectedBreakers[index].Description]],
-        range: `${clonedSheet.sheetName}!A${sheetRow}`
+        range: `${sheetName}!A${sheetRow}`
       }, {
         // CellName: 'Single or Double',
         values: [[configObject.SelectedBreakers[index].BreakerSize]],
-        range: `${clonedSheet.sheetName}!B${sheetRow}`
+        range: `${sheetName}!B${sheetRow}`
       }
     )
   }

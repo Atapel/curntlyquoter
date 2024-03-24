@@ -4,7 +4,6 @@ import ConfirmOrderButton from './Quotation_page_order_button';
 const ConfigReview = ({ configuration }) => {
 
     // Fix bug where Breake gets added from Breaker state to config.selected breakers rather than just pushing the product element from the products array
-    console.log(configuration);
     return (
         <Card>
             <ListGroup>

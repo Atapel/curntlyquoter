@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { createClient } from '../../utils/supabase/clients'
+// import { deletePricingSubSheet }  from '../../api_requests/google_sheet_call/pricing/actions'
 import {
   Button,
   Row,
@@ -15,11 +16,13 @@ import ResumeDraftButton from "./adminSavedConfigsResumeDraft"
 import MapSelectedBreakers from "./adminSavedConfigsSelectedBreakersMap";
 
 function Saved_Configurations({ session }) {
-  const supabase = createClientComponentClient();
+  const supabase = createClient();
   const [configs, setConfigs] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [selectedConfig, setSelectedConfig] = useState(null);
   const [expandedConfig, setExpandedConfig] = useState(null);
+
+  const urlPath = process.env.NEXT_PUBLIC_PRICING_SHEET_ROUTEHANDLER_URL;
 
   const handleExpand = (id) => {
     setExpandedConfig(id === expandedConfig ? null : id);
@@ -43,6 +46,26 @@ function Saved_Configurations({ session }) {
   }
 
   async function deleteConfigs(id) {
+    // Delete associated pricing Sheet
+    try {
+      // const { error } = await deletePricingSubSheet(id)
+
+      const response = await fetch(`${urlPath}/deleteSubSheet`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(id),
+      });
+
+      if (error) {
+        throw new Error("Failed to delete Sheet");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+
+    // Delete Configurations from DB
     try {
       const { data, error } = await supabase
         .from("Configurations")

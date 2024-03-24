@@ -1,11 +1,10 @@
-"use client"
-import { useState } from 'react';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
-import Link from 'next/link';
+'use client'
+import React, {useState} from 'react';
+import { signup } from '../actions'
 
 const SignUp = () => {
-    const supabase = createClientComponentClient();
-
+    // Define state for error messages if needed
+    const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const [formData, setFormData] = useState({
         email: '',
         password: '',
@@ -19,32 +18,37 @@ const SignUp = () => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+    // Function to handle the signup form submission
+    const handleSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
 
-        // Perform form validation if needed
-        if (formData.password !== formData.confirmPassword) {
-            setErrors({ confirmPassword: "Passwords don't match" });
-            return;
-        }
+// // Perform form validation if needed
+// if (formData.password !== formData.confirmPassword) {
+//     setErrors({ confirmPassword: "Passwords don't match" });
+//     return;
+// }
+    // Create a FormData object from the form element
+    const formData = new FormData(e.currentTarget);
 
-        const { error } = await supabase.auth.signUp({
-            email: formData.email,
-            password: formData.password,
-        });
+    try {
+      // Attempt to signup with the FormData object
+      await signup(formData);
 
-        if (error) {
-            setErrorMsg(error.message);
-        } else {
-            setSuccessMsg('Success! Please check your email for further instructions.');
-        }
-    };
+      // If signup is successful, you can redirect or perform other actions
+      console.log('signup successful');
+      setSuccessMsg('Success! Please check your email for further instructions.');
+    } catch (error) {
+      // If an error occurs during signup, set the error message
+      setErrorMsg(error.message);
+      console.error(error);
+    }
+    }
 
     return (
         <div className="container d-flex align-items-center justify-content-center mt-5">
             <div className="card">
                 <h2 className="card-title text-center">Create Account</h2>
-                <form className="column" onSubmit={handleSubmit}>
+                <form className="column" onSubmit={handleSignUp}>
                     <label htmlFor="email">Email</label>
                     <input
                         className={`form-control ${errors.email && 'is-invalid'}`}
@@ -85,12 +89,13 @@ const SignUp = () => {
                 </form>
                 {errorMsg && <div className="text-danger mt-3">{errorMsg}</div>}
                 {successMsg && <div className="text-success mt-3">{successMsg}</div>}
-                <Link href="/auth/SignIn" className="d-block mt-3 text-center">
+                {/* <Link href="/auth/SignIn" className="d-block mt-3 text-center">
                     Already have an account? Sign In.
-                </Link>
+                </Link> */}
             </div>
         </div>
     );
-};
+}
 
 export default SignUp;
+

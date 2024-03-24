@@ -2,12 +2,11 @@
 import React, { useState } from "react";
 import { jsPDF } from "jspdf";
 import { Alert, Button } from "react-bootstrap";
-import { UseConfigurationReducerContext, UseCurrentUserContext } from "../../../context/globalContext";
+import { UseConfigurationReducerContext } from "../../../context/globalContext";
 import Curntly_Logo from "public/curntly_slogan.png";
 
 const PDF_Generation = ({ canvasRef }) => {
   const { state, dispatch } = UseConfigurationReducerContext();
-  const { CurrentUser, setCurrentUser } = UseCurrentUserContext();
 
   const [feedback, setFeedback] = useState(null);
   const [feedbackType, setFeedbackType] = useState(null);
@@ -21,7 +20,6 @@ const PDF_Generation = ({ canvasRef }) => {
       unit: "mm",
       format: "a4",
     });
-    console.log("Current_User from PDF Creator", CurrentUser);
     pdf.addImage(canvasRef.current.toDataURL("image/png"), "PNG", 5, 5);
     
     // Set the text color, draw color, and font:
@@ -57,7 +55,7 @@ const PDF_Generation = ({ canvasRef }) => {
       `Sales Order Number: ${0}`,
       `Revision: ${0}`,
       `Drawing Date: ${americanFormatDate}`,
-      `Drawn By: ${CurrentUser.Given_Name + " " + CurrentUser.Family_Name}`,
+      // `Drawn By: ${CurrentUser.Given_Name + " " + CurrentUser.Family_Name}`,
     ];
 
     // Start y-coordinate

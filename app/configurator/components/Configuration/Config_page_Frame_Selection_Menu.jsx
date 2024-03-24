@@ -20,11 +20,8 @@ function Select_Panel_Menu(props) {
     if (state.Metadata.ResumeDraft) {
       setPanelSelected(true);
     }
-    
-    console.log(panelSelected);
   },[])
   
-  console.log(panelSelected);
   return (
     <div>      
       {

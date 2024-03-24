@@ -14,30 +14,47 @@ export async function POST(configObjectRAW) {
     const configObject = await configObjectRAW.json();
 
     // Load Sheet Id
-    const pricingSheetID = process.env.MASTER_QUOTE_SHEET_ID;
+    const templateSheetID = process.env.MASTER_QUOTE_SHEET_ID;
 
     // Initialize Google Sheets Client
     const googleSheets = getGoogleSheetsClient();
 
-    console.log("Request_Payload: ",configObject, "pricingSheetID: ", pricingSheetID);
-
-    // Clone the sheet
-    let clonedSheet;
-    try {
-      clonedSheet = await clonePricingSheet(googleSheets, configObject ,pricingSheetID);
-    } catch (cloneError) {
-      console.error('Error cloning pricing sheet:', cloneError);
-      throw new Error('Failed to clone pricing sheet');
+    // Check if sheet already exists
+    const sheetExistenceCheck = await doesSheetExist(
+      googleSheets, 
+      templateSheetID, 
+      configObject.Metadata.DatabaseID
+    )
+    
+    let tabSubSheet;
+    
+    if (!sheetExistenceCheck) {
+      console.log("Sheet does not exist, cloning template sheet");
+      // if not then clone the original template sheet
+      try {
+        tabSubSheet = await clonePricingSheet(googleSheets, configObject ,templateSheetID);
+      } catch (cloneError) {
+        console.error('Error cloning pricing sheet:', cloneError);
+        throw new Error('Failed to clone pricing sheet');
+      }
+    } else {
+      // Sheet already exists
+      tabSubSheet = configObject.Metadata.DatabaseID
     }
 
-    // Insert Sheet ID and Name from the above const into Supabase
+    // Insert Sheet ID from the above const into Supabase
     // [Implement code for inserting into Supabase]
 
     // Transform Config object into sheets batch request
-    const batchUpdateRequest = getRequestsObject(configObject.Configuration, pricingSheetID, clonedSheet);
+    const batchUpdateRequest = getRequestsObject(
+      configObject.Configuration, 
+      templateSheetID, 
+      tabSubSheet
+    );
 
     // Write Configuration values into the sheet
     let sheetWriteRequest;
+
     try {
       sheetWriteRequest = await writePricingSheet(googleSheets, batchUpdateRequest);
     } catch (writeError) {
@@ -53,7 +70,7 @@ export async function POST(configObjectRAW) {
     // Read Sheet and get Pricing Data
     let pricingSheet;
     try {
-      pricingSheet = await getPricingSheet(googleSheets, pricingSheetID, clonedSheet.sheetName);
+      pricingSheet = await getPricingSheet(googleSheets, templateSheetID, tabSubSheet);
     } catch (readError) {
       console.error('Error reading pricing sheet:', readError);
       throw new Error('Failed to read pricing sheet');

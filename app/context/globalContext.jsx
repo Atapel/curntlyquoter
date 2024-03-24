@@ -1,5 +1,5 @@
 "use client";
-import React, { createContext, useContext, useState, useReducer } from "react";
+import React, { createContext, useContext, useReducer } from "react";
 // Import Logic
 import { initialConfiguration, reducer } from "./ConfigReducer"
 import { initialBreaker, breakerReducer } from "./BreakerReducer";
@@ -11,8 +11,7 @@ const BreakerReducerContext = createContext();
 export const GlobalContextProvider = ({ children }) => {
   // Create the Context Variabless
   const [state, dispatch] = useReducer(reducer, initialConfiguration);
-  const [breakerState, breakerDispatch] = useReducer(breakerReducer, initialBreaker);  
-  const [CurrentUser, setCurrentUser] = useState(false);
+  const [breakerState, breakerDispatch] = useReducer(breakerReducer, initialBreaker);
   return (
     <>
       <ConfigurationReducerContext.Provider
@@ -20,11 +19,7 @@ export const GlobalContextProvider = ({ children }) => {
       >
         <BreakerReducerContext.Provider
           value={{ breakerState, breakerDispatch }}>
-          <Curent_User_Context.Provider
-            value={{ CurrentUser, setCurrentUser }}
-          >
             {children}
-          </Curent_User_Context.Provider>
         </BreakerReducerContext.Provider>
       </ConfigurationReducerContext.Provider>
     </>

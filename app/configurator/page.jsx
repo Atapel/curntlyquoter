@@ -1,10 +1,10 @@
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
+import { createClient } from '../utils/supabase/server'
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import ConfiguratorApp from './components/ConfiguratorApp';
 
 export default async function configuratorPage() {
-  const supabase = createServerComponentClient({ cookies });
+  const supabase = createClient({ cookies });
   let user; // Declare user outside of the try block
   
   try {

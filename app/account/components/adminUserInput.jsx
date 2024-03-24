@@ -2,7 +2,8 @@
 import React, {useState} from "react";
 import Link from "next/link";
 import { Form, Button, Row, Col, Container, ListGroup } from "react-bootstrap";
-import { UseConfigurationReducerContext } from "@/app/context/globalContext.jsx";
+import { UseConfigurationReducerContext } from "../../context/globalContext";
+import {insertConfigurationInit}  from '../../api_requests/supabase/actions'
 
 const NewConfigInput = () => {
   const { state, dispatch } = UseConfigurationReducerContext();
@@ -21,22 +22,25 @@ const NewConfigInput = () => {
     setIsFormIncomplete(value === "");
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (isFormIncomplete) {
       alert("Please fill out all fields");
       return;
     }
     
-    // Potentiallsoelogithatchecks if thee state is in init state, and if not banner pops up
-    // with a please save your old configuration or discard
-
+    // add error handling
+    const Id = await insertConfigurationInit({
+      Client: formData.client,
+      Project: formData.project
+    })
+    
     dispatch({ type: 'TOTAL_RESET' })
-    dispatch({ type: "SET_CLIENT", payload: formData.client });
-    dispatch({ type: "SET_PROJECT", payload: formData.project });
-    // Save configuration and return config id 
-
-    // and then write it into the state
-    // dispatch({ type: "SET_DATABASE_ID_NEW_CONFIG", payload: databaseID})
+    dispatch({ type: 'INIT_NEW_CONFIG', payload: {
+      client: formData.client,
+      project: formData.project,
+      databaseId: Id
+    }}) 
+    
   };
 
   return (
@@ -83,6 +87,7 @@ const NewConfigInput = () => {
               </Form.Group>
             </Container>
 
+            {/* TODO: Grey out button when no input in both fields */}
             <Link href="/configurator">
               <Button
                 variant="outline-success"
@@ -93,6 +98,7 @@ const NewConfigInput = () => {
                 Launch Configurator
               </Button>
             </Link>
+
           </Form>
         </ListGroup.Item>
       </ListGroup>

@@ -1,10 +1,8 @@
 "use client"
 import React, { useState, useEffect } from 'react';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { useRouter, useSearchParams } from 'next/navigation';
-
+import { confirmSignUp, validateOtp } from '../../actions'
 const ConfirmSignUp = () => {
-    const supabase = createClientComponentClient();
     const router = useRouter();
     const searchParams = useSearchParams();
 
@@ -25,11 +23,10 @@ const ConfirmSignUp = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const { data, error } = await supabase.auth.verifyOtp({
-                    email: emailFromQueryParam,
-                    token: tokenFromQueryParam,
-                    type: 'email',
-                });
+                const {error} = validateOtp(
+                    emailFromQueryParam,
+                    tokenFromQueryParam
+                )
 
                 if (error) {
                     console.error('Supabase error:', error.message, error.details);
@@ -90,20 +87,12 @@ const ConfirmSignUp = () => {
         // Check if there are any errors before submitting
         if (Object.keys(newErrors).length === 0) {
             try {
-                const { data, error } = await supabase.auth.getUser();
+                const {error} = confirmSignUp(
+                    formData
+                )
 
-                console.log(data);
-
-                const { error: insertError } = await supabase.from('User_Metadata').insert({
-                    User_UID: data.user.id,
-                    Given_Name: formData.givenName,
-                    Family_Name: formData.familyName,
-                    Company_Name: formData.companyName,
-                    Phone_Number: formData.phoneNumber,
-                });
-
-                if (insertError) {
-                    console.error('Supabase error:', insertError.message, insertError.details);
+                if (error) {
+                    console.error('Supabase error:', error.message);
                     throw new Error('Failed to insert record into the database.');
                 } else {
                     setSuccessMsg('Record inserted successfully!');
@@ -193,4 +182,3 @@ const ConfirmSignUp = () => {
 };
 
 export default ConfirmSignUp;
-

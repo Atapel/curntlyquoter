@@ -1,20 +1,18 @@
 'use client';
-
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import React from 'react';
-
+// import { createClient } from '../utils/supabase/server'
+import { createClient } from '../utils/supabase/clients'
+import { redirect } from 'next/navigation'
 const SignOut = () => {
-    const supabase = createClientComponentClient();
-
+    const supabase = createClient()
     async function handleSignOut() {
         const { error } = await supabase.auth.signOut();
-
         if (error) {
             // eslint-disable-next-line no-console
             console.error('ERROR:', error);
         }
+        redirect('/auth')
     }
-
     return (
         <div className="container d-flex align-items-center justify-content-center mt-5">
             <button
@@ -27,5 +25,4 @@ const SignOut = () => {
         </div>
     );
 };
-
 export default SignOut;

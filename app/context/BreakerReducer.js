@@ -1,10 +1,14 @@
 export const initialBreaker = {
+    // User Selecions
     SelectedSize: "Select Breaker Size",
     SelectedTrip: "Select Breaker Trip",
     SelectedFeature: "Select Feature",
     SelectedBreaker: { Description: "Select Breaker" },
     SelectedBreakerAmp: "Select Amperage",
     SelectedBreakerPoles: "Select Poles",
+    // Technical Specs
+    BreakerSize: null,
+    MaxAmp: null
 };
 
 export const breakerReducer = (state, action) => {
@@ -23,7 +27,13 @@ export const breakerReducer = (state, action) => {
             return { ...state, SelectedFeature: action.payload };
 
         case "SET_SELECTED_BREAKER":
-            return { ...state, SelectedBreaker: action.payload };
+            return { 
+                ...state, 
+                SelectedBreaker: action.payload,
+                Name: action.payload['Description'],
+                MaxAmp: action.payload['Max_Amperage'],
+                BreakerSize: action.payload['Size']
+            };
 
         case "SET_SELECTED_BREAKER_AMP":
             return { ...state, SelectedBreakerAmp: action.payload };

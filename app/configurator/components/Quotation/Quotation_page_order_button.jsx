@@ -1,25 +1,14 @@
 import { useState } from "react";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { Button, Alert } from "react-bootstrap";
-
+import { confirmOrder } from "../../../api_requests/supabase/actions"
 function ConfirmOrderButton() {
   const [operationStatus, setOperationStatus] = useState(null);
-  const supabase = createClientComponentClient();
 
-  async function confirmOrder() {
-    const currentTime = new Date()
-      .toISOString()
-      .substring(0, 19)
-      .replace("T", " ");
+  async function confirm() {
 
     try {
-      console.log(CurrentUser);
-      const { error } = await supabase.from("Configurations").update({
-        order_confirmed: true,
-      }).match({
-        user_id: CurrentUser.id,
-        created_at: currentTime,
-      });
+        //  Call Server
+        await confirmOrder()
       if (error) {
         console.error("Supabase error:", error.message, error.details);
         throw new Error("Failed to confirm order.");
