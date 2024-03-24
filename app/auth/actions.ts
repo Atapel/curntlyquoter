@@ -12,15 +12,17 @@ export async function login(formData: FormData) {
     password: formData.get('password') as string,
   }
 
-  const { error } = await supabase.auth.signInWithPassword(data)
 
-  if (error) {
-    console.log(error);
-    throw new Error('Login failed');
-  }
-  else {
-    redirect('/account')
-  }
+    const { error } = await supabase.auth.signInWithPassword(data)
+
+    if (error) {
+      console.log(error);
+      throw new Error(error.message);
+    }
+    else {
+      redirect('/account')
+    }
+  
 }
 
 export async function signup(formData: FormData) {
@@ -36,14 +38,14 @@ export async function signup(formData: FormData) {
 
   if (error) {
     console.log(error);
-    throw new Error('Signup failed');
+    throw new Error(error.message);
   }
   else {
     redirect('/account')
   }
 }
 
-export async function confirmOtp(
+export async function validateOtp(
     emailFromQueryParam: string,
     tokenFromQueryParam: string
   ) {
@@ -121,3 +123,39 @@ export async function resetPassword(formData: FormData) {
     redirect('/account')
   }
 }
+
+
+// To handle errors on the client side from this server action: [1]
+
+// The login function currently returns the error message if a catch block is hit. You can have the client call this function and check for any returned errors.
+// Alternatively, you can pass a callback function to login that gets called on success or error:
+
+// Insert at cursor
+
+// Copy
+// export async function login(formData: FormData, callback: (err: any, result: any) => void) {
+
+//   // login logic
+
+//   } catch (error) {
+//     callback(error);
+//   }
+
+//   callback(null, user);
+
+// }
+// On the client, call it like:
+
+// Insert at cursor
+
+// Copy
+// login(data, (err, result) => {
+//   if(err) {
+//     // handle error
+//   }
+
+//   // login succeeded
+// })
+// You can also throw the error to reject promises all the way back to the client.
+// For user-friendly errors, you may want to categorize errors on the server before sending back to the client.
+// On the client, display error messages and handle different error cases.

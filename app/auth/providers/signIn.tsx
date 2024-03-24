@@ -21,7 +21,7 @@ const SignIn = () => {
       console.log('Login successful');
     } catch (error) {
       // If an error occurs during login, set the error message
-      setErrorMessage('Login failed. Please check your credentials.');
+      setErrorMessage(error.message);
       console.error(error);
     }
   };
