@@ -1,5 +1,5 @@
 "use client"
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { confirmSignUp, validateOtp } from '../../actions'
 const ConfirmSignUp = () => {
@@ -114,70 +114,72 @@ const ConfirmSignUp = () => {
         !formData.phoneNumber.trim();
 
     return (
-        <div className="container d-flex align-items-center justify-content-center mt-5">
-            <div className="card">
-                <h1>Please add additional data about yourself</h1>
-                <form className="column" onSubmit={handleSubmit}>
-                    <label htmlFor="givenName">Given Name</label>
-                    <input
-                        className={`form-control ${errors.givenName && 'is-invalid'}`}
-                        id="givenName"
-                        name="givenName"
-                        placeholder="John"
-                        type="text"
-                        value={formData.givenName}
-                        onChange={handleChange}
-                    />
-                    {errors.givenName && <div className="invalid-feedback">{errors.givenName}</div>}
+        <Suspense>
+            <div className="container d-flex align-items-center justify-content-center mt-5">
+                <div className="card">
+                    <h1>Please add additional data about yourself</h1>
+                    <form className="column" onSubmit={handleSubmit}>
+                        <label htmlFor="givenName">Given Name</label>
+                        <input
+                            className={`form-control ${errors.givenName && 'is-invalid'}`}
+                            id="givenName"
+                            name="givenName"
+                            placeholder="John"
+                            type="text"
+                            value={formData.givenName}
+                            onChange={handleChange}
+                        />
+                        {errors.givenName && <div className="invalid-feedback">{errors.givenName}</div>}
 
-                    <label htmlFor="familyName">Family Name</label>
-                    <input
-                        className={`form-control ${errors.familyName && 'is-invalid'}`}
-                        id="familyName"
-                        name="familyName"
-                        placeholder="Doe"
-                        type="text"
-                        value={formData.familyName}
-                        onChange={handleChange}
-                    />
-                    {errors.familyName && <div className="invalid-feedback">{errors.familyName}</div>}
+                        <label htmlFor="familyName">Family Name</label>
+                        <input
+                            className={`form-control ${errors.familyName && 'is-invalid'}`}
+                            id="familyName"
+                            name="familyName"
+                            placeholder="Doe"
+                            type="text"
+                            value={formData.familyName}
+                            onChange={handleChange}
+                        />
+                        {errors.familyName && <div className="invalid-feedback">{errors.familyName}</div>}
 
-                    <label htmlFor="companyName">Company Name</label>
-                    <input
-                        className={`form-control ${errors.companyName && 'is-invalid'}`}
-                        id="companyName"
-                        name="companyName"
-                        placeholder="ACME Inc."
-                        type="text"
-                        value={formData.companyName}
-                        onChange={handleChange}
-                    />
-                    {errors.companyName && <div className="invalid-feedback">{errors.companyName}</div>}
+                        <label htmlFor="companyName">Company Name</label>
+                        <input
+                            className={`form-control ${errors.companyName && 'is-invalid'}`}
+                            id="companyName"
+                            name="companyName"
+                            placeholder="ACME Inc."
+                            type="text"
+                            value={formData.companyName}
+                            onChange={handleChange}
+                        />
+                        {errors.companyName && <div className="invalid-feedback">{errors.companyName}</div>}
 
-                    <label htmlFor="phoneNumber">Phone Number</label>
-                    <input
-                        className={`form-control ${errors.phoneNumber && 'is-invalid'}`}
-                        id="phoneNumber"
-                        name="phoneNumber"
-                        placeholder="1234567890"
-                        type="tel"
-                        value={formData.phoneNumber}
-                        onChange={handleChange}
-                    />
-                    {errors.phoneNumber && <div className="invalid-feedback">{errors.phoneNumber}</div>}
+                        <label htmlFor="phoneNumber">Phone Number</label>
+                        <input
+                            className={`form-control ${errors.phoneNumber && 'is-invalid'}`}
+                            id="phoneNumber"
+                            name="phoneNumber"
+                            placeholder="1234567890"
+                            type="tel"
+                            value={formData.phoneNumber}
+                            onChange={handleChange}
+                        />
+                        {errors.phoneNumber && <div className="invalid-feedback">{errors.phoneNumber}</div>}
 
-                    <button
-                        className="btn btn-primary btn-lg btn-block mt-3"
-                        type="submit"
-                        disabled={isSubmitDisabled}
-                    >
-                        Submit
-                    </button>
-                </form>
-                {errorMsg && <div className="text-danger mt-3">{errorMsg}</div>}
-                {successMsg && <div className="text-success mt-3">{successMsg}</div>}
+                        <button
+                            className="btn btn-primary btn-lg btn-block mt-3"
+                            type="submit"
+                            disabled={isSubmitDisabled}
+                        >
+                            Submit
+                        </button>
+                    </form>
+                    {errorMsg && <div className="text-danger mt-3">{errorMsg}</div>}
+                    {successMsg && <div className="text-success mt-3">{successMsg}</div>}
+                </div>
             </div>
-        </div>
+        </Suspense>
     );
 };
 
