@@ -1,9 +1,7 @@
-"use client"
-import React, { useState, useEffect } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { redirect, useSearchParams } from 'next/navigation';
 import { confirmSignUp, validateOtp } from '../../actions'
-const ConfirmSignUp = () => {
-    const router = useRouter();
+export default async function ConfirmSignUp () {
+    
     const searchParams = useSearchParams();
 
     const tokenFromQueryParam = searchParams.get('token');
@@ -17,11 +15,8 @@ const ConfirmSignUp = () => {
     });
 
     const [errors, setErrors] = useState({});
-    const [errorMsg, setErrorMsg] = useState(null);
-    const [successMsg, setSuccessMsg] = useState(null);
-
-    useEffect(() => {
-        const fetchData = async () => {
+    // const [errorMsg, setErrorMsg] = useState(null);
+    // const [successMsg, setSuccessMsg] = useState(null);/
             try {
                 const {error} = validateOtp(
                     emailFromQueryParam,
@@ -39,9 +34,9 @@ const ConfirmSignUp = () => {
                 console.error('Inner try-catch block error:', error);
                 setErrorMsg('An error occurred while retrieving the session.');
             }
-        };
-        fetchData();
-    }, [emailFromQueryParam, tokenFromQueryParam]);
+    //     };
+    //     fetchData();
+    // }, [emailFromQueryParam, tokenFromQueryParam]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -64,28 +59,28 @@ const ConfirmSignUp = () => {
         e.preventDefault();
 
         // Perform form validation
-        const newErrors = {};
+        // const newErrors = {};
 
-        if (!formData.givenName.trim()) {
-            newErrors.givenName = 'Required';
-        }
+        // if (!formData.givenName.trim()) {
+        //     newErrors.givenName = 'Required';
+        // }
 
-        if (!formData.familyName.trim()) {
-            newErrors.familyName = 'Required';
-        }
+        // if (!formData.familyName.trim()) {
+        //     newErrors.familyName = 'Required';
+        // }
 
-        if (!formData.companyName.trim()) {
-            newErrors.companyName = 'Required';
-        }
+        // if (!formData.companyName.trim()) {
+        //     newErrors.companyName = 'Required';
+        // }
 
-        if (!formData.phoneNumber.trim()) {
-            newErrors.phoneNumber = 'Required';
-        }
+        // if (!formData.phoneNumber.trim()) {
+        //     newErrors.phoneNumber = 'Required';
+        // }
 
-        setErrors(newErrors);
+        // setErrors(newErrors);
 
-        // Check if there are any errors before submitting
-        if (Object.keys(newErrors).length === 0) {
+        // // Check if there are any errors before submitting
+        // if (Object.keys(newErrors).length === 0) {
             try {
                 const {error} = confirmSignUp(
                     formData
@@ -97,14 +92,14 @@ const ConfirmSignUp = () => {
                 } else {
                     setSuccessMsg('Record inserted successfully!');
 
-                    // redirect("/account");
-                    router.push("/account");
+                    redirect("/account");
+                    // router.push("/account");
                 }
             } catch (error) {
                 console.error('Catch block error:', error);
                 setErrorMsg('An error occurred while inserting the record.');
             }
-        }
+        // }
     };
 
     const isSubmitDisabled =
@@ -174,11 +169,9 @@ const ConfirmSignUp = () => {
                         Submit
                     </button>
                 </form>
-                {errorMsg && <div className="text-danger mt-3">{errorMsg}</div>}
-                {successMsg && <div className="text-success mt-3">{successMsg}</div>}
+                {/* {errorMsg && <div className="text-danger mt-3">{errorMsg}</div>}
+                {successMsg && <div className="text-success mt-3">{successMsg}</div>} */}
             </div>
         </div>
     );
 };
-
-export default ConfirmSignUp;
