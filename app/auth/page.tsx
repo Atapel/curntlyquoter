@@ -1,9 +1,9 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { redirect } from 'next/navigation';
 import { createClient } from '../utils/supabase/server'
-import SignIn from './providers/signIn';
-import SignUp from './providers/signUp'
-import ResetPassword from './providers/resetPassword';
+import SignIn from './providers/emailPassword/signIn';
+import SignUp from './providers/emailPassword/signUp'
+import ResetPassword from './providers/emailPassword/resetPassword';
 export default async function authPage() {
   const supabase = createClient()
   const {
