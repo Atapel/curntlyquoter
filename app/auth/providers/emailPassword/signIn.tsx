@@ -1,7 +1,6 @@
 "use client"
 import React, {useState} from 'react';
-import { login } from '../actions';
-
+import { login } from '../../actions';
 const SignIn = () => {
   // Define state for error messages if needed
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -25,7 +24,6 @@ const SignIn = () => {
       console.error(error);
     }
   };
-
   return (
     <div className="container mt-5">
       <div className="row justify-content-center">
@@ -41,7 +39,7 @@ const SignIn = () => {
                 className={`form-control`}
                 id="emailSignIn"
                 name="email"
-                placeholder="jane@acme.com"
+                placeholder="Please enter your e-mail"
                 type="email"
               />
               <label htmlFor="password">Password</label>
@@ -49,7 +47,7 @@ const SignIn = () => {
                 className={`form-control`}
                 id="passwordSigniIn"
                 name="password"
-                placeholder="Password"
+                placeholder="Please enter your password"
                 type="password"
               />
               <button className="btn btn-primary btn-lg btn-block mt-3" type="submit">
