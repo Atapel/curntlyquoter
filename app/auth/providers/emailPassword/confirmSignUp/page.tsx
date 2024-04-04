@@ -5,10 +5,18 @@ import { confirmSignUp, validateOtp } from '../../../actions'
 import { IConfirmSignupForm } from '../../../types'
 export default function ConfirmSignUp () {
     
-    const searchParams = useSearchParams();
 
-    const tokenFromQueryParam = searchParams.get('token');
-    const emailFromQueryParam = searchParams.get('email');
+        const searchParams = useSearchParams();
+        const tokenFromQueryParam = searchParams.get('token');
+        const emailFromQueryParam = searchParams.get('email');
+        console.log(tokenFromQueryParam,emailFromQueryParam);
+        // Handle potential missing parameters gracefully
+        if (!tokenFromQueryParam || !emailFromQueryParam) {
+          // Log an error or redirect to a different page
+          console.error('Missing confirmation parameters in URL.');
+          // You can redirect here using `useRouter` from `next/router`
+        }
+  
 
     const { 
         register, 
@@ -79,10 +87,6 @@ export default function ConfirmSignUp () {
                             "companyName",
                             { 
                                 required: "Company name is required",
-                                // pattern: {
-                                //     value: /^\p{L}+$/u,
-                                //     message: "Please enter a valid company name"
-                                // }
                             }
                         )}
                     />
