@@ -1,5 +1,5 @@
 "use client"
-import { redirect, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import { useForm, SubmitHandler } from "react-hook-form"
 import { confirmSignUp, validateOtp } from '../../../actions'
 import { IConfirmSignupForm } from '../../../types'
@@ -20,22 +20,17 @@ export default function ConfirmSignUp () {
     const onSubmit: SubmitHandler<IConfirmSignupForm> = async (formData) => {
         console.log(formData)
         try {
-            const error = await confirmSignUp(
+            await confirmSignUp(
                 formData
             )
-            if (error) {
-                console.error('Supabase error:', error);
-                setError('apiError', {
-                    type: 'manual',
-                    message: error
-                  })
-                throw new Error('Failed to insert record into the database.');
-            }
         } catch (error) {
             console.error('DB insert error:', error);
+            setError('root', {
+                type: 'manual',
+                message: error
+              })
         }
     }
-
     return (
         <div className="container d-flex align-items-center justify-content-center mt-5">
             <div className="card">
@@ -57,8 +52,7 @@ export default function ConfirmSignUp () {
                             }
                         )}
                     />
-                    {errors.givenName && <div className="invalid-feedback">{errors.givenName.message}</div>}
-
+                    {errors.givenName && <div className="alert alert-danger" role="alert">{String(errors.givenName.message)}</div>}
                     <label htmlFor="familyName">Family Name</label>
                     <input
                         className={`form-control`}
@@ -75,8 +69,7 @@ export default function ConfirmSignUp () {
                             }
                         )}
                     />
-                    {/* {errors.familyName && <div className="invalid-feedback">{errors.familyName}</div>} */}
-
+                    {errors.familyName && <div className="alert alert-danger" role="alert">{String(errors.familyName.message)}</div>}
                     <label htmlFor="companyName">Company Name</label>
                     <input
                         className={`form-control`}
@@ -93,8 +86,7 @@ export default function ConfirmSignUp () {
                             }
                         )}
                     />
-                    {/* {errors.companyName && <div className="invalid-feedback">{errors.companyName}</div>} */}
-
+                    {errors.companyName && <div className="alert alert-danger" role="alert">{String(errors.companyName.message)}</div>}
                     <label htmlFor="phoneNumber">Phone number (optional)</label>
                     <input
                         className={`form-control`}
@@ -111,8 +103,8 @@ export default function ConfirmSignUp () {
                             }
                         )}
                     />
-                    {/* {errors.phoneNumber && <div className="invalid-feedback">{errors.phoneNumber}</div>} */}
-
+                    {errors.phoneNumber && <div className="alert alert-danger" role="alert">{String(errors.phoneNumber.message)}</div>}
+                    {errors.root && <div className="alert alert-danger" role="alert">{String(errors.root.message)}</div>}
                     <button
                         className="btn btn-primary btn-lg btn-block mt-3"
                         type="submit"
