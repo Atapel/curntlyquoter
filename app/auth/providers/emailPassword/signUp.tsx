@@ -46,7 +46,7 @@ const SignUp = () => {
                 }
               })}
           />
-          {/* {errors.email && <div className="invalid-feedback">{errors.email.message}</div>} */}
+          {errors.email && <div className="alert alert-danger" role="alert">{String(errors.email.message)}</div>}
           <label htmlFor="password">Password</label>
           <input
             className={`form-control`}
@@ -62,7 +62,7 @@ const SignUp = () => {
                 }
               })}
           />
-          {/* {errors.password && <div className="invalid-feedback">{errors.password.message}</div>} */}
+          {errors.password && <div className="alert alert-danger" role="alert">{String(errors.password.message)}</div>}
           <label htmlFor="confirmPassword">Confirm Password</label>
           <input
             className={`form-control`}
@@ -74,7 +74,8 @@ const SignUp = () => {
               validate: value => value === password || 'Passwords do not match'
             })}
           />
-          {/* {errors.confirmPassword && <div className="invalid-feedback">{errors.confirmPassword.message}</div>} */}
+          {errors.confirmPassword && <div className="alert alert-danger" role="alert">{String(errors.confirmPassword.message)}</div>}
+          {errors.root && <div className="alert alert-danger" role="alert">{String(errors.root.message)}</div>}
           <button 
             className="btn btn-primary btn-lg btn-block mt-3" 
             type="submit"
@@ -85,7 +86,7 @@ const SignUp = () => {
             Submit
           </button>
         </form>
-        {errors.apiError && <div className="text-danger mt-3">{errors.apiError.message}</div>}
+        
       </div>
     </div>
   );
