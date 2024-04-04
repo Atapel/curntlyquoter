@@ -4,50 +4,47 @@ import { redirect } from 'next/navigation'
 import { createClient } from '../utils/supabase/server'
 import { ISignUpForm, IConfirmSignupForm} from './types'
 
-export async function login(formData: FormData) {
+export async function login(
+    formData: FormData
+  ) {
   const supabase = createClient()
-  // type-casting here for convenience
+  
   const data = {
     email: formData.get('email') as string,
     password: formData.get('password') as string,
   }
-  const { error } = await supabase.auth.signInWithPassword(data)
-
-  if (error) {
-    console.log(error);
+  
+  try{
+    await supabase.auth.signInWithPassword(data)
+  } catch (error) {
+    console.error(error);
     throw new Error(error.message);
   }
-  else {
-    redirect('/account')
-  }
+  
+  redirect('/account')
 }
 
 export async function signup(
-  // formData: FormData
   formData: ISignUpForm
   ) {
   const supabase = createClient()
 
-  // type-casting here for convenience
-  const data = {
-    // email: formData.get('email') as string,
-    // password: formData.get('password') as string,
+  const reqData = {
     email: formData.email,
     password: formData.password,
   }
+
   try {
-    const { error } = await supabase.auth.signUp(data)
+    const { data, error } = await supabase.auth.signUp(reqData)
     if (error) {
-      console.log(error);
-      throw new Error(error.message);
-    }
-    else {
-      redirect('/auth/providers/emailPassword/checkYourEmails')
+      throw new Error(error.message)
     }
   } catch (error) {
     console.error(error);
-    return JSON.stringify(error)
+    throw new Error(error.message);
   }
+
+  redirect('/auth/providers/emailPassword/checkYourEmails')
 }
 
 export async function validateOtp(
@@ -83,26 +80,31 @@ export async function confirmSignUp(
   try {
     const { data, error } = await supabase.auth.getUser();
 
-    console.log(data);
+    if (error) {
+      throw new Error(`Error fetching user data: ${error.message}`);
+    }
 
-    const { error: insertError } = await supabase.from('User_Metadata').insert({
+    const { error: insertError } = await supabase
+      .from('User_Metadata')
+      .insert({
         User_UID: data.user.id,
         Given_Name: formData.givenName,
         Family_Name: formData.familyName,
         Company_Name: formData.companyName,
-        Phone_Number: formData.phoneNumber
-    });
+        Phone_Number: formData.phoneNumber,
+      });
 
     if (insertError) {
-        console.error('Supabase error:', insertError.message, insertError.details);
-        throw new Error(insertError.message);
-    } else {
-      redirect('/account')
+      throw new Error(`Error inserting user metadata: ${error.message}`);
     }
   } catch (error) {
     console.error(error);
-    return JSON.stringify(error)
-  }
+    // Re-throw the error to allow client-side handling
+    // Mot sure if just throw or throw new error
+    throw new Error(error.message);
+  } 
+
+  redirect('/account')
 }
 
 export async function logout() {
