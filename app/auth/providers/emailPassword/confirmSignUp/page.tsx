@@ -1,21 +1,9 @@
 "use client"
-import { Suspense } from 'react'
-import { useSearchParams } from 'next/navigation';
 import { useForm, SubmitHandler } from "react-hook-form"
-import { confirmSignUp, validateOtp } from '../../../actions'
+import { confirmSignUp } from '../../../actions'
 import { IConfirmSignupForm } from '../../../types'
+import  QuerryParams from "./querryParams"
 export default function ConfirmSignUp () {
-    
-    const searchParams = useSearchParams();
-    const tokenFromQueryParam = searchParams.get('token');
-    const emailFromQueryParam = searchParams.get('email');
-    console.log(tokenFromQueryParam,emailFromQueryParam);
-    // Handle potential missing parameters gracefully
-    if (!tokenFromQueryParam || !emailFromQueryParam) {
-        // Log an error or redirect to a different page
-        console.error('Missing confirmation parameters in URL.');
-        // You can redirect here using `useRouter` from `next/router`
-    }
     const { 
         register, 
         handleSubmit,
@@ -38,8 +26,8 @@ export default function ConfirmSignUp () {
         }
     }
     return (
-        <Suspense>
             <div className="container d-flex align-items-center justify-content-center mt-5">
+                <QuerryParams/>
                 <div className="card">
                     <h1>Please add additional data about yourself</h1>
                     <form className="column" onSubmit={handleSubmit(onSubmit)}>
@@ -118,6 +106,5 @@ export default function ConfirmSignUp () {
                     </form>
                 </div>
             </div>
-        </Suspense>
     );
 };
