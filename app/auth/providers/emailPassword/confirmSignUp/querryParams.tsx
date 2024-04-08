@@ -1,5 +1,4 @@
 "use clients"
-import { Suspense } from 'react'
 import { validateOtp } from '../../../actions'
 import { useSearchParams } from 'next/navigation';
 export default function QuerryParams() {
@@ -13,10 +12,13 @@ const searchParams = useSearchParams();
         console.error('Missing confirmation parameters in URL.');
         // You can redirect here using `useRouter` from `next/router`
     }
+    //Make validateotp call
+    //Conditionall render error message in case otp couldnt be validated
+    //If no error then just redirect to confirmsignup page
     return (
-        <Suspense>
+        <>
             {String(tokenFromQueryParam)}
             {String(emailFromQueryParam)}
-        </Suspense>
+        </>
     )
 }

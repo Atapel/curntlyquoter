@@ -1,4 +1,5 @@
 "use client"
+import { Suspense } from 'react'
 import { useForm, SubmitHandler } from "react-hook-form"
 import { confirmSignUp } from '../../../actions'
 import { IConfirmSignupForm } from '../../../types'
@@ -27,7 +28,9 @@ export default function ConfirmSignUp () {
     }
     return (
             <div className="container d-flex align-items-center justify-content-center mt-5">
-                <QuerryParams/>
+                <Suspense>
+                    <QuerryParams/>
+                </Suspense>
                 <div className="card">
                     <h1>Please add additional data about yourself</h1>
                     <form className="column" onSubmit={handleSubmit(onSubmit)}>
