@@ -19,7 +19,7 @@ const SignUp = () => {
       await signup(formData);
       console.log('signup successful');
     } catch (error) {
-      setError('apiError', {
+      setError('root', {
         type: 'manual',
         message: error.message
       });
