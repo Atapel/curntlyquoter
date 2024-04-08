@@ -52,23 +52,21 @@ export async function validateOtp(
     tokenFromQueryParam: string
   ) {
   const supabase = createClient()
-
-  const { error } = await supabase.auth.verifyOtp({
-    email: emailFromQueryParam,
-    token: tokenFromQueryParam,
-    type: 'email',
-  });
-
   try{
-  if (error) {
-      console.error('Supabase error:', error.message);
-      throw new Error('Failed to validate OTP token.');
+    const { error } = await supabase.auth.verifyOtp({
+      email: emailFromQueryParam,
+      token: tokenFromQueryParam,
+      type: 'email',
+    });
+    if (error) {
+        console.error('Supabase error:', error.message);
+        throw new Error('Failed to validate OTP token.');
+    }
+    console.log('Session retrieved');
+  } catch (error) {
+    console.error('Session not retrieved', error);
+    throw new Error(error.message);
   }
-
-  console.log('Session retrieved');
-} catch (error) {
-  console.error('Session not retrieved', error);
-}
 }
 
 export async function confirmSignUp(
