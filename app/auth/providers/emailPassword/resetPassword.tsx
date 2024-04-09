@@ -1,4 +1,4 @@
-import { resetPassword } from '../actions'
+import { resetPassword } from '../../actions'
 
 const ResetPassword = () => {
 
