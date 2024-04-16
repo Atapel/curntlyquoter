@@ -1,4 +1,5 @@
-export const initialConfiguration = {
+import {TConfiguration,TConfigurationActions} from "./types"
+export const initialConfiguration: TConfiguration = {
   Configuration: {
     SelectedFrameSize: 'Select Width',
     SelectedVoltage: 'Select Voltage',
@@ -17,13 +18,16 @@ export const initialConfiguration = {
   Metadata: {
     Client: 'Enter Client Name',
     Project: 'Enter Project Address',
-    DatabaseID: null
+    DatabaseID: null,
+    ResumeDraft: false
   },
   Pricing: {}
 };
 
-export const reducer = (state, action) => {
-  let newSize
+export const reducer = (
+  state: TConfiguration, 
+  action: TConfigurationActions) => {
+  let newSize: number
 
   switch (action.type) {
     
@@ -183,9 +187,9 @@ export const reducer = (state, action) => {
         // initialConfiguration,
         ...state,
         Metadata: {
-          Client: action.payload.client,
-          Project: action.payload.project,
-          DatabaseID: action.payload.databaseId
+          Client: action.payload.Client,
+          Project: action.payload.Project,
+          DatabaseID: action.payload.DatabaseID
         }
       } 
   }
