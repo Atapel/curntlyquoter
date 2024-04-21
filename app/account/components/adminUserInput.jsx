@@ -63,6 +63,7 @@ const NewConfigInput = () => {
                       name="client"
                       value={formData.client}
                       onChange={handleChange}
+                      data-testid="client-input"
                     />
                   </Col>
                 </Row>
@@ -81,6 +82,7 @@ const NewConfigInput = () => {
                       name="project"
                       value={formData.project}
                       onChange={handleChange}
+                      data-testid="project-input"
                     />
                   </Col>
                 </Row>
@@ -94,6 +96,7 @@ const NewConfigInput = () => {
                 className="w-100"
                 onClick={handleSubmit} // Use onClick to trigger the function
                 disabled={isFormIncomplete}
+                data-testid="launch-new-configuration-button"
               >
                 Launch Configurator
               </Button>

@@ -87,6 +87,7 @@ export default function BreakerMappings(props) {
         {availableBreakers.map((product, index) => (
             <Dropdown.Item key={index}>
                 <Button
+                data-testid={`selection-${product.Description}`}
                 onClick={() => breakerDispatch({ type: 'SET_SELECTED_BREAKER', payload: product })}
                 variant="outline-info"
                 size="sm"

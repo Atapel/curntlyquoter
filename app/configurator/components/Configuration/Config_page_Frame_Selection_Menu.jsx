@@ -39,7 +39,10 @@ function Select_Panel_Menu(props) {
                       <h5>Selected Width:</h5>
                     </Col>
                     <Col>
-                      <Dropdown.Toggle variant="primary" id="dropdown-basic">
+                      <Dropdown.Toggle
+                        data-testid="Dropdown-Width" 
+                        variant="primary" 
+                        id="dropdown-basic">
                         {state.Configuration.SelectedFrameSize}
                       </Dropdown.Toggle>
                     </Col>
@@ -48,6 +51,7 @@ function Select_Panel_Menu(props) {
                   <Dropdown.Menu>
                     <Dropdown.Item>
                       <Button
+                        data-testid="selection-36"
                         variant="outline-info"
                         size="sm"
                         className="w-100"
@@ -58,6 +62,7 @@ function Select_Panel_Menu(props) {
                     </Dropdown.Item>
                     <Dropdown.Item>
                       <Button
+                        data-testid="selection-46"
                         variant="outline-info"
                         size="sm"
                         className="w-100"
@@ -79,6 +84,7 @@ function Select_Panel_Menu(props) {
                     </Col>
                     <Col>
                       <Dropdown.Toggle
+                        data-testid="Dropdown-Height"
                         variant="primary"
                         id="dropdown-basic"
                         disabled={state.Configuration.SelectedFrameSize === "Select Width"}
@@ -90,6 +96,7 @@ function Select_Panel_Menu(props) {
                   <Dropdown.Menu>
                     <Dropdown.Item>
                       <Button
+                        data-testid="selection-90"
                         variant="outline-info"
                         size="sm"
                         className="w-100"
@@ -100,6 +107,7 @@ function Select_Panel_Menu(props) {
                     </Dropdown.Item>
                     <Dropdown.Item>
                       <Button
+                        data-testid="selection-77"
                         variant="outline-info"
                         size="sm"
                         className="w-100"
@@ -111,6 +119,7 @@ function Select_Panel_Menu(props) {
 
                     <Dropdown.Item>
                       <Button
+                        data-testid="selection-65"
                         variant="outline-info"
                         size="sm"
                         className="w-100"
@@ -132,6 +141,7 @@ function Select_Panel_Menu(props) {
                     </Col>
                     <Col>
                       <Dropdown.Toggle
+                        data-testid="Dropdown-Voltage"
                         variant="primary"
                         id="dropdown-basic"
                         disabled={state.Configuration.SelectedPanelHeight === "Select Height"}
@@ -143,6 +153,7 @@ function Select_Panel_Menu(props) {
                   <Dropdown.Menu>
                     <Dropdown.Item>
                       <Button
+                        data-testid="selection-120V"
                         variant="outline-info"
                         size="sm"
                         className="w-100"
@@ -153,6 +164,7 @@ function Select_Panel_Menu(props) {
                     </Dropdown.Item>
                     <Dropdown.Item>
                       <Button
+                        data-testid="selection-270V"
                         variant="outline-info"
                         size="sm"
                         className="w-100"
@@ -174,6 +186,7 @@ function Select_Panel_Menu(props) {
                     </Col>
                     <Col>
                       <Dropdown.Toggle
+                        data-testid="Dropdown-Kaic"
                         variant="primary"
                         id="dropdown-basic"
                         disabled={state.Configuration.SelectedVoltage === "Select Voltage"}
@@ -187,6 +200,7 @@ function Select_Panel_Menu(props) {
                       <>
                         <Dropdown.Item>
                           <Button
+                            data-testid="selection-65"
                             variant="outline-info"
                             size="sm"
                             className="w-100"
@@ -197,6 +211,7 @@ function Select_Panel_Menu(props) {
                         </Dropdown.Item>
                         <Dropdown.Item>
                           <Button
+                            data-testid="selection-100"
                             variant="outline-info"
                             size="sm"
                             className="w-100"
@@ -207,6 +222,7 @@ function Select_Panel_Menu(props) {
                         </Dropdown.Item>
                         <Dropdown.Item>
                           <Button
+                            data-testid="selection-150"
                             variant="outline-info"
                             size="sm"
                             className="w-100"
@@ -220,6 +236,7 @@ function Select_Panel_Menu(props) {
                       <>
                         <Dropdown.Item>
                           <Button
+                            data-testid="selection-35"
                             variant="outline-info"
                             size="sm"
                             className="w-100"
@@ -230,6 +247,7 @@ function Select_Panel_Menu(props) {
                         </Dropdown.Item>
                         <Dropdown.Item>
                           <Button
+                            data-testid="selection-65"
                             variant="outline-info"
                             size="sm"
                             className="w-100"
@@ -240,6 +258,7 @@ function Select_Panel_Menu(props) {
                         </Dropdown.Item>
                         <Dropdown.Item>
                           <Button
+                            data-testid="selection-100"
                             variant="outline-info"
                             size="sm"
                             className="w-100"
@@ -263,6 +282,7 @@ function Select_Panel_Menu(props) {
                     </Col>
                     <Col>
                       <Dropdown.Toggle
+                        data-testid="Dropdown-Bus"
                         variant="primary"
                         id="dropdown-basic"
                         disabled={state.Configuration.SelectedKAICRating === "Select KAIC Rating"}
@@ -274,6 +294,7 @@ function Select_Panel_Menu(props) {
                   <Dropdown.Menu>
                     <Dropdown.Item>
                       <Button
+                        data-testid="selection-800"
                         variant="outline-info"
                         size="sm"
                         className="w-100"
@@ -284,6 +305,7 @@ function Select_Panel_Menu(props) {
                     </Dropdown.Item>
                     <Dropdown.Item>
                       <Button
+                        data-testid="selection-1500"
                         variant="outline-info"
                         size="sm"
                         className="w-100"
@@ -294,6 +316,7 @@ function Select_Panel_Menu(props) {
                     </Dropdown.Item>
                     <Dropdown.Item>
                       <Button
+                        data-testid="selection-2250"
                         variant="outline-info"
                         size="sm"
                         className="w-100"
@@ -316,6 +339,7 @@ function Select_Panel_Menu(props) {
                     </Col>
                     <Col>
                       <Dropdown.Toggle
+                        data-testid="Dropdown-DistService"
                         variant="primary"
                         id="dropdown-basic"
                         disabled={state.Configuration.SelectedBusRating === "Select Bus Rating"}
@@ -327,6 +351,7 @@ function Select_Panel_Menu(props) {
                   <Dropdown.Menu>
                     <Dropdown.Item>
                       <Button
+                        data-testid="selection-Distribution"
                         // onClick={() => {
                         //   const currentValue = state.Configuration.FeedThruLugs;
                         //   dispatch({
@@ -344,6 +369,7 @@ function Select_Panel_Menu(props) {
                     </Dropdown.Item>
                     <Dropdown.Item>
                       <Button
+                        data-testid="selection-Service"
                         variant="outline-info"
                         size="sm"
                         className="w-100"
@@ -365,6 +391,7 @@ function Select_Panel_Menu(props) {
                     </Col>
                     <Col>
                       <Dropdown.Toggle
+                        data-testid="Dropdown-Feed"
                         variant="primary"
                         id="dropdown-basic"
                         disabled={state.Configuration.SelectedServiceDistribution === ("Select Service or Distribution")}
@@ -376,6 +403,7 @@ function Select_Panel_Menu(props) {
                   <Dropdown.Menu>
                     <Dropdown.Item>
                       <Button
+                        data-testid="selection-MainBreaker"
                         variant="outline-info"
                         size="sm"
                         className="w-100"
@@ -386,6 +414,7 @@ function Select_Panel_Menu(props) {
                     </Dropdown.Item>
                     <Dropdown.Item>
                       <Button
+                        data-testid="selection-MainLug"
                         variant="outline-info"
                         size="sm"
                         className="w-100"
@@ -411,6 +440,7 @@ function Select_Panel_Menu(props) {
                       </Col>
                       <Col>
                         <Dropdown.Toggle
+                          data-testid="Dropdown-Position"
                           variant="primary"
                           id="dropdown-basic"
                           // disabled={state.Configuration.MainLug === false}
@@ -422,6 +452,7 @@ function Select_Panel_Menu(props) {
                     <Dropdown.Menu>
                       <Dropdown.Item>
                         <Button
+                          data-testid="selection-Top"
                           variant="outline-info"
                           size="sm"
                           className="w-100"
@@ -432,6 +463,7 @@ function Select_Panel_Menu(props) {
                       </Dropdown.Item>
                       <Dropdown.Item>
                         <Button
+                          data-testid="selection-Bottom"
                           variant="outline-info"
                           size="sm"
                           className="w-100"
@@ -442,6 +474,7 @@ function Select_Panel_Menu(props) {
                       </Dropdown.Item>
                       <Dropdown.Item>
                         <Button
+                          data-testid="selection-TopBottom"
                           variant="outline-info"
                           size="sm"
                           className="w-100"
@@ -464,6 +497,7 @@ function Select_Panel_Menu(props) {
                     </Col>
                     <Col>
                       <Form.Check
+                        data-testid="Tickbox-lugs"
                         type="checkbox"
                         onClick={() => {
                           dispatch({
@@ -482,6 +516,7 @@ function Select_Panel_Menu(props) {
 
               <ListGroupItem>
                 <Button
+                  data-testid="Add-Frame"
                   variant="outline-info"
                   size="sm"
                   className="w-100"
