@@ -115,6 +115,9 @@ export type TConfigDB =  {
 
 export type TSelectedBreaker = {
     Description: string;
+    Name?: string,
+    MaxAmp?: number,
+    BreakerSize?: number
 };
   
 export type TInitialBreaker = {
@@ -124,5 +127,15 @@ export type TInitialBreaker = {
     SelectedBreaker: TSelectedBreaker;
     SelectedBreakerAmp: string; 
     SelectedBreakerPoles: string;
+    BreakerSize: number,
+    MaxAmp: number
 };
 
+export type TBreakerActions = 
+  | { type: 'RESET_BREAKER_STATE' }
+  | { type: 'SET_SELECTED_SIZE', payload:  string}
+  | { type: 'SET_SELECTED_TRIP', payload:  any}
+  | { type: 'SET_SELECTED_FEATURE', payload:  any}
+  | { type: 'SET_SELECTED_BREAKER', payload: TSelectedBreaker }
+  | { type: 'SET_SELECTED_BREAKER_AMP', payload:  string}
+  | { type: 'SET_SELECTED_BREAKER_POLES', payload:  string}
