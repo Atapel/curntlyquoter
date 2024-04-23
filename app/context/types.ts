@@ -76,7 +76,7 @@ export type TMetadata = {
 export type TConfigurationActions = 
   | { type: 'TOTAL_RESET' }
   | { type: 'RESET_CONFIGURATION' }
-  | { type: 'LOAD_CONFIGURATION_FROM_DB'; payload: TConfiguration}
+  | { type: 'LOAD_CONFIGURATION_FROM_DB'; payload: TConfigDB}
   | { type: 'SET_FRAME_SIZE'; payload: string }
   | { type: 'SET_VOLTAGE'; payload: string }
   | { type: 'SET_KAIC_RATING'; payload: string }
@@ -87,10 +87,24 @@ export type TConfigurationActions =
   | { type: 'SET_FEED_TYPE'; payload: string }
   | { type: 'SET_FEED_POSITION'; payload: string }
   | { type: 'ADD_BREAKER'; payload: string }
-  | { type: 'REMOVE_BREAKER'; payload: string }
+  | { type: 'REMOVE_BREAKER'; payload: number }
   | { type: 'INIT_NEW_CONFIG'; payload: TMetadata }
 
-  
+export type TConfigDB =  {
+    id: string,
+    created_at: string,
+    user_id: string,
+    panel_width: number,
+    panel_voltage: string,
+    panel_KAIC_rating: number,
+    panel_bus_rating: string,
+    selected_breakers: TInitialBreaker[],
+    order_confirmed: boolean,
+    init_client: string,
+    init_project: string,
+    init_drawn_by: string,
+    last_updated_at: null
+}
 // export type TPricing = {};
   
 // export type TInitialConfiguration = {

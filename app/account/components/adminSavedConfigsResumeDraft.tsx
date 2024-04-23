@@ -3,11 +3,11 @@ import React from 'react';
 import { Button } from 'react-bootstrap';
 import Link from "next/link";
 import { UseConfigurationReducerContext } from "../../context/globalContext";
-import { TConfiguration } from "../../context/types";
-function ResumeDraftButton(props: TConfiguration) {
+import { TConfigDB } from "../../context/types";
+function ResumeDraftButton(props) {
     const { state, dispatch } = UseConfigurationReducerContext();
 
-    const loadConfigurationIntoState = (configObject) => {
+    const loadConfigurationIntoState = (configObject: TConfigDB) => {
         dispatch({ 
             type: 'LOAD_CONFIGURATION_FROM_DB', 
             payload: configObject 
