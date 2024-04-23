@@ -1,4 +1,5 @@
-export const initialBreaker = {
+import {TInitialBreaker, TBreakerActions} from "./types"
+export const initialBreaker: TInitialBreaker = {
     // User Selecions
     SelectedSize: "Select Breaker Size",
     SelectedTrip: "Select Breaker Trip",
@@ -11,7 +12,10 @@ export const initialBreaker = {
     MaxAmp: null
 };
 
-export const breakerReducer = (state, action) => {
+export const breakerReducer = (
+    state: TInitialBreaker, 
+    action: TBreakerActions
+) => {
     switch (action.type) {
 
         case "RESET_BREAKER_STATE":
