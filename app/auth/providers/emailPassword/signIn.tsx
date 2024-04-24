@@ -14,15 +14,20 @@ const SignIn = () => {
 
     try {
       // Attempt to login with the FormData object
-      await login(formData);
-
-      // If login is successful, you can redirect or perform other actions
-      console.log('Login successful');
+      const result = await login(formData);
+    
+      // Check if result is an error object
+      if (result && typeof result === 'object' && result.error) {
+        // If an error occurs during login, set the error message
+        setErrorMessage(result.error);
+        console.error(result.error);
+      }
     } catch (error) {
       // If an error occurs during login, set the error message
       setErrorMessage(error.message);
       console.error(error);
     }
+    
   };
   return (
     <div className="container mt-5">
@@ -41,6 +46,7 @@ const SignIn = () => {
                 name="email"
                 placeholder="Please enter your e-mail"
                 type="email"
+                data-testid="email-input"
               />
               <label htmlFor="password">Password</label>
               <input
@@ -49,8 +55,13 @@ const SignIn = () => {
                 name="password"
                 placeholder="Please enter your password"
                 type="password"
+                data-testid="password-input"
               />
-              <button className="btn btn-primary btn-lg btn-block mt-3" type="submit">
+              <button 
+                className="btn btn-primary btn-lg btn-block mt-3" 
+                type="submit" 
+                data-testid="signin-button"
+              >
                 Submit
               </button>
             </form>

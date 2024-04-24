@@ -3,24 +3,27 @@
 import { redirect } from 'next/navigation'
 import { createClient } from '../utils/supabase/server'
 import { ISignUpForm, IConfirmSignupForm} from './types'
-
+// type returnAuthErrMsg = {
+//   error: string
+// }
 export async function login(
     formData: FormData
-  ) {
+  ):  Promise<void | {error: string}>  {
   const supabase = createClient()
   
-  const data = {
+  const credentials = {
     email: formData.get('email') as string,
     password: formData.get('password') as string,
   }
   
   try{
-    await supabase.auth.signInWithPassword(data)
+    const { error} = await supabase.auth.signInWithPassword(credentials)
+    if(error) throw error;
   } catch (error) {
     console.error(error);
-    throw new Error(error.message);
+    // throw new Error(error.message);
+    return {error: error.message}
   }
-  
   redirect('/account')
 }
 
@@ -35,7 +38,7 @@ export async function signup(
   }
 
   try {
-    const { data, error } = await supabase.auth.signUp(reqData)
+    const { error } = await supabase.auth.signUp(reqData)
     if (error) {
       throw new Error(error.message)
     }
