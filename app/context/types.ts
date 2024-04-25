@@ -86,7 +86,7 @@ export type TConfigurationActions =
   | { type: 'SET_FEED_THRU_LUGS'; payload: boolean }
   | { type: 'SET_FEED_TYPE'; payload: string }
   | { type: 'SET_FEED_POSITION'; payload: string }
-  | { type: 'ADD_BREAKER'; payload: string }
+  | { type: 'ADD_BREAKER'; payload:  TInitialBreaker}
   | { type: 'REMOVE_BREAKER'; payload: number }
   | { type: 'INIT_NEW_CONFIG'; payload: TMetadata }
 

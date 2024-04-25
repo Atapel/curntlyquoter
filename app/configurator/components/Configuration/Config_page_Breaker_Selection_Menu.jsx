@@ -8,11 +8,11 @@ import BreakerMappings from "./BreakerMappings";
 const Select_Breakers_Menu = () => {
   const { state, dispatch } = UseConfigurationReducerContext();
   const { breakerState, breakerDispatch } = UseBreakerReducerContext()
-  const [renderSelectedBrakers, setrenderSelectedBrakers] = useState(false);
-  const [disableButtonState, setDisableButtonState] = useState(false)
+  // const [renderSelectedBrakers, setrenderSelectedBrakers] = useState(false);
+  // const [disableButtonState, setDisableButtonState] = useState(false)
   const [showAddButton, setShowAddButton] = useState(true)
 
-  const handleProductSelect = (product) => {
+  const handleProductSelect = () => {
     dispatch({ type: 'ADD_BREAKER', payload: breakerState })
     // Ativate the Component that lists the selected Breakers
     // setrenderSelectedBrakers(true)
@@ -152,6 +152,8 @@ const Select_Breakers_Menu = () => {
                     </Dropdown.Toggle>
                   </Col>
                 </Row>
+
+                <Dropdown.Menu>
                   {breakerState.SelectedBreaker.AmperageOptions.map((amperage, index) => (
                     <Dropdown.Item key={index}>
                       <Button
@@ -165,6 +167,7 @@ const Select_Breakers_Menu = () => {
                       </Button>
                     </Dropdown.Item>
                   ))}
+                </Dropdown.Menu>
               </Dropdown>
             </ListGroup.Item>
 
@@ -191,7 +194,7 @@ const Select_Breakers_Menu = () => {
 
                   {breakerState.SelectedBreaker.PolesOptions.map((pole, index) => (
 
-                    <Dropdown.Item>
+                    <Dropdown.Item key={index}>
                       <Button
                       data-testid={`selection-${pole}`}
                         onClick={() => breakerDispatch({ type: 'SET_SELECTED_BREAKER_POLES', payload: pole })}
