@@ -8,7 +8,7 @@ import {
   ListGroupItem,
   Form
 } from "react-bootstrap";
-
+import {selectableFrameOptions} from "../../assets/FrameSelectionOptions";
 import { UseConfigurationReducerContext } from "@/app/context/globalContext.jsx";
 import DisplaySelectedFrame from "./Config_page_Selected_Frame_Preview.jsx";
 
@@ -49,28 +49,21 @@ function Select_Panel_Menu(props) {
                   </Row>
 
                   <Dropdown.Menu>
-                    <Dropdown.Item>
-                      <Button
-                        data-testid="selection-36"
-                        variant="outline-info"
-                        size="sm"
-                        className="w-100"
-                        onClick={() => dispatch({ type: 'SET_FRAME_SIZE', payload: 36 })}
-                      >
-                        36
-                      </Button>
-                    </Dropdown.Item>
-                    <Dropdown.Item>
-                      <Button
-                        data-testid="selection-46"
-                        variant="outline-info"
-                        size="sm"
-                        className="w-100"
-                        onClick={() => dispatch({ type: 'SET_FRAME_SIZE', payload: 46 })}
-                      >
-                        46
-                      </Button>
-                    </Dropdown.Item>
+                  {
+                    selectableFrameOptions.frameSize.map((framesize)=>(
+                      <Dropdown.Item  key={framesize}>
+                        <Button
+                          data-testid={`selection-${framesize}`}
+                          variant="outline-info"
+                          size="sm"
+                          className="w-100"
+                          onClick={() => dispatch({ type: 'SET_FRAME_SIZE', payload: framesize })}
+                        >
+                          {framesize}
+                        </Button>
+                      </Dropdown.Item>
+                    ))
+                  }
                   </Dropdown.Menu>
                 </Dropdown>
               </ListGroup.Item>
@@ -94,40 +87,22 @@ function Select_Panel_Menu(props) {
                     </Col>
                   </Row>
                   <Dropdown.Menu>
-                    <Dropdown.Item>
-                      <Button
-                        data-testid="selection-90"
-                        variant="outline-info"
-                        size="sm"
-                        className="w-100"
-                        onClick={() => dispatch({ type: 'SET_PANEL_HEIGHT', payload: 90 })}
-                      >
-                        90"
-                      </Button>
-                    </Dropdown.Item>
-                    <Dropdown.Item>
-                      <Button
-                        data-testid="selection-77"
-                        variant="outline-info"
-                        size="sm"
-                        className="w-100"
-                        onClick={() => dispatch({ type: 'SET_PANEL_HEIGHT', payload: 77.5 })}
-                      >
-                        77.5"
-                      </Button>
-                    </Dropdown.Item>
-
-                    <Dropdown.Item>
-                      <Button
-                        data-testid="selection-65"
-                        variant="outline-info"
-                        size="sm"
-                        className="w-100"
-                        onClick={() => dispatch({ type: 'SET_PANEL_HEIGHT', payload: 65 })}
-                      >
-                        65"
-                      </Button>
-                    </Dropdown.Item>
+                  {
+                    selectableFrameOptions.panelHeight.map((panelHeight)=>(
+                      <Dropdown.Item key={panelHeight}>
+                        <Button
+                          data-testid={`selection-${panelHeight}`}
+                          variant="outline-info"
+                          size="sm"
+                          className="w-100"
+                          onClick={() => dispatch({ type: 'SET_PANEL_HEIGHT', payload: panelHeight })}
+                        >
+                          {panelHeight}
+                        </Button>
+                      </Dropdown.Item>
+                    ))
+                  }
+                    
                   </Dropdown.Menu>
                 </Dropdown>
               </ListGroup.Item>
@@ -151,28 +126,22 @@ function Select_Panel_Menu(props) {
                     </Col>
                   </Row>
                   <Dropdown.Menu>
-                    <Dropdown.Item>
-                      <Button
-                        data-testid="selection-120V"
-                        variant="outline-info"
-                        size="sm"
-                        className="w-100"
-                        onClick={() => dispatch({ type: 'SET_VOLTAGE', payload: "208Y/120V" })}
-                      >
-                        208Y/120V
-                      </Button>
-                    </Dropdown.Item>
-                    <Dropdown.Item>
-                      <Button
-                        data-testid="selection-270V"
-                        variant="outline-info"
-                        size="sm"
-                        className="w-100"
-                        onClick={() => dispatch({ type: 'SET_VOLTAGE', payload: "480Y/270V" })}
-                      >
-                        480Y/270V
-                      </Button>
-                    </Dropdown.Item>
+                  {
+                    selectableFrameOptions.voltage.map((voltage)=>(
+                      <Dropdown.Item key={voltage}>
+                        <Button
+                          data-testid={`selection-${voltage}`}
+                          variant="outline-info"
+                          size="sm"
+                          className="w-100"
+                          onClick={() => dispatch({ type: 'SET_VOLTAGE', payload: voltage })}
+                        >
+                          {voltage}
+                        </Button>
+                      </Dropdown.Item>
+                    ))
+                  } 
+                    
                   </Dropdown.Menu>
                 </Dropdown>
               </ListGroup.Item>
@@ -198,75 +167,40 @@ function Select_Panel_Menu(props) {
                   <Dropdown.Menu>
                     {state.Configuration.SelectedVoltage === "208Y/120V" ? (
                       <>
-                        <Dropdown.Item>
-                          <Button
-                            data-testid="selection-65"
-                            variant="outline-info"
-                            size="sm"
-                            className="w-100"
-                            onClick={() => dispatch({ type: 'SET_KAIC_RATING', payload: 65 })}
-                          >
-                            65
-                          </Button>
-                        </Dropdown.Item>
-                        <Dropdown.Item>
-                          <Button
-                            data-testid="selection-100"
-                            variant="outline-info"
-                            size="sm"
-                            className="w-100"
-                            onClick={() => dispatch({ type: 'SET_KAIC_RATING', payload: 100 })}
-                          >
-                            100
-                          </Button>
-                        </Dropdown.Item>
-                        <Dropdown.Item>
-                          <Button
-                            data-testid="selection-150"
-                            variant="outline-info"
-                            size="sm"
-                            className="w-100"
-                            onClick={() => dispatch({ type: 'SET_KAIC_RATING', payload: 150 })}
-                          >
-                            150
-                          </Button>
-                        </Dropdown.Item>
+                      {
+                    selectableFrameOptions.kaicRating["208Y/120V"].map((kaicRating)=>(
+                      <Dropdown.Item key={kaicRating}>
+                        <Button
+                          data-testid={`selection-${kaicRating}`}
+                          variant="outline-info"
+                          size="sm"
+                          className="w-100"
+                          onClick={() => dispatch({ type: 'SET_KAIC_RATING', payload: kaicRating })}
+                        >
+                          {kaicRating}
+                        </Button>
+                      </Dropdown.Item>
+                    ))
+                  }
+                        
                       </>
                     ) : state.Configuration.SelectedVoltage === "480Y/270V" ? (
                       <>
-                        <Dropdown.Item>
-                          <Button
-                            data-testid="selection-35"
-                            variant="outline-info"
-                            size="sm"
-                            className="w-100"
-                            onClick={() => dispatch({ type: 'SET_KAIC_RATING', payload: 35 })}
-                          >
-                            35
-                          </Button>
-                        </Dropdown.Item>
-                        <Dropdown.Item>
-                          <Button
-                            data-testid="selection-65"
-                            variant="outline-info"
-                            size="sm"
-                            className="w-100"
-                            onClick={() => dispatch({ type: 'SET_KAIC_RATING', payload: 65 })}
-                          >
-                            65
-                          </Button>
-                        </Dropdown.Item>
-                        <Dropdown.Item>
-                          <Button
-                            data-testid="selection-100"
-                            variant="outline-info"
-                            size="sm"
-                            className="w-100"
-                            onClick={() => dispatch({ type: 'SET_KAIC_RATING', payload: 100 })}
-                          >
-                            100
-                          </Button>
-                        </Dropdown.Item>
+                        {
+                  selectableFrameOptions.kaicRating["480Y/270V"].map((kaicRating)=>(
+                      <Dropdown.Item key={kaicRating}>
+                        <Button
+                          data-testid={`selection-${kaicRating}`}
+                          variant="outline-info"
+                          size="sm"
+                          className="w-100"
+                          onClick={() => dispatch({ type: 'SET_KAIC_RATING', payload: kaicRating })}
+                        >
+                          {kaicRating}
+                        </Button>
+                      </Dropdown.Item>
+                    ))
+                  }
                       </>
                     ) : null}
                   </Dropdown.Menu>
@@ -292,39 +226,20 @@ function Select_Panel_Menu(props) {
                     </Col>
                   </Row>
                   <Dropdown.Menu>
-                    <Dropdown.Item>
-                      <Button
-                        data-testid="selection-800"
-                        variant="outline-info"
-                        size="sm"
-                        className="w-100"
-                        onClick={() => dispatch({ type: 'SET_BUS_RATING', payload: 800 })}
-                      >
-                        800A
-                      </Button>
-                    </Dropdown.Item>
-                    <Dropdown.Item>
-                      <Button
-                        data-testid="selection-1500"
-                        variant="outline-info"
-                        size="sm"
-                        className="w-100"
-                        onClick={() => dispatch({ type: 'SET_BUS_RATING', payload: 1500 })}
-                      >
-                        1500A
-                      </Button>
-                    </Dropdown.Item>
-                    <Dropdown.Item>
-                      <Button
-                        data-testid="selection-2250"
-                        variant="outline-info"
-                        size="sm"
-                        className="w-100"
-                        onClick={() => dispatch({ type: 'SET_BUS_RATING', payload: 2250 })}
-                      >
-                        2250A
-                      </Button>
-                    </Dropdown.Item>
+                  {
+                    selectableFrameOptions.busRating.map((busRating)=>(
+                      <Dropdown.Item key={busRating}>
+                        <Button
+                          data-testid={`selection-${busRating}`}
+                          variant="outline-info"
+                          size="sm"
+                          className="w-100"
+                          onClick={() => dispatch({ type: 'SET_BUS_RATING', payload: busRating })}
+                        >
+                          {busRating}
+                        </Button>
+                      </Dropdown.Item>
+                    ))}
                   </Dropdown.Menu>
                 </Dropdown>
               </ListGroup.Item>
@@ -349,35 +264,21 @@ function Select_Panel_Menu(props) {
                     </Col>
                   </Row>
                   <Dropdown.Menu>
-                    <Dropdown.Item>
-                      <Button
-                        data-testid="selection-Distribution"
-                        // onClick={() => {
-                        //   const currentValue = state.Configuration.FeedThruLugs;
-                        //   dispatch({
-                        //     type: 'SET_MAIN_LUG',
-                        //     payload: !currentValue
-                        //   });
-                        // }}
-                        variant="outline-info"
-                        size="sm"
-                        className="w-100"
-                        onClick={() => dispatch({ type: 'SET_SERVICE_OR_DISTRIBUTION', payload: "Distribution" })}
-                      >
-                        Distribution
-                      </Button>
-                    </Dropdown.Item>
-                    <Dropdown.Item>
-                      <Button
-                        data-testid="selection-Service"
-                        variant="outline-info"
-                        size="sm"
-                        className="w-100"
-                        onClick={() => dispatch({ type: 'SET_SERVICE_OR_DISTRIBUTION', payload: "Service" })}
-                      >
-                        Service
-                      </Button>
-                    </Dropdown.Item>
+                  {
+                    selectableFrameOptions.serviceDistribution.map((serviceDistribution)=>(
+                      <Dropdown.Item key={serviceDistribution}>
+                        <Button
+                          data-testid={`selection-${serviceDistribution}`}
+                          variant="outline-info"
+                          size="sm"
+                          className="w-100"
+                          onClick={() => dispatch({ type: 'SET_SERVICE_OR_DISTRIBUTION', payload: serviceDistribution })}
+                        >
+                          {serviceDistribution}
+                        </Button>
+                      </Dropdown.Item>
+                    ))
+                  }
                   </Dropdown.Menu>
                 </Dropdown>
               </ListGroup.Item>
@@ -401,28 +302,21 @@ function Select_Panel_Menu(props) {
                     </Col>
                   </Row>
                   <Dropdown.Menu>
-                    <Dropdown.Item>
-                      <Button
-                        data-testid="selection-MainBreaker"
-                        variant="outline-info"
-                        size="sm"
-                        className="w-100"
-                        onClick={() => dispatch({ type: 'SET_FEED_TYPE', payload: "Main Breaker" })}
-                      >
-                        Main Breaker
-                      </Button>
-                    </Dropdown.Item>
-                    <Dropdown.Item>
-                      <Button
-                        data-testid="selection-MainLug"
-                        variant="outline-info"
-                        size="sm"
-                        className="w-100"
-                        onClick={() => dispatch({ type: 'SET_FEED_TYPE', payload: "Main Lug" })}
-                      >
-                        Main Lug
-                      </Button>
-                    </Dropdown.Item>
+                  {
+                    selectableFrameOptions.feedType.map((feedType)=>(
+                      <Dropdown.Item key={feedType}>
+                        <Button
+                          data-testid={`selection-${feedType}`}
+                          variant="outline-info"
+                          size="sm"
+                          className="w-100"
+                          onClick={() => dispatch({ type: 'SET_FEED_TYPE', payload: feedType })}
+                        >
+                          {feedType}
+                        </Button>
+                      </Dropdown.Item>
+                    ))
+                  }
                   </Dropdown.Menu>
                 </Dropdown>
               </ListGroup.Item>
@@ -450,40 +344,21 @@ function Select_Panel_Menu(props) {
                       </Col>
                     </Row>
                     <Dropdown.Menu>
-                      <Dropdown.Item>
+                    {
+                    selectableFrameOptions.feedPosition.map((feedPosition)=>(
+                      <Dropdown.Item key={feedPosition}>
                         <Button
-                          data-testid="selection-Top"
+                          data-testid={`selection-${feedPosition}`}
                           variant="outline-info"
                           size="sm"
                           className="w-100"
-                          onClick={() => dispatch({ type: 'SET_FEED_POSITION', payload: "Top" })}
+                          onClick={() => dispatch({ type: 'SET_FEED_POSITION', payload: feedPosition })}
                         >
-                          Top
+                          {feedPosition}
                         </Button>
                       </Dropdown.Item>
-                      <Dropdown.Item>
-                        <Button
-                          data-testid="selection-Bottom"
-                          variant="outline-info"
-                          size="sm"
-                          className="w-100"
-                          onClick={() => dispatch({ type: 'SET_FEED_POSITION', payload: "Bottom" })}
-                        >
-                          Bottom
-                        </Button>
-                      </Dropdown.Item>
-                      <Dropdown.Item>
-                        <Button
-                          data-testid="selection-TopBottom"
-                          variant="outline-info"
-                          size="sm"
-                          className="w-100"
-                          onClick={() => dispatch({ type: 'SET_FEED_POSITION', payload: "FeedThru (Top/Bottom)" })}
-                        >
-                          Feed Thru (Top/Bottom)
-                        </Button>
-                      </Dropdown.Item>
-  
+                    ))
+                  }
                     </Dropdown.Menu>
                   </Dropdown>
                 </ListGroup.Item>
