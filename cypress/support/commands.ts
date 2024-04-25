@@ -2,7 +2,15 @@
 /// <reference types="cypress" />
 
 declare namespace Cypress {
-    interface Chainable<Subject = any> {
+  interface Chainable<Subject = any> {
+    launchNewConfig(): Chainable<any>;
+  }
+  interface Chainable<Subject = any> {
+    login(
+      email: string, 
+      password: string): Chainable<any>;
+  }
+  interface Chainable<Subject = any> {
       addFrame(
         width: number,
         height: number,
@@ -21,18 +29,23 @@ declare namespace Cypress {
             poles: string
         ): Chainable<any>;
       }
-      interface Chainable<Subject = any> {
-        launchNewConfig(): Chainable<any>;
-      }
   }
+Cypress.Commands.add('login', (email, password) => {
+    cy.visit(`/auth`);
+
+    cy.get('[data-testid="email-input"]').type(email);
+    cy.get('[data-testid="password-input"]').type(password);
+    cy.get('[data-testid="signin-button"]').click();
+  })
+
 Cypress.Commands.add(`launchNewConfig`, ()=>{
     cy.visit(`/`);
     const random = Math.floor(Math.random() * 1000);
     cy.get('[data-testid="project-input"]').type(`Test${random}`);
     cy.get('[data-testid="client-input"]').type(`Test${random}`);
     cy.get('[data-testid="launch-new-configuration-button"]').click();
-
 })
+
 Cypress.Commands.add(`addFrame`, (
     width,
     height,

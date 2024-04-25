@@ -1,16 +1,21 @@
 import "../support/commands"
+import {selectableFrameOptions} from "../../app/configurator/assets/FrameSelectionOptions"
+import {Breakers} from "../../app/configurator/assets/BreakerSelectionOptions"
 describe('Config Test Draft', () => {
   let authCookie;
 
   it('Signing In', () => {
-    cy.visit('http://localhost:3000/auth')
-    cy.get('[data-testid="email-input"]').type('kilian96@live.de');
-    cy.get('[data-testid="password-input"]').type('Kilian96');
-    cy.get('[data-testid="signin-button"]').click();
     
-    cy.getCookie('sb-wnlbohioemzhzlhhknvy-auth-token').then(cookie => {
-      authCookie = cookie;
-    })
+    cy.visit('http://localhost:3000/auth')
+
+    const email = Cypress.env("testUserEmail")
+    const password = Cypress.env("testUserPassword")
+
+    cy.login(email, password)
+    
+    // cy.getCookie('sb-wnlbohioemzhzlhhknvy-auth-token').then(cookie => {
+    //   authCookie = cookie;
+    // })
 
     cy.wait(5000)
 
@@ -18,15 +23,20 @@ describe('Config Test Draft', () => {
     
     cy.wait(5000)
 
+    // Iterate through every possible frame configuration
     cy.addFrame(
       36,
       90,
-      "120V",
+      "208Y/120V",
       "100",
       "1500",
       "Distribution",
-      "MainBreaker",
+      "Main Breaker",
     )
+
+    // Iterate through every possible breaker configuration
+    
+    
     cy.addBreaker(
       "Single",
       "UTS400",
