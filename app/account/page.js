@@ -1,8 +1,9 @@
 import { createClient } from '../utils/supabase/server'
 import { cookies } from "next/headers";
-import AdminSite from "./adminSite";
 import { redirect } from 'next/navigation';
-
+import UserPanel from "./components/adminUserPanel";
+import NewConfigInput from "./components/adminUserInput";
+import Saved_Configurations from "./components/adminSavedConfigs";
 export default async function Account() {
   const supabase = createClient({ cookies });
 
@@ -20,7 +21,18 @@ export default async function Account() {
 
   return (
     <>
-      <AdminSite session={session} />
+    <title>Curntly Configurator</title>
+      <div className="container-fluid">
+        <UserPanel session={session} />
+        <div className="row">
+          <div className="col">
+            <Saved_Configurations session={session} />
+          </div>
+          <div className="col">
+            <NewConfigInput />
+          </div>
+        </div>
+      </div>
     </>
   );
 }
