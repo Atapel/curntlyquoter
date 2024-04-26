@@ -22,17 +22,28 @@ export const breakerReducer = (
             return initialBreaker;
 
         case "SET_SELECTED_SIZE":
-            return { ...state, SelectedSize: action.payload };
+            return { 
+                ...state, 
+                SelectedSize: action.payload as TInitialBreaker["SelectedSize"]
+            };
 
         case "SET_SELECTED_TRIP":
-            return { ...state, SelectedTrip: action.payload };
+            return { 
+                ...state, 
+                SelectedTrip: action.payload as TInitialBreaker["SelectedTrip"]
+            };
 
         case "SET_SELECTED_FEATURE":
-            return { ...state, SelectedFeature: action.payload };
+            return { 
+                ...state, 
+                SelectedFeature: action.payload as TInitialBreaker["SelectedFeature"]
+            };
 
         case "SET_SELECTED_BREAKER":
             return { 
+                
                 ...state, 
+
                 SelectedBreaker: action.payload,
                 Name: action.payload['Description'],
                 MaxAmp: action.payload['Max_Amperage'],
@@ -40,10 +51,16 @@ export const breakerReducer = (
             };
 
         case "SET_SELECTED_BREAKER_AMP":
-            return { ...state, SelectedBreakerAmp: action.payload };
+            return { 
+                ...state, 
+                SelectedBreakerAmp: action.payload as TInitialBreaker["SelectedBreakerAmp"]
+            };
 
         case "SET_SELECTED_BREAKER_POLES":
-            return { ...state, SelectedBreakerPoles: action.payload };
+            return { 
+                ...state, 
+                SelectedBreakerPoles: action.payload as TInitialBreaker["SelectedBreakerPoles"]
+            };
 
         default:
             return state;

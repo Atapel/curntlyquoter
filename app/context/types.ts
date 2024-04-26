@@ -117,15 +117,15 @@ export type TSelectedBreaker = {
     Description: string;
     Name?: string,
     MaxAmp?: number,
-    BreakerSize?: number
+    BreakerSize?: string
 };
   
 export type TInitialBreaker = {
     SelectedSize: string;
-    SelectedTrip: string;
-    SelectedFeature: string;
+    SelectedTrip: any;
+    SelectedFeature: any;
     SelectedBreaker: TSelectedBreaker;
-    SelectedBreakerAmp: string; 
+    SelectedBreakerAmp: "Select Amperage" | number; 
     SelectedBreakerPoles: string;
     BreakerSize: number,
     MaxAmp: number
