@@ -1,46 +1,37 @@
-"use client";
-import React from "react";
-import { Button, Row, Col, ListGroup } from "react-bootstrap";
 import UserFeedbackForm from "./adminFeedbackFromUser"
 import SignOut from "../../auth/Components/SignOutButton"
-
 const UserPanel = ({ session }) => {
-
   return (
-    <ListGroup>
-      <ListGroup.Item>
+    <div className="list-group">
+      <div className="list-group-item">
         <h2>Account</h2>
-      </ListGroup.Item>
-      <ListGroup.Item>
-        <Row>
+      </div>
+      <div className="list-group-item">
+        <div className="row">
           {session ? (
             <>
-
-              <Col>User: {session?.user.email}</Col>
-              <Col>
-              <UserFeedbackForm session={session} />
-              </Col>
-              <Col>
+              <div className="col">User: {session?.user.email}</div>
+              <div className="col">
+                <UserFeedbackForm session={session} />
+              </div>
+              <div className="col">
                 <SignOut />
-              </Col>
+              </div>
             </>
           ) : (
             <>
-              <Col>No user is signed in.</Col>
-              <Col>
-                <Button
-                  variant="success"
-                  href="/"
-                  className="w-50"
-                >
+              <div className="col">No user is signed in.</div>
+              <div className="col">
+                <a href="/" className="btn btn-success w-50">
                   Sign in here
-                </Button>
-              </Col>
+                </a>
+              </div>
             </>
           )}
-        </Row>
-      </ListGroup.Item>
-    </ListGroup>
+        </div>
+      </div>
+    </div>
+  
   );
 };
 

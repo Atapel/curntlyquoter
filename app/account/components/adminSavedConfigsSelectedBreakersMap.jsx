@@ -1,28 +1,25 @@
-"use client"
-import React from "react";
-import { Col, ListGroup, Dropdown, Row } from "react-bootstrap";
-
 const MapSelectedBreakers = (config_state) => {
   let selectedBreakers = config_state.config_state.selected_breakers
   return (
     <>
-      {selectedBreakers.map((item, index) => (
-        <ListGroup.Item key={index}>
-          <Row>
-            <Col>{item.Description}</Col>
-
-            <Col>
-              <Dropdown>
-                <Dropdown.Toggle variant="primary" id="dropdown-basic">
+      {selectedBreakers && selectedBreakers.map((item, index) => (
+        <li key={index} className="list-group-item">
+          <div className="row">
+            <div className="col">
+              {item.Description}
+            </div>
+            <div className="col">
+              <div className="dropdown">
+                <button className="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   Details
-                </Dropdown.Toggle>
-                <Dropdown.Menu>
-                  <Dropdown.Item>Max Amp: {item.Max_Amperage}</Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
-            </Col>
-          </Row>
-        </ListGroup.Item>
+                </button>
+                <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <div className="dropdown-item">Max Amp: {item.Max_Amperage}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
       ))}
     </>
   );

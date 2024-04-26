@@ -2,16 +2,6 @@
 import React, { useEffect, useState } from "react";
 import { createClient } from '../../utils/supabase/clients'
 // import { deletePricingSubSheet }  from '../../api_requests/google_sheet_call/pricing/actions'
-import {
-  Button,
-  Row,
-  Col,
-  ListGroup,
-  ListGroupItem,
-  Card,
-  Modal,
-  Alert,
-} from "react-bootstrap";
 import ResumeDraftButton from "./adminSavedConfigsResumeDraft"
 import MapSelectedBreakers from "./adminSavedConfigsSelectedBreakersMap";
 
@@ -96,130 +86,127 @@ function Saved_Configurations({ session }) {
   }, []);
 
   return (
-    <>
-      <ListGroup>
-        <ListGroup.Item>
-          <h2>Previous configurations</h2>
-        </ListGroup.Item>
-        <ListGroup.Item>
-          <Row>
-            {configs.length > 0 ? (
-              configs.map((configuration) => (
-                <React.Fragment key={configuration.id}>
-                  <Card style={{ width: "18rem" }}>
-                    <Card.Img variant="top" src="" />
-                    <Card.Body>
-                      <Card.Title>Overview</Card.Title>
-                      <ListGroup>
-                        <ListGroupItem>
-                          <strong>Project name:</strong>{" "}
-                          {configuration.init_project}
-                        </ListGroupItem>
-                        <ListGroupItem>
-                          <strong>Created at:</strong>{" "}
-                          {configuration.created_at
-                            .substring(0, 19)
-                            .replace("T", " ")}
-                        </ListGroupItem>
-                        <ListGroupItem>
-                          <strong>Client:</strong>{" "}
-                          {configuration.init_client}
-                        </ListGroupItem>
-                        <ListGroupItem>
-                          <strong>Drawn by:</strong>{" "}
-                          {configuration.init_drawn_by}
-                        </ListGroupItem>
-                        {expandedConfig === configuration.id && (
-                          <>
-                            <Card.Title>Selected Switchboard</Card.Title>
-                            <ListGroupItem>
-                              <strong>Width:</strong>{" "}
-                              {configuration.panel_width}
-                            </ListGroupItem>
-                            <ListGroupItem>
-                              <strong>Voltage:</strong>{" "}
-                              {configuration.panel_voltage}
-                            </ListGroupItem>
-                            <ListGroupItem>
-                              <strong>KAIC rating:</strong>{" "}
-                              {configuration.panel_KAIC_rating}
-                            </ListGroupItem>
-                            <ListGroupItem>
-                              <strong>Bus rating:</strong>{" "}
-                              {configuration.panel_bus_rating}
-                            </ListGroupItem>
-                            <Card.Title>Selected Breakers</Card.Title>
-                            <MapSelectedBreakers
-                              config_state={configuration}
-                            />
-                            <Card.Title>Order Details</Card.Title>
-                            <ListGroupItem>
-                              <strong>Order status:</strong>{" "}
-                              {configuration.order_confirmed
-                                ? "Confirmed"
-                                : "Not confirmed"}
-                            </ListGroupItem>
-                          </>
-                        )}
-                      </ListGroup>
-
-                      <Col>
-                        <Row>
-                          <Button
-                            variant="primary"
+      <>
+        <div className="list-group">
+          <div className="list-group-item">
+            <h2>Previous configurations</h2>
+          </div>
+          <div className="list-group-item">
+            <div className="row">
+              {configs.length > 0 ? (
+                configs.map((configuration) => (
+                  <div className="col-md-4 mb-3" key={configuration.id}>
+                    <div className="card" style={{ width: "18rem" }}>
+                      <img className="card-img-top" src="" alt="Card image cap" />
+                      <div className="card-body">
+                        <h5 className="card-title">Overview</h5>
+                        <ul className="list-group list-group-flush">
+                          <li className="list-group-item">
+                            <strong>Project name:</strong>{" "}
+                            {configuration.init_project}
+                          </li>
+                          <li className="list-group-item">
+                            <strong>Created at:</strong>{" "}
+                            {configuration.created_at
+                              .substring(0, 19)
+                              .replace("T", " ")}
+                          </li>
+                          <li className="list-group-item">
+                            <strong>Client:</strong>{" "}
+                            {configuration.init_client}
+                          </li>
+                          <li className="list-group-item">
+                            <strong>Drawn by:</strong>{" "}
+                            {configuration.init_drawn_by}
+                          </li>
+                          {expandedConfig === configuration.id && (
+                            <>
+                              <h5 className="card-title">Selected Switchboard</h5>
+                              <li className="list-group-item">
+                                <strong>Width:</strong>{" "}
+                                {configuration.panel_width}
+                              </li>
+                              <li className="list-group-item">
+                                <strong>Voltage:</strong>{" "}
+                                {configuration.panel_voltage}
+                              </li>
+                              <li className="list-group-item">
+                                <strong>KAIC rating:</strong>{" "}
+                                {configuration.panel_KAIC_rating}
+                              </li>
+                              <li className="list-group-item">
+                                <strong>Bus rating:</strong>{" "}
+                                {configuration.panel_bus_rating}
+                              </li>
+                              <h5 className="card-title">Selected Breakers</h5>
+                              <MapSelectedBreakers
+                                config_state={configuration}
+                              />
+                              <h5 className="card-title">Order Details</h5>
+                              <li className="list-group-item">
+                                <strong>Order status:</strong>{" "}
+                                {configuration.order_confirmed
+                                  ? "Confirmed"
+                                  : "Not confirmed"}
+                              </li>
+                            </>
+                          )}
+                        </ul>
+                        <div className="row">
+                          <button
+                            type="button"
+                            className="btn btn-primary mr-2"
                             onClick={() => handleExpand(configuration.id)}
                           >
                             {expandedConfig === configuration.id
                               ? "Collapse"
                               : "Expand"}
-                          </Button>
-                        </Row>
-                        <Row>
-                          <ResumeDraftButton
-                            configFromDb={configuration}
-                          >
-                          </ResumeDraftButton>
-                        </Row>
-                        <Row>
-                          <Button
-                            variant="danger"
+                          </button>
+                          <ResumeDraftButton configFromDb={configuration} />
+                          <button
+                            type="button"
+                            className="btn btn-danger mt-2"
                             onClick={() => handleDelete(configuration.id)}
                           >
                             Delete
-                          </Button>
-                        </Row>
-                      </Col>
-                    </Card.Body>
-                  </Card>
-                </React.Fragment>
-              ))
-            ) : (
-              <Col>
-                <Alert variant="info">User has no configurations saved.</Alert>
-              </Col>
-            )}
-          </Row>
-        </ListGroup.Item>
-      </ListGroup>
-
-      <Modal show={showModal} onHide={() => setShowModal(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>Confirm Delete</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          Are you sure you want to delete this configuration?
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowModal(false)}>
-            Cancel
-          </Button>
-          <Button variant="danger" onClick={confirmDelete}>
-            Delete
-          </Button>
-        </Modal.Footer>
-      </Modal>
-    </>
-  );
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <div className="col">
+                  <div className="alert alert-info" role="alert">
+                    User has no configurations saved.
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+    
+        <div className={`modal ${showModal ? 'show' : ''}`} tabIndex="-1" role="dialog">
+          <div className="modal-dialog" role="document">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title">Confirm Delete</h5>
+                <button type="button" className="close" onClick={() => setShowModal(false)} aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div className="modal-body">
+                Are you sure you want to delete this configuration?
+              </div>
+              <div className="modal-footer">
+                <button type="button" className="btn btn-secondary" onClick={() => setShowModal(false)}>Cancel</button>
+                <button type="button" className="btn btn-danger" onClick={confirmDelete}>Delete</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </>
+    );
 }
 
 export default Saved_Configurations;
