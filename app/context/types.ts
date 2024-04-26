@@ -43,11 +43,11 @@
   
 export type TConfiguration = {
   Configuration: {
-    SelectedFrameSize: string;
+    SelectedFrameSize: 'Select Width' | number;
     SelectedVoltage: string; 
-    SelectedKAICRating: string;
-    SelectedBusRating: string;
-    SelectedPanelHeight: string;
+    SelectedKAICRating: 'Select KAIC Rating' | number;
+    SelectedBusRating: 'Select Bus Rating' | number;
+    SelectedPanelHeight: "Select Height" | number;
     SelectedServiceDistribution: string;
     FeedThruLugs: boolean;
     SelectedFeedType: string;

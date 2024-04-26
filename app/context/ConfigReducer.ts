@@ -73,7 +73,7 @@ export const reducer = (
         ...state,
         Configuration: {
           ...state.Configuration,
-          SelectedFrameSize: action.payload
+          SelectedFrameSize: action.payload as TConfiguration["Configuration"]["SelectedFrameSize"]
         }
       };
 
@@ -82,7 +82,7 @@ export const reducer = (
         ...state,
         Configuration: {
           ...state.Configuration,
-          SelectedVoltage: action.payload
+          SelectedVoltage: action.payload as TConfiguration["Configuration"]["SelectedVoltage"]
         }
       };
 
@@ -91,7 +91,7 @@ export const reducer = (
         ...state,
         Configuration: {
           ...state.Configuration,
-          SelectedKAICRating: action.payload
+          SelectedKAICRating: action.payload as TConfiguration["Configuration"]["SelectedKAICRating"]
         }
       };
 
@@ -100,7 +100,7 @@ export const reducer = (
         ...state,
         Configuration: {
           ...state.Configuration,
-          SelectedBusRating: action.payload
+          SelectedBusRating: action.payload as TConfiguration["Configuration"]["SelectedBusRating"]
         }
       };
 
@@ -109,7 +109,7 @@ export const reducer = (
         ...state,
         Configuration: {
           ...state.Configuration,
-          SelectedPanelHeight: action.payload
+          SelectedPanelHeight: action.payload as TConfiguration["Configuration"]["SelectedPanelHeight"]
         }
       };
 
@@ -118,7 +118,7 @@ export const reducer = (
         ...state,
         Configuration: {
           ...state.Configuration,
-          SelectedServiceDistribution: action.payload
+          SelectedServiceDistribution: action.payload as TConfiguration["Configuration"]["SelectedServiceDistribution"]
         }
       };
 
@@ -136,7 +136,7 @@ export const reducer = (
         ...state,
         Configuration: {
           ...state.Configuration,
-          SelectedFeedType: action.payload
+          SelectedFeedType: action.payload as TConfiguration["Configuration"]["SelectedFeedType"]
         }
       }
 
@@ -145,19 +145,41 @@ export const reducer = (
         ...state,
         Configuration: {
           ...state.Configuration,
-          SelectedFeedPosition: action.payload
+          SelectedFeedPosition: action.payload as TConfiguration["Configuration"]["SelectedFeedPosition"]
         }
       }
 
     case 'ADD_BREAKER':
+      // Size Checker
       newSize = state.Configuration.CurrentBreakersSize + action.payload['BreakerSize']
+      // Breaker Description labeling
+      let modifiedPayload = { ...action.payload }; // Creating a shallow copy of action.payload
+
+      // Breaker Description labeling
+      if (state.Configuration.SelectedVoltage === "208Y/120V") {
+        if (state.Configuration.SelectedKAICRating === 65) {
+          modifiedPayload.SelectedBreaker.Description += 'N';
+        } else if (state.Configuration.SelectedKAICRating === 100) {
+          modifiedPayload.SelectedBreaker.Description += 'H';
+        } else if (state.Configuration.SelectedKAICRating === 150) {
+          modifiedPayload.SelectedBreaker.Description += 'L';
+        }
+      } else if (state.Configuration.SelectedVoltage === "480Y/270V") {
+        if (state.Configuration.SelectedKAICRating === 35) {
+          modifiedPayload.SelectedBreaker.Description += 'N';
+        } else if (state.Configuration.SelectedKAICRating === 65) {
+          modifiedPayload.SelectedBreaker.Description += 'H';
+        } else if (state.Configuration.SelectedKAICRating === 100) {
+          modifiedPayload.SelectedBreaker.Description += 'L';
+        }
+      }
       
       if (newSize < state.Configuration.MaxBreakerSize) {
         return {
           ...state,
           Configuration: {
             ...state.Configuration,
-            SelectedBreakers: [...state.Configuration.SelectedBreakers, action.payload],
+            SelectedBreakers: [...state.Configuration.SelectedBreakers, modifiedPayload],
             CurrentBreakersSize: newSize
           }
         };
@@ -187,9 +209,9 @@ export const reducer = (
         // initialConfiguration,
         ...state,
         Metadata: {
-          Client: action.payload.Client,
-          Project: action.payload.Project,
-          DatabaseID: action.payload.DatabaseID
+          Client: action.payload.Client as TConfiguration["Metadata"]["Client"],
+          Project: action.payload.Project as TConfiguration["Metadata"]["Project"],
+          DatabaseID: action.payload.DatabaseID as TConfiguration["Metadata"]["DatabaseID"]
         }
       } 
   }
