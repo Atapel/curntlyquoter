@@ -8,8 +8,6 @@ import BreakerMappings from "./BreakerMappings";
 const Select_Breakers_Menu = () => {
   const { state, dispatch } = UseConfigurationReducerContext();
   const { breakerState, breakerDispatch } = UseBreakerReducerContext()
-  // const [renderSelectedBrakers, setrenderSelectedBrakers] = useState(false);
-  // const [disableButtonState, setDisableButtonState] = useState(false)
   const [showAddButton, setShowAddButton] = useState(true)
 
   const handleProductSelect = () => {
