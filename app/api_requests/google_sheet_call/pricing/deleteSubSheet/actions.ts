@@ -1,5 +1,5 @@
 'use Server'
-import getGoogleSheetsClient from "../sheetsClient";
+import getGoogleSheetsClient from "../../sheetsClient";
 
 export const deletePricingSubSheet = async (
   sheetName: string
