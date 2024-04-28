@@ -1,9 +1,24 @@
 /// <reference types="cypress" />
 /// <reference types="cypress" />
-
+interface IConfigSpecs {
+  TestIdentifier: string;
+  Width: number;
+  Height: number;
+  Voltage: string;
+  Kaic: string;
+  Bus: string;
+  ServiceDistribution: string;
+  FeedType: string;
+  BreakerFrame: string;
+  BreakerModel: string;
+  BreakerAmp: string;
+  BreakerPole: string;
+}
 declare namespace Cypress {
   interface Chainable<Subject = any> {
-    launchNewConfig(): Chainable<any>;
+    launchNewConfig(
+      testName: string
+    ): Chainable<any>;
   }
   interface Chainable<Subject = any> {
     login(
@@ -12,89 +27,121 @@ declare namespace Cypress {
   }
   interface Chainable<Subject = any> {
       addFrame(
-        width: number,
-        height: number,
-        voltage: string,
-        kaicRating: string,
-        busRating: string,
-        distributionService: string,
-        feedType: string
+        ConfigSpecs: IConfigSpecs
       ): Chainable<any>;
     }
     interface Chainable<Subject = any> {
         addBreaker(
-            breakerFrame: string, 
-            breaker: string, 
-            amp: string, 
-            poles: string
+          ConfigSpecs: IConfigSpecs
+        ): Chainable<any>;
+      }
+      interface Chainable<Subject = any> {
+        saveConfig(): Chainable<any>;
+      }
+      interface Chainable<Subject = any> {
+        checkConfigSpecsQuotationPage(
+          ConfigSpecs: IConfigSpecs
+        ): Chainable<any>;
+      }
+      interface Chainable<Subject = any> {
+        checkConfigSpecsUserDashboard(
+          ConfigSpecs: IConfigSpecs
         ): Chainable<any>;
       }
   }
 Cypress.Commands.add('login', (email, password) => {
-    cy.visit(`/auth`);
-
+  cy.session([email,password], () => {
+    cy.visit('/auth')
     cy.get('[data-testid="email-input"]').type(email);
     cy.get('[data-testid="password-input"]').type(password);
     cy.get('[data-testid="signin-button"]').click();
+    cy.wait(5000)
+    cy.url().should('contain', '/account')
+    })   
   })
 
-Cypress.Commands.add(`launchNewConfig`, ()=>{
-    cy.visit(`/`);
-    const random = Math.floor(Math.random() * 1000);
-    cy.get('[data-testid="project-input"]').type(`Test${random}`);
-    cy.get('[data-testid="client-input"]').type(`Test${random}`);
+Cypress.Commands.add(`launchNewConfig`, (testName)=>{
+    cy.visit(`/account`);
+    cy.get('[data-testid="project-input"]').type(testName);
+    cy.get('[data-testid="client-input"]').type(testName);
     cy.get('[data-testid="launch-new-configuration-button"]').click();
+    cy.wait(5000)
 })
 
-Cypress.Commands.add(`addFrame`, (
-    width,
-    height,
-    voltage,
-    kaicRating,
-    busRating,
-    distributionService,
-    feedType
-    ) => {
+Cypress.Commands.add(`addFrame`, (ConfigSpecs) => {
+    cy.visit
     cy.get(`[data-testid="Dropdown-Width"]`).click();
-    cy.get(`[data-testid="selection-${width}"]`).click()
+    cy.get(`[data-testid="selection-${ConfigSpecs.Width}"]`).click()
 
     cy.get(`[data-testid="Dropdown-Height"]`).click();
-    cy.get(`[data-testid="selection-${height}"]`).click()
+    cy.get(`[data-testid="selection-${ConfigSpecs.Height}"]`).click()
 
     cy.get(`[data-testid="Dropdown-Voltage"]`).click();
-    cy.get(`[data-testid="selection-${voltage}"]`).click()
+    cy.get(`[data-testid="selection-${ConfigSpecs.Voltage}"]`).click()
 
     cy.get(`[data-testid="Dropdown-Kaic"]`).click();
-    cy.get(`[data-testid="selection-${kaicRating}"]`).click()
+    cy.get(`[data-testid="selection-${ConfigSpecs.Kaic}"]`).click()
 
     cy.get(`[data-testid="Dropdown-Bus"]`).click();
-    cy.get(`[data-testid="selection-${busRating}"]`).click()
+    cy.get(`[data-testid="selection-${ConfigSpecs.Bus}"]`).click()
     
     cy.get(`[data-testid="Dropdown-DistService"]`).click();
-    cy.get(`[data-testid="selection-${distributionService}"]`).click()
+    cy.get(`[data-testid="selection-${ConfigSpecs.ServiceDistribution}"]`).click()
 
     cy.get(`[data-testid="Dropdown-Feed"]`).click();
-    cy.get(`[data-testid="selection-${feedType}"]`).click()
+    cy.get(`[data-testid="selection-${ConfigSpecs.FeedType}"]`).click()
 
+    // if (feedPosition) {
+    //   cy.get(`[data-testid="Dropdown-FeedPosition"]`).click();
+    //   cy.get(`[data-testid="selection-${feedPosition}"]`).click()
+    // }
+    
     cy.get(`[data-testid="Add-Frame"]`).click();
   });
 
 
-Cypress.Commands.add('addBreaker', (breakerFrame, breaker, amp, poles) => {
+Cypress.Commands.add('addBreaker', (ConfigSpecs) => {
     cy.get(`[data-testid="Dropdown-BreakerFrame"]`).click();
-    cy.get(`[data-testid="selection-${breakerFrame}"]`).click();
+    cy.get(`[data-testid="selection-${ConfigSpecs.BreakerFrame}"]`).click();
   
     cy.get(`[data-testid="Dropdown-Breaker"]`).click();
-    cy.get(`[data-testid="selection-${breaker}"]`).click();
+    cy.get(`[data-testid="selection-${ConfigSpecs.BreakerModel}"]`).click();
   
     cy.get(`[data-testid="Dropdown-Amp"]`).click();
-    cy.get(`[data-testid="selection-${amp}"]`).click();
+    cy.get(`[data-testid="selection-${ConfigSpecs.BreakerAmp}"]`).click();
   
     cy.get(`[data-testid="Dropdown-Poles"]`).click();
-    cy.get(`[data-testid="selection-${poles}"]`).click();
+    cy.get(`[data-testid="selection-${ConfigSpecs.BreakerPole}"]`).click();
 
     cy.get(`[data-testid="Add-Breaker"]`).click();
   });
 
+Cypress.Commands.add("saveConfig", ()=>{
+  cy.get(`[data-testid="Save-Config"]`).click();
+  cy.get(`[data-testid="Save-Config-Alert"]`).should("contain.text","Configuration saved successfully!");  
+})
+
+Cypress.Commands.add("checkConfigSpecsQuotationPage", (ConfigSpecs)=>{
+  // cy.get(`[data-testid="Quotation-Page"]`).click();
+  // Assertion Configuration Overview:
+  
+  cy.get(`[data-testid="${ConfigSpecs.TestIdentifier}-Width"]`).should("contain.text", ConfigSpecs.Width);
+  cy.get(`[data-testid="${ConfigSpecs.TestIdentifier}-Height"]`).should("contain.text", ConfigSpecs.Height);
+  cy.get(`[data-testid="${ConfigSpecs.TestIdentifier}-Voltage"]`).should("contain.text", ConfigSpecs.Voltage);
+  cy.get(`[data-testid="${ConfigSpecs.TestIdentifier}-Kaic"]`).should("contain.text", ConfigSpecs.Kaic);
+  cy.get(`[data-testid="${ConfigSpecs.TestIdentifier}-Bus"]`).should("contain.text", ConfigSpecs.Bus);
+  cy.get(`[data-testid="${ConfigSpecs.TestIdentifier}-ServiceDistribution"]`).should("contain.text", ConfigSpecs.ServiceDistribution);
+  cy.get(`[data-testid="${ConfigSpecs.TestIdentifier}-FeedType"]`).should("contain.text", ConfigSpecs.FeedType);
+
+})
+
+Cypress.Commands.add("checkConfigSpecsUserDashboard", (ConfigSpecs)=>{
+  cy.visit(`/account`);
+  
+  cy.get(`[data-testid="${ConfigSpecs.TestIdentifier}-Width"]`).should("contain.text", ConfigSpecs.Width);
+  cy.get(`[data-testid="${ConfigSpecs.TestIdentifier}-Voltage"]`).should("contain.text", ConfigSpecs.Voltage);
+  cy.get(`[data-testid="${ConfigSpecs.TestIdentifier}-Kaic"]`).should("contain.text", ConfigSpecs.Kaic);
+  cy.get(`[data-testid="${ConfigSpecs.TestIdentifier}-Bus"]`).should("contain.text", ConfigSpecs.Bus);
+})
   
   

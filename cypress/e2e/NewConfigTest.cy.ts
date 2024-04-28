@@ -1,49 +1,51 @@
 import "../support/commands"
-import {selectableFrameOptions} from "../../app/configurator/assets/FrameSelectionOptions"
-import {Breakers} from "../../app/configurator/assets/BreakerSelectionOptions"
 describe('Config Test Draft', () => {
-  let authCookie;
-
-  it('Signing In', () => {
-    
-    cy.visit('http://localhost:3000/auth')
-
+  const ConfigSpecs: IConfigSpecs = {
+    TestIdentifier: `Test${Math.floor(Math.random() * 1000)}`,
+    Width: 36,
+    Height: 90,
+    Voltage: "208Y/120V",
+    Kaic: "100",
+    Bus: "1500",
+    ServiceDistribution: "Distribution",
+    FeedType: "Main Breaker",
+    BreakerFrame: "Single",
+    BreakerModel: "UTS400",
+    BreakerAmp: "250",
+    BreakerPole: "2p"
+  }
+  beforeEach(() => {
     const email = Cypress.env("testUserEmail")
     const password = Cypress.env("testUserPassword")
-
     cy.login(email, password)
-    
-    // cy.getCookie('sb-wnlbohioemzhzlhhknvy-auth-token').then(cookie => {
-    //   authCookie = cookie;
-    // })
+  })
 
+  it('Completes a new configuration', () => {
     cy.wait(5000)
-
-    cy.launchNewConfig()
-    
+    cy.launchNewConfig(ConfigSpecs.TestIdentifier)
     cy.wait(5000)
-
-    // Iterate through every possible frame configuration
+    
     cy.addFrame(
-      36,
-      90,
-      "208Y/120V",
-      "100",
-      "1500",
-      "Distribution",
-      "Main Breaker",
+      ConfigSpecs
     )
-
-    // Iterate through every possible breaker configuration
-    
     
     cy.addBreaker(
-      "Single",
-      "UTS400",
-      "250",
-      "2p"
+      ConfigSpecs
     )
+
+    cy.saveConfig()
+
+    cy.checkConfigSpecsQuotationPage(ConfigSpecs)
+
+    // cy.checkConfigSpecsUserDashboard(ConfigSpecs)
 
   })
 
+  // it("Deletes a Config", () => {
+  //   cy.wait(5000)
+  //   cy.visit(`/account`);
+  //   cy.get(`[data-testid="Delete-Config-${ConfigSpecs.TestIdentifier}"]`).click();
+  //   cy.get(`[data-testid="Confirm-Delete-Config"]`).click();
+
+  // })
 })
