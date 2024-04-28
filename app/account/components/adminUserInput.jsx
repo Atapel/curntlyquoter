@@ -35,11 +35,18 @@ const NewConfigInput = () => {
     })
     
     dispatch({ type: 'TOTAL_RESET' })
+    // Typescript didn notice the wrong payload i gave it
+    // Payload arg was payload: {
+      // client: formData.client,
+      // project: formData.project,
+      // databaseId: Id
+      // Capitalisation in key was wrong, no error recieved
     dispatch({ type: 'INIT_NEW_CONFIG', payload: {
-      client: formData.client,
-      project: formData.project,
-      databaseId: Id
-    }}) 
+      Client: formData.client,
+      Project: formData.project,
+      DatabaseId: Id
+    }})
+    console.log("state after init",state);
     
   };
 
