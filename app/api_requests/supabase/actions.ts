@@ -1,7 +1,10 @@
 "use server"
 import { createClient } from '../../utils/supabase/server'
-
-export async function insertConfigurationInit(configState: any) {
+import { TConfiguration } from '../../context/types';
+export async function insertConfigurationInit(configState: {
+  Client: string,
+  Project: string
+}): Promise<string> {
   const currentTime = new Date().toISOString().substring(0, 19).replace("T", " ");
   const supabase = createClient()
   const currentUser = await supabase.auth.getUser()
@@ -36,7 +39,7 @@ export async function insertConfigurationInit(configState: any) {
   return data[0].id
 }
 
-export async function updateConfiguration(configState: any) {
+export async function updateConfiguration(configState: TConfiguration) {
     const currentTime = new Date().toISOString().substring(0, 19).replace("T", " ");
     const supabase = createClient()
     const objectToInsert = {
