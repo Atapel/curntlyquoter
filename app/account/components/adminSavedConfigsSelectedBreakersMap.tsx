@@ -1,12 +1,19 @@
-const MapSelectedBreakers = (config_state) => {
-  let selectedBreakers = config_state.config_state.selected_breakers
+import {FunctionComponent} from 'react';
+import {TInitialBreaker, TConfigDB} from "../../context/types"
+interface selectedBreakersProps {
+  config_state: TConfigDB
+}
+const MapSelectedBreakers:FunctionComponent<selectedBreakersProps> = (
+  props: selectedBreakersProps
+) => {
+  let selectedBreakers: TInitialBreaker[] = props.config_state.selected_breakers
   return (
     <>
       {selectedBreakers && selectedBreakers.map((item, index) => (
         <li key={index} className="list-group-item">
           <div className="row">
             <div className="col">
-              {item.Description}
+              {item.SelectedBreaker.Description}
             </div>
             <div className="col">
               <div className="dropdown">
@@ -14,7 +21,7 @@ const MapSelectedBreakers = (config_state) => {
                   Details
                 </button>
                 <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                  <div className="dropdown-item">Max Amp: {item.Max_Amperage}</div>
+                  <div className="dropdown-item">Max Amp: {item.MaxAmp}</div>
                 </div>
               </div>
             </div>
