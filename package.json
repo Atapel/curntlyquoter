@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test": "pnpm cypress open --browser chrome --e2e cypress/e2e/NewConfigTest.cy.ts"
   },
   "dependencies": {
     "@google-cloud/local-auth": "3.0.1",
