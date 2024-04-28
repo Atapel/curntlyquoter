@@ -25,11 +25,15 @@ function SaveConfigurationButton() {
         onClick={insertConfigurations}
         variant="outline-info"
         className="w-100"
+        data-testid="Save-Config"
       >
         Save Configuration to Database
       </Button>
       {operationStatus && (
-        <Alert variant={operationStatus}>
+        <Alert 
+          variant={operationStatus}
+          data-testid="Save-Config-Alert"  
+        >
           {operationStatus === "success"
             ? "Configuration saved successfully!"
             : "Failed to save configuration!"}
