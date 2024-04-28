@@ -6,6 +6,11 @@ export default defineConfig({
     setupNodeEvents(on, config) {
       // implement node event listeners here
     },
+    // env: {
+    //   localUrl: 'http://localhost:3000',
+    //   previewUrl: 'XXXXX',
+    //   prodUrl: 'XXXXX',
+    // },
     baseUrl: 'http://localhost:3000'
   },
 });
