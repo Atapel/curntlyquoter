@@ -26,7 +26,7 @@ export default async function Account() {
         <UserPanel session={session} />
         <div className="row">
           <div className="col">
-            <Saved_Configurations session={session} />
+            <Saved_Configurations />
           </div>
           <div className="col">
             <NewConfigInput />
