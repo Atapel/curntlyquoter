@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
 import { Card, ListGroup, ListGroupItem, Row, Col, Dropdown } from 'react-bootstrap'; // Make sure to import necessary Bootstrap components
 import ConfirmOrderButton from './Quotation_page_order_button';
-const ConfigReview = ({ configuration }) => {
-
+import { UseConfigurationReducerContext } from "../../../context/globalContext";
+const ConfigReview = () => {
+    const { state, dispatch } = UseConfigurationReducerContext();
     // Fix bug where Breake gets added from Breaker state to config.selected breakers rather than just pushing the product element from the products array
     return (
         <Card>
@@ -10,36 +10,36 @@ const ConfigReview = ({ configuration }) => {
                 <Row>
                 <Col>
                     <Card.Title>Selected Switchboard</Card.Title>
-                    <ListGroupItem>
-                        <strong>Width:</strong> {configuration.SelectedFrameSize}
+                    <ListGroupItem data-testid={`${state.Metadata.Project}-Width`}>
+                        <strong>Width:</strong> {state.Configuration.SelectedFrameSize}
                     </ListGroupItem>
-                    <ListGroupItem>
-                        <strong>Voltage:</strong> {configuration.SelectedVoltage}
+                    <ListGroupItem data-testid={`${state.Metadata.Project}-Voltage`}>
+                        <strong>Voltage:</strong> {state.Configuration.SelectedVoltage}
                     </ListGroupItem>
-                    <ListGroupItem>
-                        <strong>KAIC rating:</strong> {configuration.SelectedKAICRating}
+                    <ListGroupItem data-testid={`${state.Metadata.Project}-Kaic`}>
+                        <strong>KAIC rating:</strong> {state.Configuration.SelectedKAICRating}
                     </ListGroupItem>
-                    <ListGroupItem>
-                        <strong>Bus rating:</strong> {configuration.SelectedBusRating}
+                    <ListGroupItem data-testid={`${state.Metadata.Project}-Bus`}>
+                        <strong>Bus rating:</strong> {state.Configuration.SelectedBusRating}
                     </ListGroupItem>
-                    <ListGroupItem>
-                        <strong>Panel Height:</strong> {configuration.SelectedPanelHeight}
+                    <ListGroupItem data-testid={`${state.Metadata.Project}-Height`}>
+                        <strong>Panel Height:</strong> {state.Configuration.SelectedPanelHeight}
                     </ListGroupItem>
-                    <ListGroupItem>
+                    <ListGroupItem data-testid={`${state.Metadata.Project}-ServiceDistribution`}>
                         <strong>Service Distribution:</strong>{' '}
-                        {configuration.SelectedServiceDistribution}
+                        {state.Configuration.SelectedServiceDistribution}
                     </ListGroupItem>
-                    <ListGroupItem>
-                        <strong>Feed Type:</strong> {configuration.SelectedFeedType}
+                    <ListGroupItem data-testid={`${state.Metadata.Project}-FeedType`}>
+                        <strong>Feed Type:</strong> {state.Configuration.SelectedFeedType}
                     </ListGroupItem>
                     
-                    {configuration.SelectedFeedType === "Main Breaker" ? (
-                        <ListGroupItem>
-                            <strong>Feed Thru Lugs:</strong> {configuration.FeedThruLugs ? "Yes" : "No"}
+                    {state.Configuration.SelectedFeedType === "Main Breaker" ? (
+                        <ListGroupItem data-testid={`${state.Metadata.Project}-FeedThruLugs`}>
+                            <strong>Feed Thru Lugs:</strong> {state.Configuration.FeedThruLugs ? "Yes" : "No"}
                         </ListGroupItem>
-                    ): configuration.SelectedFeedType === "Main Lug" ? (
-                        <ListGroupItem>
-                            <strong>Feed Position:</strong> {configuration.SelectedFeedPosition}
+                    ): state.Configuration.SelectedFeedType === "Main Lug" ? (
+                        <ListGroupItem data-testid={`${state.Metadata.Project}-FeedPosition`}>
+                            <strong>Feed Position:</strong> {state.Configuration.SelectedFeedPosition}
                         </ListGroupItem>
                     ):
                     (null)}
@@ -49,7 +49,7 @@ const ConfigReview = ({ configuration }) => {
                     <Col>
                     <Card.Title>Selected Breakers</Card.Title>
 
-                    {configuration.SelectedBreakers.map((item, index) => (
+                    {state.Configuration.SelectedBreakers && state.Configuration.SelectedBreakers.map((item, index) => (
                         <ListGroup.Item key={index}>
                         <Row>
                             <Col>{item.Description}</Col>
@@ -73,7 +73,7 @@ const ConfigReview = ({ configuration }) => {
                     <Card.Title>Order Details</Card.Title>
                     <ListGroupItem>
                         <strong>Order status:</strong>{' '}
-                        {configuration.order_confirmed ? <p>Confirmed</p> : <Col><Row><p>Not Confirmed yet</p></Row><Row><ConfirmOrderButton></ConfirmOrderButton></Row></Col>}
+                        {state.Configuration.order_confirmed ? <p>Confirmed</p> : <Col><Row><p>Not Confirmed yet</p></Row><Row><ConfirmOrderButton></ConfirmOrderButton></Row></Col>}
                     </ListGroupItem>
                     </Col>
                 </Row>
