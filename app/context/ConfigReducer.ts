@@ -1,5 +1,5 @@
-import {TConfiguration,TConfigurationActions} from "./types"
-export const initialConfiguration: TConfiguration = {
+import {TConfigurationState,TConfigurationActions} from "./types"
+export const initialConfiguration: TConfigurationState = {
   Configuration: {
     SelectedFrameSize: 'Select Width',
     SelectedVoltage: 'Select Voltage',
@@ -21,11 +21,16 @@ export const initialConfiguration: TConfiguration = {
     DatabaseID: null,
     ResumeDraft: false
   },
-  Pricing: {}
+  Pricing: {
+    OrderConfirmed:false,
+    // Price: ;
+    // OrderNumber: ;
+    // OrderDate: ;
+  }
 };
 export type TConfigReducer = (
-  state: TConfiguration, 
-  action: TConfigurationActions) => TConfiguration 
+  state: TConfigurationState, 
+  action: TConfigurationActions) => TConfigurationState 
 
 export const reducer: TConfigReducer = (state, action) => {
   let newSize: number
@@ -56,11 +61,11 @@ export const reducer: TConfigReducer = (state, action) => {
           SelectedVoltage: action.payload.panel_voltage,
           SelectedKAICRating: action.payload.panel_KAIC_rating,
           SelectedBusRating: action.payload.panel_bus_rating,
-          SelectedPanelHeight: 'Select Height',
-          SelectedServiceDistribution: 'Select Service or Distribution',
-          FeedThruLugs: false,
-          SelectedFeedType: "Select Feed Type",
-          SelectedFeedPosition: "Select Feed Position",
+          SelectedPanelHeight: action.payload.panel_height,
+          SelectedServiceDistribution: action.payload.panel_service_distribution,
+          FeedThruLugs: action.payload.panel_feed_thru_lugs,
+          SelectedFeedType: action.payload.panel_feed_type,
+          SelectedFeedPosition: action.payload.panel_feed_position,
           SelectedBreakers: action.payload.selected_breakers,
           CurrentBreakersSize: newBreakersSize,
           MaxBreakerSize: 45
@@ -71,7 +76,12 @@ export const reducer: TConfigReducer = (state, action) => {
           DatabaseID: action.payload.id,
           ResumeDraft: true
         },
-        Pricing: {}
+        Pricing: {
+          OrderConfirmed:action.payload.order_confirmed,
+          // Price: action.payload.price;
+          // OrderNumber: action.payload.price_order_number;
+          // OrderDate: action.payload.price_order_date;
+        }
       }
 
 
@@ -80,7 +90,7 @@ export const reducer: TConfigReducer = (state, action) => {
         ...state,
         Configuration: {
           ...state.Configuration,
-          SelectedFrameSize: action.payload as TConfiguration["Configuration"]["SelectedFrameSize"]
+          SelectedFrameSize: action.payload as TConfigurationState["Configuration"]["SelectedFrameSize"]
         }
       };
 
@@ -89,7 +99,7 @@ export const reducer: TConfigReducer = (state, action) => {
         ...state,
         Configuration: {
           ...state.Configuration,
-          SelectedVoltage: action.payload as TConfiguration["Configuration"]["SelectedVoltage"]
+          SelectedVoltage: action.payload as TConfigurationState["Configuration"]["SelectedVoltage"]
         }
       };
 
@@ -98,7 +108,7 @@ export const reducer: TConfigReducer = (state, action) => {
         ...state,
         Configuration: {
           ...state.Configuration,
-          SelectedKAICRating: action.payload as TConfiguration["Configuration"]["SelectedKAICRating"]
+          SelectedKAICRating: action.payload as TConfigurationState["Configuration"]["SelectedKAICRating"]
         }
       };
 
@@ -107,7 +117,7 @@ export const reducer: TConfigReducer = (state, action) => {
         ...state,
         Configuration: {
           ...state.Configuration,
-          SelectedBusRating: action.payload as TConfiguration["Configuration"]["SelectedBusRating"]
+          SelectedBusRating: action.payload as TConfigurationState["Configuration"]["SelectedBusRating"]
         }
       };
 
@@ -116,7 +126,7 @@ export const reducer: TConfigReducer = (state, action) => {
         ...state,
         Configuration: {
           ...state.Configuration,
-          SelectedPanelHeight: action.payload as TConfiguration["Configuration"]["SelectedPanelHeight"]
+          SelectedPanelHeight: action.payload as TConfigurationState["Configuration"]["SelectedPanelHeight"]
         }
       };
 
@@ -125,7 +135,7 @@ export const reducer: TConfigReducer = (state, action) => {
         ...state,
         Configuration: {
           ...state.Configuration,
-          SelectedServiceDistribution: action.payload as TConfiguration["Configuration"]["SelectedServiceDistribution"]
+          SelectedServiceDistribution: action.payload as TConfigurationState["Configuration"]["SelectedServiceDistribution"]
         }
       };
 
@@ -143,7 +153,7 @@ export const reducer: TConfigReducer = (state, action) => {
         ...state,
         Configuration: {
           ...state.Configuration,
-          SelectedFeedType: action.payload as TConfiguration["Configuration"]["SelectedFeedType"]
+          SelectedFeedType: action.payload as TConfigurationState["Configuration"]["SelectedFeedType"]
         }
       }
 
@@ -152,7 +162,7 @@ export const reducer: TConfigReducer = (state, action) => {
         ...state,
         Configuration: {
           ...state.Configuration,
-          SelectedFeedPosition: action.payload as TConfiguration["Configuration"]["SelectedFeedPosition"]
+          SelectedFeedPosition: action.payload as TConfigurationState["Configuration"]["SelectedFeedPosition"]
         }
       }
 
@@ -216,9 +226,9 @@ export const reducer: TConfigReducer = (state, action) => {
         // initialConfiguration,
         ...state,
         Metadata: {
-          // Client: action.payload.Client as TConfiguration["Metadata"]["Client"],
-          // Project: action.payload.Project as TConfiguration["Metadata"]["Project"],
-          // DatabaseID: action.payload.DatabaseID as TConfiguration["Metadata"]["DatabaseID"]
+          // Client: action.payload.Client as TConfigurationState["Metadata"]["Client"],
+          // Project: action.payload.Project as TConfigurationState["Metadata"]["Project"],
+          // DatabaseID: action.payload.DatabaseID as TConfigurationState["Metadata"]["DatabaseID"]
           Client: action.payload.Client,
           Project: action.payload.Project,
           DatabaseID: action.payload.DatabaseID,

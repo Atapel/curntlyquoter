@@ -1,71 +1,21 @@
-// interface Configuration {
-//     SelectedFrameSize: string;
-//     SelectedVoltage: string; 
-//     SelectedKAICRating: string;
-//     SelectedBusRating: string;
-//     SelectedPanelHeight: string;
-//     SelectedServiceDistribution: string;
-//     FeedThruLugs: boolean;
-//     SelectedFeedType: string;
-//     SelectedFeedPosition: string;
-//     SelectedBreakers: string[];
-//     CurrentBreakersSize: number;
-//     MaxBreakerSize: number;
-//   }
-  
-//   interface Metadata {
-//     Client: string;
-//     Project: string; 
-//     DatabaseID: string | null;
-//   }
-  
-//   interface Pricing {}
-  
-//   interface InitialConfiguration {
-//     Configuration: Configuration;
-//     Metadata: Metadata;
-//     Pricing: Pricing;
-//   }
-
-  
-//   interface SelectedBreaker {
-//     Description: string;
-//   }
-  
-//   interface InitialBreaker {
-//     SelectedSize: string;
-//     SelectedTrip: string;
-//     SelectedFeature: string;
-//     SelectedBreaker: SelectedBreaker;
-//     SelectedBreakerAmp: string; 
-//     SelectedBreakerPoles: string;
-//   }
-  
-export type TConfiguration = {
-  Configuration: {
-    SelectedFrameSize: 'Select Width' | number;
-    SelectedVoltage: string; 
-    SelectedKAICRating: 'Select KAIC Rating' | number;
-    SelectedBusRating: 'Select Bus Rating' | number;
-    SelectedPanelHeight: "Select Height" | number;
-    SelectedServiceDistribution: string;
-    FeedThruLugs: boolean;
-    SelectedFeedType: string;
-    SelectedFeedPosition: string;
-    SelectedBreakers: TInitialBreaker[];
-    CurrentBreakersSize: number;
-    MaxBreakerSize: number;
-  },
-  Metadata: {
-    Client: string;
-    Project: string; 
-    DatabaseID: string | null;
-    ResumeDraft: boolean
-  },
-  Pricing: {}
+export type TConfigurationState = {
+  Configuration: TConfiguration
+  Metadata: TMetadata
+  Pricing: TPricing
 };
-export type TConfigDBObject = {
-  
+export type TConfiguration = {
+  SelectedFrameSize: 'Select Width' | number;
+  SelectedVoltage: string; 
+  SelectedKAICRating: 'Select KAIC Rating' | number;
+  SelectedBusRating: 'Select Bus Rating' | number;
+  SelectedPanelHeight: "Select Height" | number;
+  SelectedServiceDistribution: string;
+  FeedThruLugs: boolean;
+  SelectedFeedType: string;
+  SelectedFeedPosition: string;
+  SelectedBreakers: TInitialBreaker[];
+  CurrentBreakersSize: number;
+  MaxBreakerSize: number;
 }
 export type TMetadata = {
   Client: string;
@@ -73,6 +23,12 @@ export type TMetadata = {
   DatabaseID: string | null;
   ResumeDraft: boolean
 };
+export type TPricing = {
+  Price?: number;
+  OrderNumber?: string;
+  OrderDate?: string;
+  OrderConfirmed: boolean;
+}
 export type TConfigurationActions = 
   | { type: 'TOTAL_RESET' }
   | { type: 'RESET_CONFIGURATION' }
@@ -95,9 +51,14 @@ export type TConfigDB =  {
     created_at: string,
     user_id: string,
     panel_width: number,
+    panel_height: number,
     panel_voltage: string,
     panel_KAIC_rating: number,
     panel_bus_rating: number,
+    panel_service_distribution: string,
+    panel_feed_thru_lugs: boolean,
+    panel_feed_type: string,
+    panel_feed_position: string,
     selected_breakers: TInitialBreaker[],
     order_confirmed: boolean,
     init_client: string,
@@ -105,13 +66,6 @@ export type TConfigDB =  {
     init_drawn_by: string,
     last_updated_at: null
 }
-// export type TPricing = {};
-  
-// export type TInitialConfiguration = {
-//     Configuration: TConfiguration;
-//     Metadata: TMetadata;
-//     Pricing: TPricing;
-// };
 
 export type TSelectedBreaker = {
     Description: string;
