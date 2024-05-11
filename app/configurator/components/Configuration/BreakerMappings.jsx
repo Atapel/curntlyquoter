@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Dropdown, Button } from "react-bootstrap";
-import { UseConfigurationReducerContext, UseBreakerReducerContext } from "@/context/globalContext";
+import { UseConfigurationReducerContext, UseBreakerReducerContext } from "@context/globalContext";
 import { getBreakerDetails } from "@api_requests/fetch_products"; 
 export default function BreakerMappings(props) {
     const { state, dispatch } = UseConfigurationReducerContext();
