@@ -1,16 +1,33 @@
 "use client";
 import React, { createContext, useContext, useReducer } from "react";
-import {TConfiguration,TConfigurationActions} from "./types"
+import {
+  TConfigurationState,
+  TConfigurationActions,
+  TInitialBreaker,
+  TBreakerActions
+} from "./types"
 // Import Logic
 import { initialConfiguration, reducer } from "./ConfigReducer"
 import { initialBreaker, breakerReducer } from "./BreakerReducer";
 // Create Context
 interface ConfigurationContextType {
-  state: TConfiguration;
+  state: TConfigurationState;
   dispatch: React.Dispatch<TConfigurationActions>;
 }
-const ConfigurationReducerContext = createContext<ConfigurationContextType>({ state: initialConfiguration, dispatch: () => {} });
-const BreakerReducerContext = createContext({ state: initialBreaker, dispatch: () => {} });
+interface BreakerContextType {
+  breakerState: TInitialBreaker;
+  dispatch: React.Dispatch<TBreakerActions>;
+}
+const ConfigurationReducerContext = createContext<ConfigurationContextType>({ 
+  state: initialConfiguration, 
+  dispatch: () => {} 
+});
+
+const BreakerReducerContext = createContext({ 
+  state: initialBreaker,
+  dispatch: () => {} 
+});
+
 // Export the global Context Provider
 export const GlobalContextProvider = ({ children }) => {
   // Create the Context Variabless
@@ -30,5 +47,5 @@ export const GlobalContextProvider = ({ children }) => {
   );
 };
 // Export the Context Consumers
-export const UseConfigurationReducerContext = () => useContext(ConfigurationReducerContext)
-export const UseBreakerReducerContext = () => useContext(BreakerReducerContext)
+export const UseConfigurationReducerContext = ():ConfigurationContextType => useContext(ConfigurationReducerContext)
+export const UseBreakerReducerContext = ():BreakerContextType => useContext(BreakerReducerContext)
