@@ -2,8 +2,8 @@
 import React, {useState} from "react";
 import Link from "next/link";
 import { Form, Button, Row, Col, Container, ListGroup } from "react-bootstrap";
-import { UseConfigurationReducerContext } from "../../context/globalContext";
-import {insertConfigurationInit}  from '../../api_requests/supabase/actions'
+import { UseConfigurationReducerContext } from "@context/globalContext";
+import {insertConfigurationInit}  from '@api_requests/supabase/actions'
 
 const NewConfigInput = () => {
   const { state, dispatch } = UseConfigurationReducerContext();

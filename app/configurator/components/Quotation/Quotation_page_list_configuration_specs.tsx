@@ -1,6 +1,6 @@
 import { Card, ListGroup, ListGroupItem, Row, Col, Dropdown } from 'react-bootstrap'; // Make sure to import necessary Bootstrap components
 import ConfirmOrderButton from './Quotation_page_order_button';
-import { UseConfigurationReducerContext } from "../../../context/globalContext";
+import { UseConfigurationReducerContext } from "@context/globalContext";
 const ConfigReview = () => {
     const { state, dispatch } = UseConfigurationReducerContext();
     // Fix bug where Breake gets added from Breaker state to config.selected breakers rather than just pushing the product element from the products array
@@ -52,7 +52,7 @@ const ConfigReview = () => {
                     {state.Configuration.SelectedBreakers && state.Configuration.SelectedBreakers.map((item, index) => (
                         <ListGroup.Item key={index}>
                         <Row>
-                            <Col>{item.Description}</Col>
+                            <Col>{item.SelectedBreaker.Description}</Col>
                             <Col>{item.BreakerSize}</Col>
                             <Col>
                             <Dropdown>
@@ -60,7 +60,7 @@ const ConfigReview = () => {
                                 Details
                                 </Dropdown.Toggle>
                                 <Dropdown.Menu>
-                                <Dropdown.Item>Max Amp: {item.Max_Amperage}</Dropdown.Item>
+                                <Dropdown.Item>Max Amp: {item.SelectedBreaker.MaxAmp}</Dropdown.Item>
                                 </Dropdown.Menu>
                             </Dropdown>
                             </Col>
@@ -73,7 +73,7 @@ const ConfigReview = () => {
                     <Card.Title>Order Details</Card.Title>
                     <ListGroupItem>
                         <strong>Order status:</strong>{' '}
-                        {state.Configuration.order_confirmed ? <p>Confirmed</p> : <Col><Row><p>Not Confirmed yet</p></Row><Row><ConfirmOrderButton></ConfirmOrderButton></Row></Col>}
+                        {state.Pricing.OrderConfirmed ? <p>Confirmed</p> : <Col><Row><p>Not Confirmed yet</p></Row><Row><ConfirmOrderButton></ConfirmOrderButton></Row></Col>}
                     </ListGroupItem>
                     </Col>
                 </Row>

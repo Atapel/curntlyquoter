@@ -1,5 +1,5 @@
 import {FunctionComponent} from 'react';
-import {TInitialBreaker, TConfigDB} from "../../context/types"
+import {TInitialBreaker, TConfigDB} from "@context/types"
 interface selectedBreakersProps {
   config_state: TConfigDB
 }

@@ -24,17 +24,14 @@
     ],
     "baseUrl": "./",
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["./*"],
+      "@account/*": ["./app/account/*"],
+      "@api_requests/*": ["./app/api_requests/*"],
+      "@auth/*": ["./app/auth/*"],
+      "@context/*": ["./app/context/*"],
+      "@configurator/*": ["app/configurator/*"],
+      "@utils/*": ["./app/utils/*"]
     },
-    // "paths": {
-    //   "@account/*": ["app/account/*"],
-    //   "@api_requests/*": ["app/api_requests/*"],
-    //   "@auth/*": ["app/auth/*"],
-    //   "@configurator/*": ["app/configurator/*"],
-    //   "@context/*": ["app/context/*"],
-    //   "@globals.css": ["app/globals.css"],
-    //   "@utils/*": ["app/utils/*"]
-    // }
   },
   "include": [
     "next-env.d.ts",

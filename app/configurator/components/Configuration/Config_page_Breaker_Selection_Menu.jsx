@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Alert, Dropdown, Button, Row, ListGroup, Col, ListGroupItem } from "react-bootstrap";
-import { getBreakerDetails } from "../../../api_requests/fetch_products";
-import { UseConfigurationReducerContext, UseBreakerReducerContext } from "@/app/context/globalContext.jsx";
+import { getBreakerDetails } from "@api_requests/fetch_products";
+import { UseConfigurationReducerContext, UseBreakerReducerContext } from "@context/globalContext";
 import DisplaySelectedItems from "./Config_page_Selected_Breakers_List";
 import BreakerMappings from "./BreakerMappings";
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { ListGroup } from "react-bootstrap";
-import { UseConfigurationReducerContext } from "@/app/context/globalContext";
+import { UseConfigurationReducerContext } from "@context/globalContext";
 import PDF_Generation from "./Config_page_PDF_creation";
 import SaveConfigurationButton from "../Configuration/Config_page_insert_button";
 import { frontViewSvgSource, sideViewSvgSource } from "./SvgSourceGenerator";

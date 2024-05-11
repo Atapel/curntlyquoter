@@ -1,5 +1,5 @@
 import UserFeedbackForm from "./adminFeedbackFromUser"
-import SignOut from "../../auth/Components/SignOutButton"
+import SignOut from "@auth/Components/SignOutButton"
 const UserPanel = ({ session }) => {
   return (
     <div className="list-group">

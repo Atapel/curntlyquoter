@@ -1,5 +1,5 @@
 import ConfigCards from "./savedConfigCards";
-import {TConfigDB} from "../../context/types";
+import {TConfigDB} from "@context/types";
 import {getConfigs} from "../actions" 
 async function Saved_Configurations() {
 

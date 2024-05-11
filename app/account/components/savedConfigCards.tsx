@@ -1,6 +1,6 @@
 "use client"
 import { FunctionComponent, useState } from 'react';
-import { TConfigDB } from '../../context/types';
+import { TConfigDB } from '@context/types';
 import {deleteConfigs} from "../actions" 
 import ResumeDraftButton from "./adminSavedConfigsResumeDraft"
 import MapSelectedBreakers from "./adminSavedConfigsSelectedBreakersMap";

@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, Col, ListGroup, Row } from "react-bootstrap";
-import { UseConfigurationReducerContext } from "@/app/context/globalContext.jsx";
+import { UseConfigurationReducerContext } from "@context/globalContext";
 
 const DisplaySelectedFrame = (props) => {
   const { state, dispatch } = UseConfigurationReducerContext();

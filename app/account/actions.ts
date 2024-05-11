@@ -1,7 +1,7 @@
 "use server";
-import { createClient } from '../utils/supabase/server'
-import { deletePricingSubSheet }  from '../api_requests/google_sheet_call/pricing/deleteSubSheet/actions'
-import { TConfigDB } from '../context/types';
+import { createClient } from '@utils/supabase/server'
+import { deletePricingSubSheet }  from '@api_requests/google_sheet_call/pricing/deleteSubSheet/actions'
+import { TConfigDB } from '@context/types';
 import { revalidatePath } from 'next/cache'
 const supabase = createClient();
 const urlPath = process.env.NEXT_PUBLIC_PRICING_SHEET_ROUTEHANDLER_URL;

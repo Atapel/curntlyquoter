@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button, Alert } from "react-bootstrap";
-import { confirmOrder } from "../../../api_requests/supabase/actions"
+import { confirmOrder } from "@api_requests/supabase/actions"
 function ConfirmOrderButton() {
   const [operationStatus, setOperationStatus] = useState(null);
 

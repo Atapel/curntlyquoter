@@ -1,7 +1,7 @@
 import React from "react";
 import ListGroup from "react-bootstrap/ListGroup";
 import { Alert, Button, Col, Dropdown, Row } from "react-bootstrap";
-import { UseConfigurationReducerContext } from "@/app/context/globalContext.jsx";
+import { UseConfigurationReducerContext } from "@/app/context/globalContext";
 
 const DisplaySelectedItems = () => {
   const { state, dispatch } = UseConfigurationReducerContext();

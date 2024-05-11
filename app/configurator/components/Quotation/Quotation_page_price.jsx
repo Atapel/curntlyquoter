@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { UseConfigurationReducerContext } from "@/app/context/globalContext.jsx";
+import { UseConfigurationReducerContext } from "@context/globalContext";
 import { Button, Col, Row } from 'react-bootstrap';
 
 const PriceDisplayComponent = () => {

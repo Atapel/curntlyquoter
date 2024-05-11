@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button, Alert } from "react-bootstrap";
-import { UseConfigurationReducerContext } from "../../../context/globalContext";
-import { updateConfiguration }  from '../../../api_requests/supabase/actions'
+import { UseConfigurationReducerContext } from "@context/globalContext";
+import { updateConfiguration }  from '@api_requests/supabase/actions'
 function SaveConfigurationButton() {
   const { state, dispatch } = UseConfigurationReducerContext();
   const [operationStatus, setOperationStatus] = useState(null);

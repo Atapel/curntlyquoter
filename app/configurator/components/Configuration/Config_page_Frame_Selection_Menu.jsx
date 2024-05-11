@@ -9,8 +9,8 @@ import {
   Form
 } from "react-bootstrap";
 import {selectableFrameOptions} from "../../assets/FrameSelectionOptions";
-import { UseConfigurationReducerContext } from "@/app/context/globalContext.jsx";
-import DisplaySelectedFrame from "./Config_page_Selected_Frame_Preview.jsx";
+import { UseConfigurationReducerContext } from "@context/globalContext";
+import DisplaySelectedFrame from "./Config_page_Selected_Frame_Preview";
 
 function Select_Panel_Menu(props) {
   const [panelSelected, setPanelSelected] = props.renderstate;

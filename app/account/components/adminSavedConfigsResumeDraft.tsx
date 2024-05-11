@@ -2,8 +2,8 @@
 import {FunctionComponent} from 'react';
 import { Button } from 'react-bootstrap';
 import Link from "next/link";
-import { UseConfigurationReducerContext } from "../../context/globalContext";
-import { TConfigDB } from "../../context/types";
+import { UseConfigurationReducerContext } from "@context/globalContext";
+import { TConfigDB } from "@context/types";
 interface IResumeDraftButtonProps {
     configFromDb: TConfigDB
 }

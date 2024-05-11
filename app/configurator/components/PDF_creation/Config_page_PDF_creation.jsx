@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { jsPDF } from "jspdf";
 import { Alert, Button } from "react-bootstrap";
-import { UseConfigurationReducerContext } from "../../../context/globalContext";
+import { UseConfigurationReducerContext } from "@context/globalContext";
 import Curntly_Logo from "public/curntly_slogan.png";
 
 const PDF_Generation = ({ canvasRef }) => {
