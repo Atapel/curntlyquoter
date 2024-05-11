@@ -23,10 +23,11 @@ export const initialConfiguration: TConfiguration = {
   },
   Pricing: {}
 };
-
-export const reducer = (
+export type TConfigReducer = (
   state: TConfiguration, 
-  action: TConfigurationActions) => {
+  action: TConfigurationActions) => TConfiguration 
+
+export const reducer: TConfigReducer = (state, action) => {
   let newSize: number
 
   switch (action.type) {
@@ -43,7 +44,8 @@ export const reducer = (
     case 'LOAD_CONFIGURATION_FROM_DB':
       // Calculate current Breaker Size
       let sizeArray = []
-      action.payload.selected_breakers.forEach(breaker => {
+
+      action.payload.selected_breakers && action.payload.selected_breakers.forEach(breaker => {
         sizeArray.push(breaker["Size"])
       });
       let newBreakersSize = sizeArray.reduce((total, num) => total + num, 0)
@@ -54,6 +56,11 @@ export const reducer = (
           SelectedVoltage: action.payload.panel_voltage,
           SelectedKAICRating: action.payload.panel_KAIC_rating,
           SelectedBusRating: action.payload.panel_bus_rating,
+          SelectedPanelHeight: 'Select Height',
+          SelectedServiceDistribution: 'Select Service or Distribution',
+          FeedThruLugs: false,
+          SelectedFeedType: "Select Feed Type",
+          SelectedFeedPosition: "Select Feed Position",
           SelectedBreakers: action.payload.selected_breakers,
           CurrentBreakersSize: newBreakersSize,
           MaxBreakerSize: 45
@@ -209,9 +216,13 @@ export const reducer = (
         // initialConfiguration,
         ...state,
         Metadata: {
-          Client: action.payload.Client as TConfiguration["Metadata"]["Client"],
-          Project: action.payload.Project as TConfiguration["Metadata"]["Project"],
-          DatabaseID: action.payload.DatabaseID as TConfiguration["Metadata"]["DatabaseID"]
+          // Client: action.payload.Client as TConfiguration["Metadata"]["Client"],
+          // Project: action.payload.Project as TConfiguration["Metadata"]["Project"],
+          // DatabaseID: action.payload.DatabaseID as TConfiguration["Metadata"]["DatabaseID"]
+          Client: action.payload.Client,
+          Project: action.payload.Project,
+          DatabaseID: action.payload.DatabaseID,
+          ResumeDraft: false
         }
       } 
   }

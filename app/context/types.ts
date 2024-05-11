@@ -80,7 +80,7 @@ export type TConfigurationActions =
   | { type: 'SET_FRAME_SIZE'; payload: string }
   | { type: 'SET_VOLTAGE'; payload: string }
   | { type: 'SET_KAIC_RATING'; payload: string }
-  | { type: 'SET_BUS_RATING'; payload: string }
+  | { type: 'SET_BUS_RATING'; payload: number }
   | { type: 'SET_PANEL_HEIGHT'; payload: string }
   | { type: 'SET_SERVICE_OR_DISTRIBUTION'; payload: string }
   | { type: 'SET_FEED_THRU_LUGS'; payload: boolean }
@@ -97,7 +97,7 @@ export type TConfigDB =  {
     panel_width: number,
     panel_voltage: string,
     panel_KAIC_rating: number,
-    panel_bus_rating: string,
+    panel_bus_rating: number,
     selected_breakers: TInitialBreaker[],
     order_confirmed: boolean,
     init_client: string,
