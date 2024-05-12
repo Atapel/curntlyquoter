@@ -9,14 +9,24 @@ function SaveConfigurationButton() {
   async function insertConfigurations() {
     
     try {
-      updateConfiguration(state)
-      // Log success and set operation status
-      console.log("Record inserted successfully!");
-      setOperationStatus("success");
-    } catch (error) { 
-      console.log(error);
+      console.log("state to save",state);
+      
+      const result = await updateConfiguration(state);
+      if (typeof result === 'string') {
+        // Log success and set operation status
+        console.log("Record inserted successfully!");
+        setOperationStatus("success");
+      } else {
+        // Handle the object with an 'error' property
+        console.error(result.error);
+        setOperationStatus("danger");
+      }
+    } catch (error) {
+      // Handle any errors that occurred during the update process
+      console.error('Error updating configuration:', error);
       setOperationStatus("danger");
     }
+    
   }
 
   return (

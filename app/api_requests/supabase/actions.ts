@@ -18,25 +18,26 @@ export async function insertConfigurationInit(configState: {
     init_drawn_by: 'USER_1'
   }
 
-  let data;
+  let data: string;
 
   try {
     // Try to insert data into the "Configurations" table
     const {  data: insertedData, error: insertError } = await supabase.from("Configurations").insert(objectToInsert).select('id');
-    data = insertedData;
+    data = insertedData[0].id;
+        
     // Handle data insertion error
     if (insertError) {
       console.error("Supabase data insertion error:", insertError);
       throw new Error("Failed to insert record into the database.");
     }
     // Log success and set operation status
-    console.log("Record inserted successfully!");
+    console.log("Record inserted successfully!",data);
   } catch (error) {
     // Overall error handling
     console.error("Insert configurations error:", error, error.message, error.details);
   }
 
-  return data[0].id
+  return data
 }
 
 export async function updateConfiguration(configState: TConfigurationState) {
@@ -53,15 +54,18 @@ export async function updateConfiguration(configState: TConfigurationState) {
       order_confirmed: false,
     }
     
-    if (configState.Metadata.DatabaseID !== null) {
+    if (configState.Metadata.DatabaseID) {
       try {
-        console.log(configState.Metadata.DatabaseID);
+        console.log("configState.Metadata.DatabaseID",configState);
+        console.log("objectToInsert",objectToInsert);
+        
         // Update entire row matching ID
         const { error } = await supabase
           .from('Configurations')
           .update(objectToInsert)
           .eq('id', configState.Metadata.DatabaseID)
-
+        console.log("YOLO",error);
+        
         // Handle data insertion error
         if (error) {
           console.error("Supabase data update error:", error.message, error.details);
@@ -69,13 +73,19 @@ export async function updateConfiguration(configState: TConfigurationState) {
         }
 
         // Log success and set operation status
-        console.log("Record updated successfully!");
+        return "Record updated successfully!";
 
       } catch (error) {
         // Overall error handling
         console.error("Update configurations error:", error, error.message, error.details);
+        throw new Error(`Failed to update record in the database,${error.message}`);
+        
       }
 
+    }
+    else {
+      throw new Error(`Failed to update record in the database, No Database ID was provided`);
+      return {error: `No Database ID was provided`}
     }
       
 }
