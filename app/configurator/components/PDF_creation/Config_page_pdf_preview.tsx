@@ -70,15 +70,15 @@ const PDF_preview = (props) => {
             currentX = 78.5; // Start with an offset for x-coordinate
           }
           context.drawImage(img, currentX, currentY);
-          if (item.Size == 9) {
+          if (item.SelectedBreaker.Size == 9) {
             currentY += 45; // Increment y-coordinate
-          } else if (item.Size == 6) {
+          } else if (item.SelectedBreaker.Size == 6) {
             currentY += 30; // Increment y-coordinate
-          } else if (item.Size == 4) {
+          } else if (item.SelectedBreaker.Size == 4) {
             currentY += 20; // Increment y-coordinate
           }
         };
-        img.src = "data:image/svg+xml," + encodeURIComponent(item.SVG_str);
+        img.src = "data:image/svg+xml," + encodeURIComponent(item.SelectedBreaker.SVG_str);
       });
     };
     

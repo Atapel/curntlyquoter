@@ -68,10 +68,15 @@ export type TConfigDB =  {
 }
 
 export type TSelectedBreaker = {
-    Description: string;
     Name?: string,
     MaxAmp?: number,
-    BreakerSize?: string
+    Description: string;
+    Max_Amperage: number;
+    BreakerSize: string;
+    PolesOptions: string[];
+    AmperageOptions: number[];
+    Size: number;
+    SVG_str: string;
 };
   
 export type TInitialBreaker = {

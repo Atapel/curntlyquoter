@@ -1,4 +1,5 @@
-export const Breakers = [
+import {TSelectedBreaker} from "@context/types" 
+export const Breakers : TSelectedBreaker[] = [
     {
         Description: "UTS1200",
         Max_Amperage: 1200,
