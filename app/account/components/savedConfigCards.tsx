@@ -8,7 +8,7 @@ interface configCardsProps {
     configs: TConfigDB[]
 }
  
-function ConfigCards(props): FunctionComponent<configCardsProps> {
+function ConfigCards(props: configCardsProps): FunctionComponent<configCardsProps> {
     const [showModal, setShowModal] = useState(false);
     const [selectedConfig, setSelectedConfig] = useState(null);
     const [expandedConfig, setExpandedConfig] = useState(null);
@@ -45,7 +45,7 @@ function ConfigCards(props): FunctionComponent<configCardsProps> {
                                     // data-testid={`${configuration.init_project}`}
                                 >
                                     <strong>Created at:</strong>{" "}
-                                    {configuration.created_at
+                                    {configuration.init_created_at
                                     .substring(0, 19)
                                     .replace("T", " ")}
                                 </li>

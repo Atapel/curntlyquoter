@@ -48,7 +48,7 @@ export type TConfigurationActions =
 
 export type TConfigDB =  {
     id: string,
-    created_at: string,
+    init_created_at: string,
     user_id: string,
     panel_width: number | null,
     panel_height: number | null,

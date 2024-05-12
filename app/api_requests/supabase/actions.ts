@@ -11,8 +11,8 @@ export async function insertConfigurationInit(configState: {
   // User Name from DB in Variable
   // cons UserName = currentUser.data.user.user_metadata.name;  
   const objectToInsert = {
-    created_at: currentTime,
     user_id: currentUser.data.user.id,
+    init_created_at: currentTime,
     init_client: configState.Client,
     init_project: configState.Project,
     init_drawn_by: 'USER_1'
