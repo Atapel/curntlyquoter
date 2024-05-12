@@ -24,7 +24,7 @@ function ConfigCards(props: configCardsProps): FunctionComponent<configCardsProp
         deleteConfigs(selectedConfig);
         setShowModal(false);
     };
-    console.log("props.configs",props.configs);
+    // console.log("props.configs",props.configs);
     
     return (
         <>
