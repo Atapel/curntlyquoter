@@ -21,9 +21,9 @@ describe('Config Test Draft', () => {
   })
 
   it('Completes a new configuration', () => {
-    cy.wait(5000)
+    // cy.wait(5000)
     cy.launchNewConfig(ConfigSpecs.TestIdentifier)
-    cy.wait(5000)
+    // cy.wait(5000)
     
     cy.addFrame(
       ConfigSpecs

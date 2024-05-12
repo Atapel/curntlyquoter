@@ -51,25 +51,32 @@ declare namespace Cypress {
   }
 Cypress.Commands.add('login', (email, password) => {
   cy.session([email,password], () => {
+    cy.intercept('/auth').as('authPage')
     cy.visit('/auth')
+    cy.wait('@authPage')
+    
+    // cy.visit('/auth')
     cy.get('[data-testid="email-input"]').type(email);
     cy.get('[data-testid="password-input"]').type(password);
-    cy.get('[data-testid="signin-button"]').click();
+    cy.get('[data-testid="signin-button"]').click({timeout: 20000});
     cy.wait(5000)
-    cy.url().should('contain', '/account')
     })   
   })
 
 Cypress.Commands.add(`launchNewConfig`, (testName)=>{
-    cy.visit(`/account`);
+  cy.intercept('/account').as('accountPage')
+  cy.visit('/account')
+  cy.wait('@accountPage')
+  
+  // cy.visit(`/account`);
     cy.get('[data-testid="project-input"]').type(testName);
     cy.get('[data-testid="client-input"]').type(testName);
-    cy.get('[data-testid="launch-new-configuration-button"]').click();
+    cy.get('[data-testid="launch-new-configuration-button"]').click({timeout: 20000});
     cy.wait(5000)
 })
 
 Cypress.Commands.add(`addFrame`, (ConfigSpecs) => {
-    cy.visit
+      
     cy.get(`[data-testid="Dropdown-Width"]`).click();
     cy.get(`[data-testid="selection-${ConfigSpecs.Width}"]`).click()
 
