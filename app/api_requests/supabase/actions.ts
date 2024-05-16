@@ -47,9 +47,14 @@ export async function updateConfiguration(configState: TConfigurationState) {
       // Case below needs to be implemented
       last_updated_at: currentTime, 
       panel_width:configState.Configuration.SelectedFrameSize,
+      panel_height:configState.Configuration.SelectedPanelHeight,
       panel_voltage:configState.Configuration.SelectedVoltage,
       panel_KAIC_rating:configState.Configuration.SelectedKAICRating,
       panel_bus_rating:configState.Configuration.SelectedBusRating,
+      panel_service_distribution:configState.Configuration.SelectedServiceDistribution,
+      panel_feed_type:configState.Configuration.SelectedFeedType,
+      panel_feed_position:configState.Configuration.SelectedFeedPosition,
+      panel_feed_thru_lugs:configState.Configuration.FeedThruLugs,
       selected_breakers:configState.Configuration.SelectedBreakers,
       order_confirmed: false,
     }
