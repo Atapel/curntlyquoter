@@ -44,7 +44,8 @@ const NewConfigInput = () => {
     dispatch({ type: 'INIT_NEW_CONFIG', payload: {
       Client: formData.client,
       Project: formData.project,
-      DatabaseId: Id
+      DatabaseID: Id,
+      ResumeDraft: false
     }})
     console.log("state after init",state);
     
