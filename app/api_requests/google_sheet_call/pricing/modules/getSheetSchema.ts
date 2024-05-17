@@ -2,12 +2,27 @@
 // validation rules for a cell and then adds a default validation rule for that cell
 // for each merged cell
 // 
-
 // range: "B2", merge with "B2" of Schema
-const getRequestsObject = (configObject, spreadsheetId, sheetName) => {
+import {TConfiguration} from "@context/types"
+export type TBatchUpdateRequest = {
+  spreadsheetId: string,
+  resource: {
+    valueInputOption: "RAW",
+    data: TSheetSchema
+  }
+}
+type TSheetSchema = ({
+  values: (number | string)[][];
+  range: string;
+})[]
+export const getRequestsObject = (
+  configObject: TConfiguration, 
+  spreadsheetId: string, 
+  sheetName: string
+): TBatchUpdateRequest => {
 
   // Define Sheet Schema
-  let Schema = [
+  let Schema: TSheetSchema = [
     {
       // CellName: 'Amperage',
       values: [[configObject.SelectedBusRating]],
@@ -42,7 +57,7 @@ const getRequestsObject = (configObject, spreadsheetId, sheetName) => {
     Schema.push(
       {
         // CellName: 'Breaker',
-        values: [[configObject.SelectedBreakers[index].Description]],
+        values: [[configObject.SelectedBreakers[index].SelectedBreaker.Description]],
         range: `${sheetName}!A${sheetRow}`
       }, {
         // CellName: 'Single or Double',
@@ -52,7 +67,7 @@ const getRequestsObject = (configObject, spreadsheetId, sheetName) => {
     )
   }
 
-  const batchUpdateRequest = {
+  const batchUpdateRequest: TBatchUpdateRequest = {
     spreadsheetId,
     resource: {
       valueInputOption: "RAW",
@@ -69,7 +84,3 @@ const getRequestsObject = (configObject, spreadsheetId, sheetName) => {
 // Perform Validation on Config Object
 
 // Merge config object into schema
-
-
-
-module.exports = getRequestsObject;

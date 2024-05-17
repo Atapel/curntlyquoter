@@ -1,8 +1,15 @@
-const doesSheetExist = async (clienObject,spreadsheetId,sheetName) => {
+import {
+  sheets_v4
+} from "googleapis"
+export const doesSheetExist = async (
+  // clienObject:sheets_v4,
+  clientObject: sheets_v4.Sheets,
+  spreadsheetId:string,
+  sheetName: string) : Promise<boolean> => {
        
     // Check if sheet alreadyy exists by sheetname
     try{
-      const response = await clienObject.spreadsheets.get({
+      const response = await clientObject.spreadsheets.get({
         spreadsheetId,
       });
   
@@ -17,5 +24,3 @@ const doesSheetExist = async (clienObject,spreadsheetId,sheetName) => {
       console.error("Error checking sheet existence", error);
     }
   }
-module.exports = doesSheetExist;
-// Now  figure out  on how to implement this

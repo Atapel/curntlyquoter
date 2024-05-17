@@ -1,8 +1,13 @@
-const { google } = require("googleapis");
+// const { google } = require("googleapis");
+import {
+  google,
+  Auth,
+  sheets_v4
+} from "googleapis"
 
-const getGoogleSheetsClient = () => {
+const getGoogleSheetsClient = (): sheets_v4.Sheets => {
   try {
-    const auth = new google.auth.GoogleAuth({
+    const auth: Auth.GoogleAuth = new google.auth.GoogleAuth({
       credentials: {
         type: "service_account",
         project_id: process.env.GOOGLE_SHEETS_PROJECT_ID,
@@ -20,7 +25,7 @@ const getGoogleSheetsClient = () => {
     });
 
     // Instance of Google Sheets API
-    const googleSheets = google.sheets({ version: "v4", auth });
+    const googleSheets: sheets_v4.Sheets = google.sheets({ version: "v4", auth });
     
     return googleSheets;
   } catch (error) {
@@ -39,4 +44,4 @@ const getGoogleSheetsClient = () => {
   }
 };
 
-module.exports = getGoogleSheetsClient;
+export default getGoogleSheetsClient;

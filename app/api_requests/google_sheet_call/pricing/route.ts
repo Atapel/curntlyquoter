@@ -1,20 +1,18 @@
-const { google } = require("googleapis");
-const getGoogleSheetsClient = require("../sheetsClient")
-const doesSheetExist = require("./modules/doesSheetExist")
-const getRequestsObject = require("./modules/getSheetSchema")
-const getPricingSheet = require("./modules/getPricing")
-const writePricingSheet = require("./modules/writePricing")
-const clonePricingSheet = require("./modules/cloneSheet")
-
+import getGoogleSheetsClient from "../sheetsClient"
+import {doesSheetExist} from "./modules/doesSheetExist"
+import {clonePricingSheet} from "./modules/cloneSheet"
+import {getRequestsObject} from "./modules/getSheetSchema"
+import {getPricingSheet} from "./modules/getPricing"
+import {writePricingSheet} from "./modules/writePricing"
+import {TConfigurationState} from "@context/types"
 // Dev Acces at
 // http://localhost:3000/configurator/api_requests/google_sheet_call/pricing
-
 export async function POST(configObjectRAW) {
   try {
-    const configObject = await configObjectRAW.json();
+    const configObject: TConfigurationState = await configObjectRAW.json();
 
     // Load Sheet Id
-    const templateSheetID = process.env.MASTER_QUOTE_SHEET_ID;
+    const templateSheetID: string = process.env.MASTER_QUOTE_SHEET_ID;
 
     // Initialize Google Sheets Client
     const googleSheets = getGoogleSheetsClient();
@@ -26,13 +24,17 @@ export async function POST(configObjectRAW) {
       configObject.Metadata.DatabaseID
     )
     
-    let tabSubSheet;
+    let tabSubSheet:string;
     
     if (!sheetExistenceCheck) {
       console.log("Sheet does not exist, cloning template sheet");
       // if not then clone the original template sheet
       try {
-        tabSubSheet = await clonePricingSheet(googleSheets, configObject ,templateSheetID);
+        tabSubSheet = await clonePricingSheet(
+          googleSheets, 
+          configObject,
+          templateSheetID
+        );
       } catch (cloneError) {
         console.error('Error cloning pricing sheet:', cloneError);
         throw new Error('Failed to clone pricing sheet');
@@ -42,9 +44,6 @@ export async function POST(configObjectRAW) {
       tabSubSheet = configObject.Metadata.DatabaseID
     }
 
-    // Insert Sheet ID from the above const into Supabase
-    // [Implement code for inserting into Supabase]
-
     // Transform Config object into sheets batch request
     const batchUpdateRequest = getRequestsObject(
       configObject.Configuration, 
@@ -52,19 +51,11 @@ export async function POST(configObjectRAW) {
       tabSubSheet
     );
 
-    // Write Configuration values into the sheet
-    let sheetWriteRequest;
-
     try {
-      sheetWriteRequest = await writePricingSheet(googleSheets, batchUpdateRequest);
+      await writePricingSheet(googleSheets, batchUpdateRequest);
     } catch (writeError) {
       console.error('Error writing to pricing sheet:', writeError);
       throw new Error('Failed to write to pricing sheet');
-    }
-
-    // Implement checking if fetched successfully and returns 200 status then continue
-    if (sheetWriteRequest.status !== 200) {
-      throw new Error(`Failed to write to pricing sheet. Status: ${sheetWriteRequest.status}`);
     }
 
     // Read Sheet and get Pricing Data
@@ -78,12 +69,13 @@ export async function POST(configObjectRAW) {
 
     // Transform Pricing Data values
     let pannelPriceRAW = pricingSheet[14][1];
-    const price = {
+    const price: { pannel: number; breakers: number; total: number } = {
       pannel: parseFloat(pannelPriceRAW.replace(/[$,]/g, '')),
       breakers: parseFloat(pricingSheet[28][1]),
+      total: 666
     };
 
-    price.total = price.pannel + price.breakers;
+    // price.total = price.pannel + price.breakers;
     let respo = JSON.stringify(price);
 
     return new Response(respo);
