@@ -14,9 +14,9 @@ export default async function RootLayout({ children }) {
     <html lang="en">
       <GlobalContextProvider>
         <body>
-          <div className='flex flex-row'>
-            <img src={Curntly_Logo.src} width="500" height="100"></img>
-            {/* <h1>Configurator Tool (Alpha Version)</h1> */}
+          <div className='flex-row'>
+            <img className='flex-col' src={Curntly_Logo.src} width="350" height="80"></img>
+            <p className='flex-col'>Configurator Tool (Alpha Version)</p>
           </div>
             {children}
         </body>
