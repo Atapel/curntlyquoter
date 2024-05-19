@@ -1,11 +1,27 @@
+import {
+  sheets_v4
+} from "googleapis"
+type TCellInputValidation = ({
+  Cell: string,
+  Validation: (string[])
+})[]
+  export const getValidationRules = async (
+    spreadsheetId: string, 
+    clienObject: sheets_v4.Sheets,
+    sheetName: string
+  ): Promise<TCellInputValidation> => {
+  const cellValidationValues: TCellInputValidation = [];
   // Retrieve data validation rules
-  const response = await googleSheets.spreadsheets.get({
-    auth: auth,
+  const response = await clienObject.spreadsheets.get({
     spreadsheetId: spreadsheetId,
-    ranges: [range],
+    ranges: [sheetName],
     fields: 'sheets/data/rowData/values/dataValidation'
   });
   const rowData = response.data.sheets[0].data[0].rowData;
+
+  // Bellow code too fragile, instead search for dataValidation key
+  // Look in the docs if the api can return a cleaner answer,
+  // where both the cell location and the validation values are returned
 
   for (let rowIndex = 0; rowIndex < rowData.length; rowIndex++) {
     if (!rowData[rowIndex].values) continue; // Skip empty rows
@@ -32,8 +48,29 @@
     }
   }
 
+  return cellValidationValues
 
- 
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 let validationRules = [
   {
     range: "B2",
