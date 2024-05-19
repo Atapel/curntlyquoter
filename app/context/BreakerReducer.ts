@@ -8,6 +8,7 @@ export const initialBreaker: TInitialBreaker = {
     SelectedBreakerAmp: "Select Amperage",
     SelectedBreakerPoles: "Select Poles",
     // Technical Specs
+    BreakerDisplayName: null,
     BreakerSize: null,
     MaxAmp: null
 };

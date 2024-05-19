@@ -86,6 +86,7 @@ export type TInitialBreaker = {
     SelectedBreaker: TSelectedBreaker;
     SelectedBreakerAmp: "Select Amperage" | number; 
     SelectedBreakerPoles: string;
+    BreakerDisplayName: null | string,
     BreakerSize: number,
     MaxAmp: number
 };

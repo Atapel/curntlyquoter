@@ -172,22 +172,24 @@ export const reducer: TConfigReducer = (state, action) => {
       // Breaker Description labeling
       let modifiedPayload = { ...action.payload }; // Creating a shallow copy of action.payload
 
+      modifiedPayload.BreakerDisplayName = action.payload.SelectedBreaker.Description
+      
       // Breaker Description labeling
       if (state.Configuration.SelectedVoltage === "208Y/120V") {
         if (state.Configuration.SelectedKAICRating === 65) {
-          modifiedPayload.SelectedBreaker.Description += 'N';
+          modifiedPayload.BreakerDisplayName += 'N';
         } else if (state.Configuration.SelectedKAICRating === 100) {
-          modifiedPayload.SelectedBreaker.Description += 'H';
+          modifiedPayload.BreakerDisplayName += 'H';
         } else if (state.Configuration.SelectedKAICRating === 150) {
-          modifiedPayload.SelectedBreaker.Description += 'L';
+          modifiedPayload.BreakerDisplayName += 'L';
         }
       } else if (state.Configuration.SelectedVoltage === "480Y/270V") {
         if (state.Configuration.SelectedKAICRating === 35) {
-          modifiedPayload.SelectedBreaker.Description += 'N';
+          modifiedPayload.BreakerDisplayName += 'N';
         } else if (state.Configuration.SelectedKAICRating === 65) {
-          modifiedPayload.SelectedBreaker.Description += 'H';
+          modifiedPayload.BreakerDisplayName += 'H';
         } else if (state.Configuration.SelectedKAICRating === 100) {
-          modifiedPayload.SelectedBreaker.Description += 'L';
+          modifiedPayload.BreakerDisplayName += 'L';
         }
       }
       
