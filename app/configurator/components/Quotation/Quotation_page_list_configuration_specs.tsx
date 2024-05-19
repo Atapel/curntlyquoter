@@ -53,7 +53,19 @@ const ConfigReview = () => {
                         <ListGroup.Item key={index}>
                         <Row>
                             <Col>{item.SelectedBreaker.Description}</Col>
-                            <Col>{item.BreakerSize}</Col>
+                            <Col>{item.SelectedSize}</Col>
+                            <Col>
+                                <Row>Availability:</Row>
+                                <Col>
+                                    {
+                                    // item.InStock
+                                    true
+                                        ? 'In Stock'
+                                        : 'Out of Stock'
+                                    }
+                                </Col>
+                            </Col>
+
                             <Col>
                             <Dropdown>
                                 <Dropdown.Toggle variant="primary" id="dropdown-basic">
