@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { UseConfigurationReducerContext } from "@context/globalContext";
 import { Button, Col, Row } from 'react-bootstrap';
-
+import {TPricingApiResponse} from "@api_requests/types"
 const PriceDisplayComponent = () => {
   const { state, dispatch } = UseConfigurationReducerContext();
-  const [data, setData] = useState('');
+  const [data, setData] = useState<TPricingApiResponse>();
   const [loading, setLoading] = useState(false);
   const [buttonPressed, setButtonPressed] = useState(false);
-
+  const [error, setError] = useState<string | null>(null);
   const urlPath = process.env.NEXT_PUBLIC_PRICING_SHEET_ROUTEHANDLER_URL;
 
   const fetchData = async () => {
@@ -24,13 +24,12 @@ const PriceDisplayComponent = () => {
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
-      console.log(response);
-      const result = await response.json(); // Assuming the response is in JSON format
-      console.log(result);
+      const result: TPricingApiResponse = await response.json(); // Assuming the response is in JSON format
       setData(result);
       setButtonPressed(true); // Set the buttonPressed state to true after successful data fetch
     } catch (error) {
       console.error('Error fetching data:', error.message);
+      setError(error.message);
     } finally {
       setLoading(false);
     }
@@ -42,6 +41,7 @@ const PriceDisplayComponent = () => {
         <Row>
           <Col>
             <Button
+              data-testid="Price-Generator"
               variant="success"
               onClick={fetchData}
               disabled={loading}
@@ -51,13 +51,18 @@ const PriceDisplayComponent = () => {
           </Col>
 
           <Col>
+          {/* Render Price */}
           {buttonPressed && (
-          <>
-            {/* <p>Pannel Price: ${Math.ceil(data.pannel)}</p>
-            <p>Breakers Price: ${Math.ceil(data.breakers)}</p> */}
-            <p>Total Price: ${Math.ceil(data.total)}</p>
-          </>
-        )}
+            <>
+              {/* <p>Pannel Price: ${Math.ceil(data.pannel)}</p>
+              <p>Breakers Price: ${Math.ceil(data.breakers)}</p> */}
+              <p
+                data-testid="Price-Display"
+              >Total Price: ${data.total}</p>
+            </>
+          )}
+          {/* Render Error */}
+          {error && <p data-testid="Price-Error">{error}</p>}
           </Col>
         </Row>
         
