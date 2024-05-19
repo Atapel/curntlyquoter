@@ -61,16 +61,12 @@ export async function updateConfiguration(configState: TConfigurationState) {
     
     if (configState.Metadata.DatabaseID) {
       try {
-        console.log("configState.Metadata.DatabaseID",configState);
-        console.log("objectToInsert",objectToInsert);
-        
         // Update entire row matching ID
         const { error } = await supabase
           .from('Configurations')
           .update(objectToInsert)
           .eq('id', configState.Metadata.DatabaseID)
-        console.log("YOLO",error);
-        
+                
         // Handle data insertion error
         if (error) {
           console.error("Supabase data update error:", error.message, error.details);

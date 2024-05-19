@@ -3,7 +3,7 @@
 import {
     sheets_v4
   } from "googleapis"
-export const getPricingSheet = async (
+export const readSheet = async (
     clienObject: sheets_v4.Sheets, 
     spreadsheetId: string, 
     sheetName: string

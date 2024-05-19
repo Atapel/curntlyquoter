@@ -2,7 +2,7 @@ import {
   sheets_v4
 } from "googleapis"
 import { TBatchUpdateRequest } from "./getSheetSchema"
-export const writePricingSheet = async (
+export const writeSheet = async (
   clienObject: sheets_v4.Sheets, 
   batchRequest: TBatchUpdateRequest
 ):Promise<void> => {
