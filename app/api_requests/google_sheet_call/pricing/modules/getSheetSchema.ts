@@ -3,7 +3,11 @@
 // for each merged cell
 // 
 // range: "B2", merge with "B2" of Schema
+import {
+  sheets_v4
+} from "googleapis"
 import {TConfiguration} from "@context/types"
+import {getValidationRules} from "./getValidationRules"
 export type TBatchUpdateRequest = {
   spreadsheetId: string,
   resource: {
@@ -15,12 +19,17 @@ type TSheetSchema = ({
   values: (number | string)[][];
   range: string;
 })[]
-export const getRequestsObject = (
-  configObject: TConfiguration, 
+export const getRequestsObject = async (
+  configObject: TConfiguration,
+  clientObject:sheets_v4.Sheets,
   spreadsheetId: string, 
   sheetName: string
-): TBatchUpdateRequest => {
-
+): Promise<TBatchUpdateRequest> => {
+  let validationRules = await getValidationRules(
+    spreadsheetId,
+    clientObject, 
+    sheetName
+  )
   // Define Sheet Schema
   let Schema: TSheetSchema = [
     {
@@ -61,7 +70,7 @@ export const getRequestsObject = (
         range: `${sheetName}!A${sheetRow}`
       }, {
         // CellName: 'Single or Double',
-        values: [[configObject.SelectedBreakers[index].BreakerSize]],
+        values: [[configObject.SelectedBreakers[index].SelectedSize]],
         range: `${sheetName}!B${sheetRow}`
       }
     )
@@ -77,9 +86,6 @@ export const getRequestsObject = (
 
   return batchUpdateRequest
 }
-
-
-// Get Validation valuess
 
 // Perform Validation on Config Object
 
