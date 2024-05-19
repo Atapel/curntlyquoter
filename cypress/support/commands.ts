@@ -48,6 +48,11 @@ declare namespace Cypress {
           ConfigSpecs: IConfigSpecs
         ): Chainable<any>;
       }
+      interface Chainable<Subject = any> {
+        checkPriceGenerator(
+          // ConfigSpecs: IConfigSpecs
+        ): Chainable<any>;
+      }
   }
 Cypress.Commands.add('login', (email, password) => {
   cy.session([email,password], () => {
@@ -76,7 +81,10 @@ Cypress.Commands.add(`launchNewConfig`, (testName)=>{
 })
 
 Cypress.Commands.add(`addFrame`, (ConfigSpecs) => {
-      
+    // cy.intercept('/configurator').as('configPage')
+    // cy.visit('/configurator')
+    // cy.wait('@configPage')
+
     cy.get(`[data-testid="Dropdown-Width"]`).click();
     cy.get(`[data-testid="selection-${ConfigSpecs.Width}"]`).click()
 
@@ -129,6 +137,7 @@ Cypress.Commands.add("saveConfig", ()=>{
 })
 
 Cypress.Commands.add("checkConfigSpecsQuotationPage", (ConfigSpecs)=>{
+  // FIX THIS NOOOOOOOOOOOW
   // cy.get(`[data-testid="Quotation-Page"]`).click();
   // Assertion Configuration Overview:
   
@@ -139,6 +148,17 @@ Cypress.Commands.add("checkConfigSpecsQuotationPage", (ConfigSpecs)=>{
   cy.get(`[data-testid="${ConfigSpecs.TestIdentifier}-Bus"]`).should("contain.text", ConfigSpecs.Bus);
   cy.get(`[data-testid="${ConfigSpecs.TestIdentifier}-ServiceDistribution"]`).should("contain.text", ConfigSpecs.ServiceDistribution);
   cy.get(`[data-testid="${ConfigSpecs.TestIdentifier}-FeedType"]`).should("contain.text", ConfigSpecs.FeedType);
+
+})
+
+Cypress.Commands.add("checkPriceGenerator", ()=>{
+  cy.get(`[data-testid="Price-Generator"]`).click();
+  cy.wait(30000)
+  cy.get(`[data-testid="Price-Display"]`).should('contain.text', /\d+/);
+  
+  // To test for the validity of the pricing formulas and 
+  // get a specific sum, use the mthod bellow
+  // cy.get(`[data-testid="Price-Display"]`).should('have.text', '99.99');
 
 })
 

@@ -37,6 +37,8 @@ describe('Config Test Draft', () => {
 
     cy.checkConfigSpecsQuotationPage(ConfigSpecs)
 
+    cy.checkPriceGenerator()
+
     // cy.checkConfigSpecsUserDashboard(ConfigSpecs)
 
   })
