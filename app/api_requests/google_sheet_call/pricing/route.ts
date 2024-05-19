@@ -2,9 +2,11 @@ import getGoogleSheetsClient from "../sheetsClient"
 import {doesSheetExist} from "./modules/doesSheetExist"
 import {clonePricingSheet} from "./modules/cloneSheet"
 import {getRequestsObject} from "./modules/getSheetSchema"
-import {getPricingSheet} from "./modules/getPricing"
-import {writePricingSheet} from "./modules/writePricing"
+import {readSheet} from "./modules/getPricing"
+import {writeSheet} from "./modules/writePricing"
+import {getPricing} from "./modules/extractPricing"
 import {TConfigurationState} from "@context/types"
+import {TPricingApiResponse} from "@api_requests/types"
 // Dev Acces at
 // http://localhost:3000/configurator/api_requests/google_sheet_call/pricing
 export async function POST(configObjectRAW) {
@@ -45,14 +47,15 @@ export async function POST(configObjectRAW) {
     }
 
     // Transform Config object into sheets batch request
-    const batchUpdateRequest = getRequestsObject(
-      configObject.Configuration, 
+    const batchUpdateRequest = await getRequestsObject(
+      configObject.Configuration,
+      googleSheets,
       templateSheetID, 
       tabSubSheet
     );
 
     try {
-      await writePricingSheet(googleSheets, batchUpdateRequest);
+      await writeSheet(googleSheets, batchUpdateRequest);
     } catch (writeError) {
       console.error('Error writing to pricing sheet:', writeError);
       throw new Error('Failed to write to pricing sheet');
@@ -61,22 +64,15 @@ export async function POST(configObjectRAW) {
     // Read Sheet and get Pricing Data
     let pricingSheet;
     try {
-      pricingSheet = await getPricingSheet(googleSheets, templateSheetID, tabSubSheet);
+      pricingSheet = await readSheet(googleSheets, templateSheetID, tabSubSheet);
     } catch (readError) {
       console.error('Error reading pricing sheet:', readError);
       throw new Error('Failed to read pricing sheet');
     }
 
-    // Transform Pricing Data values
-    let pannelPriceRAW = pricingSheet[14][1];
-    const price: { pannel: number; breakers: number; total: number } = {
-      pannel: parseFloat(pannelPriceRAW.replace(/[$,]/g, '')),
-      breakers: parseFloat(pricingSheet[28][1]),
-      total: 666
-    };
-
-    // price.total = price.pannel + price.breakers;
-    let respo = JSON.stringify(price);
+    // Extract Pricing Data
+    const pricingObject: TPricingApiResponse = getPricing(pricingSheet);
+    let respo = JSON.stringify(pricingObject);
 
     return new Response(respo);
   } catch (error) {
@@ -84,3 +80,9 @@ export async function POST(configObjectRAW) {
     return new Response('Internal Server Error', { status: 500 });
   }
 }
+
+// Throw error in getPricing Sheet if price field is not defiend
+// Implement typing and error handling in the client caller function
+
+// Test if the errors thrown in the modules do actually get caught 
+// in line 83
