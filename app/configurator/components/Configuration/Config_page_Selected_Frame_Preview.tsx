@@ -15,7 +15,7 @@ const DisplaySelectedFrame = (props) => {
     <div>
       <ListGroup>
         <ListGroup.Item>
-          <h2>Currently Selected Frame: </h2>
+          <h2>Selected Frame: </h2>
         </ListGroup.Item>
         <ListGroup.Item>
           <Row>
