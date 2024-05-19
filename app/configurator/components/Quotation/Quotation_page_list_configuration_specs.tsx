@@ -1,4 +1,4 @@
-import { Card, ListGroup, ListGroupItem, Row, Col, Dropdown } from 'react-bootstrap'; // Make sure to import necessary Bootstrap components
+import { Alert, Card, ListGroup, ListGroupItem, Row, Col, Dropdown } from 'react-bootstrap'; // Make sure to import necessary Bootstrap components
 import ConfirmOrderButton from './Quotation_page_order_button';
 import { UseConfigurationReducerContext } from "@context/globalContext";
 const ConfigReview = () => {
@@ -52,18 +52,24 @@ const ConfigReview = () => {
                     {state.Configuration.SelectedBreakers && state.Configuration.SelectedBreakers.map((item, index) => (
                         <ListGroup.Item key={index}>
                         <Row>
-                            <Col>{item.SelectedBreaker.Description}</Col>
+                            <Col>{item.BreakerDisplayName}</Col>
                             <Col>{item.SelectedSize}</Col>
                             <Col>
-                                <Row>Availability:</Row>
-                                <Col>
+                                Availability:
+                                
                                     {
                                     // item.InStock
                                     true
-                                        ? 'In Stock'
-                                        : 'Out of Stock'
+                                        ? 
+                                        <Alert variant={"success"}>
+                                            In Stock
+                                        </Alert>
+                                        : 
+                                        <Alert variant={"success"}>
+                                            Out of Stock
+                                        </Alert>
                                     }
-                                </Col>
+                                
                             </Col>
 
                             <Col>
