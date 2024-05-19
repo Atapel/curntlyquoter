@@ -65,7 +65,7 @@ const PDF_preview = (props) => {
         const img = new Image();
         img.onload = () => {
           if (state.Configuration.SelectedFrameSize === 36) {
-            currentX = 60.5; // Start with an offset for x-coordinate
+            currentX = 76; // Start with an offset for x-coordinate
           } else if (state.Configuration.SelectedFrameSize === 46) {
             currentX = 78.5; // Start with an offset for x-coordinate
           }
