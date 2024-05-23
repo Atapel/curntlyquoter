@@ -1,10 +1,9 @@
 import Authenticate from "./auth/page"
 import { createClient } from './utils/supabase/server'
-import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
 export default async function Home() {
-  const supabase = createClient({ cookies });
+  const supabase = createClient();
 
   const {
     data: { user },
@@ -17,4 +16,3 @@ export default async function Home() {
   }
   return <Authenticate />;
 }
-
