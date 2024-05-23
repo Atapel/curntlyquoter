@@ -1,11 +1,10 @@
 import { createClient } from '../utils/supabase/server'
-import { cookies } from "next/headers";
 import { redirect } from 'next/navigation';
 import UserPanel from "./components/adminUserPanel";
 import NewConfigInput from "./components/adminUserInput";
 import Saved_Configurations from "./components/adminSavedConfigs";
 export default async function Account() {
-  const supabase = createClient({ cookies });
+  const supabase = createClient();
 
   const {
     data: { session },
