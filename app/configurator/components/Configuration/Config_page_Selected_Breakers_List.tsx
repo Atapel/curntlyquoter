@@ -28,7 +28,7 @@ const DisplaySelectedItems = () => {
         {state.Configuration.SelectedBreakers && state.Configuration.SelectedBreakers.map((item, index) => (
           <ListGroup.Item key={index}>
             <Row>
-              <Col>{item.Name}</Col>
+              <Col>{item.BreakerDisplayName}</Col>
 
               <Col>
                 <Dropdown>

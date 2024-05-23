@@ -11,7 +11,7 @@ const PDF_Generation = ({ canvasRef }) => {
   const [feedback, setFeedback] = useState(null);
   const [feedbackType, setFeedbackType] = useState(null);
 
-  const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+  const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: '2-digit', day: '2-digit' };
   const americanFormatDate = new Date().toLocaleDateString('en-US', options);
 
   const createPdf = () => {
@@ -20,7 +20,15 @@ const PDF_Generation = ({ canvasRef }) => {
       unit: "mm",
       format: "a4",
     });
-    pdf.addImage(canvasRef.current.toDataURL("image/png"), "PNG", 5, 5);
+    
+    pdf.addImage({
+      imageData: canvasRef.current.toDataURL("image/png"),
+      format: "PNG",
+      x: 5,
+      y: 5,
+      width: undefined,  // You can specify width if needed
+      height: undefined, // You can specify height if needed
+    });
     
     // Set the text color, draw color, and font:
     pdf.setTextColor(0, 0, 0); // RGB values

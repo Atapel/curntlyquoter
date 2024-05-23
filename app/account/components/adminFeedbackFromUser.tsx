@@ -9,6 +9,7 @@ const FeedbackForm = ({ session }) => {
     B: "",
     C: session?.user.email,
     D: new Date().toLocaleDateString(),
+    E: null
   });
 
   const urlPath = process.env.NEXT_PUBLIC_FEEDBACK_SHEET_ROUTEHANDLER_URL
@@ -70,7 +71,7 @@ const FeedbackForm = ({ session }) => {
             <Form.Control
               as="textarea"
               rows={3}
-              value={formData.feedback}
+              value={formData.E}
               onChange={handleInputChange}
             />
           </Form.Group>

@@ -4,7 +4,9 @@ export const initialBreaker: TInitialBreaker = {
     SelectedSize: "Select Breaker Size",
     SelectedTrip: "Select Breaker Trip",
     SelectedFeature: "Select Feature",
-    SelectedBreaker: { Description: "Select Breaker" },
+    SelectedBreaker: { 
+        Description: "Select Breaker",
+    },
     SelectedBreakerAmp: "Select Amperage",
     SelectedBreakerPoles: "Select Poles",
     // Technical Specs

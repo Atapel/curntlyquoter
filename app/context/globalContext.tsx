@@ -16,16 +16,16 @@ interface ConfigurationContextType {
 }
 interface BreakerContextType {
   breakerState: TInitialBreaker;
-  dispatch: React.Dispatch<TBreakerActions>;
+  breakerDispatch: React.Dispatch<TBreakerActions>;
 }
 const ConfigurationReducerContext = createContext<ConfigurationContextType>({ 
   state: initialConfiguration, 
   dispatch: () => {} 
 });
 
-const BreakerReducerContext = createContext({ 
-  state: initialBreaker,
-  dispatch: () => {} 
+const BreakerReducerContext = createContext<BreakerContextType>({ 
+  breakerState: initialBreaker,
+  breakerDispatch: () => {} 
 });
 
 // Export the global Context Provider

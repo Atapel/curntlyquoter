@@ -7,7 +7,7 @@ import { TConfigDB } from "@context/types";
 interface IResumeDraftButtonProps {
     configFromDb: TConfigDB
 }
-function ResumeDraftButton(props:IResumeDraftButtonProps):FunctionComponent<IResumeDraftButtonProps>{
+function ResumeDraftButton(props:IResumeDraftButtonProps){
     const { state, dispatch } = UseConfigurationReducerContext();
     const loadConfigurationIntoState = (configObject: TConfigDB) => {
         dispatch({ 

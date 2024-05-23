@@ -33,11 +33,11 @@ export type TConfigurationActions =
   | { type: 'TOTAL_RESET' }
   | { type: 'RESET_CONFIGURATION' }
   | { type: 'LOAD_CONFIGURATION_FROM_DB'; payload: TConfigDB}
-  | { type: 'SET_FRAME_SIZE'; payload: string }
+  | { type: 'SET_FRAME_SIZE'; payload: number }
   | { type: 'SET_VOLTAGE'; payload: string }
-  | { type: 'SET_KAIC_RATING'; payload: string }
+  | { type: 'SET_KAIC_RATING'; payload: number }
   | { type: 'SET_BUS_RATING'; payload: number }
-  | { type: 'SET_PANEL_HEIGHT'; payload: string }
+  | { type: 'SET_PANEL_HEIGHT'; payload: number }
   | { type: 'SET_SERVICE_OR_DISTRIBUTION'; payload: string }
   | { type: 'SET_FEED_THRU_LUGS'; payload: boolean }
   | { type: 'SET_FEED_TYPE'; payload: string }
@@ -71,12 +71,12 @@ export type TSelectedBreaker = {
     Name?: string,
     MaxAmp?: number,
     Description: string;
-    Max_Amperage: number;
-    BreakerSize: string;
-    PolesOptions: string[];
-    AmperageOptions: number[];
-    Size: number;
-    SVG_str: string;
+    Max_Amperage?: number;
+    BreakerSize?: string;
+    PolesOptions?: string[];
+    AmperageOptions?: number[];
+    Size?: number;
+    SVG_str?: string;
 };
   
 export type TInitialBreaker = {
@@ -97,5 +97,5 @@ export type TBreakerActions =
   | { type: 'SET_SELECTED_TRIP', payload:  any}
   | { type: 'SET_SELECTED_FEATURE', payload:  any}
   | { type: 'SET_SELECTED_BREAKER', payload: TSelectedBreaker }
-  | { type: 'SET_SELECTED_BREAKER_AMP', payload:  string}
+  | { type: 'SET_SELECTED_BREAKER_AMP', payload:  number}
   | { type: 'SET_SELECTED_BREAKER_POLES', payload:  string}

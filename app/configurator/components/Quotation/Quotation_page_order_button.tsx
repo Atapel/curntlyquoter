@@ -6,25 +6,25 @@ function ConfirmOrderButton() {
 
   async function confirm() {
 
-    try {
-        //  Call Server
-        await confirmOrder()
-      if (error) {
-        console.error("Supabase error:", error.message, error.details);
-        throw new Error("Failed to confirm order.");
-      }
-      console.log("Order confirmed successfully!");
-      setOperationStatus('success');
-    } catch (error) {
-      console.error(error);
-      setOperationStatus('danger');
-    }
+    // try {
+    //     //  Call Server
+    //     await confirmOrder()
+    //   if (error) {
+    //     console.error("Supabase error:", error.message, error.details);
+    //     throw new Error("Failed to confirm order.");
+    //   }
+    //   console.log("Order confirmed successfully!");
+    //   setOperationStatus('success');
+    // } catch (error) {
+    //   console.error(error);
+    //   setOperationStatus('danger');
+    // }
   }
 
   return (
     <>
       <Button
-        onClick={confirmOrder}
+        // onClick={confirmOrder}
         variant="outline-success"
         className="w-50"
       >

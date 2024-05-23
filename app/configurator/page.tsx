@@ -4,12 +4,12 @@ import { redirect } from 'next/navigation';
 import ConfiguratorApp from './components/ConfiguratorApp';
 
 export default async function configuratorPage() {
-  const supabase = createClient({ cookies });
+  const supabase = createClient();
   let user; // Declare user outside of the try block
   
   try {
     const {
-      data: { user: userData, error },
+      data: { user: userData },
     } = await supabase.auth.getUser();
 
     user = userData; // Assign userData to user
@@ -19,10 +19,10 @@ export default async function configuratorPage() {
       redirect('/auth');
     }
     // Handle user retrieval error
-    if (error) {
-      console.error("Supabase user retrieval error:", error.message, error.details);
-      throw new Error("Failed to retrieve user information.");
-    }
+    // if (error) {
+    //   console.error("Supabase user retrieval error:", error.message, error.details);
+    //   throw new Error("Failed to retrieve user information.");
+    // }
   } catch (error) {
     // Overall error handling
     console.error("Retrieve User Serverside error:", error, error.message , error.details);

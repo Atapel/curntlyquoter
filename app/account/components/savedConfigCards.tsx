@@ -8,7 +8,7 @@ interface configCardsProps {
     configs: TConfigDB[]
 }
  
-function ConfigCards(props: configCardsProps): FunctionComponent<configCardsProps> {
+function ConfigCards(props: configCardsProps) {
     const [showModal, setShowModal] = useState(false);
     const [selectedConfig, setSelectedConfig] = useState(null);
     const [expandedConfig, setExpandedConfig] = useState(null);
@@ -24,7 +24,7 @@ function ConfigCards(props: configCardsProps): FunctionComponent<configCardsProp
         deleteConfigs(selectedConfig);
         setShowModal(false);
     };
-    // console.log("props.configs",props.configs);
+    console.log("props.configs",props.configs);
     
     return (
         <>
