@@ -1,7 +1,7 @@
 import ConfigCards from "./savedConfigCards";
 import {TConfigDB} from "@context/types";
 import {getConfigs} from "../actions" 
-async function Saved_Configurations() {
+async function Saved_Configurations(): Promise<JSX.Element> {
 
   // Typescript Error needs to be fixed.
   // No error thrown when null type values are being returned

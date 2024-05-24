@@ -3,7 +3,7 @@ import {TInitialBreaker, TConfigDB} from "@context/types"
 interface selectedBreakersProps {
   config_state: TConfigDB
 }
-const MapSelectedBreakers:FunctionComponent<selectedBreakersProps> = (
+const MapSelectedBreakers = (
   props: selectedBreakersProps
 ) => {
   let selectedBreakers: TInitialBreaker[] = props.config_state.selected_breakers
