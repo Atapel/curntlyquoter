@@ -1,4 +1,5 @@
-import { createClient } from '@utils/supabase/server'
+"use client"
+import { createClient } from '@utils/supabase/clients'
 import { redirect } from 'next/navigation';
 import UserPanel from "./components/adminUserPanel";
 import NewConfigInput from "./components/adminUserInput";
