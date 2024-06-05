@@ -1,18 +1,18 @@
-import { useEffect,useState } from "react";
+// import { useEffect, useState } from "react";
 import ConfigCards from "./savedConfigCards"; // Assuming this is a Teact component
 import { TConfigDB } from "@context/types";
-import {getConfigs} from "../actions" 
+import { getConfigs } from "../actions";
 async function Saved_Configurations() {
   // Fetch data using the useEffect hook or a custom data fetching function
-  const [configsFromDB, setConfigsFromDB] = useState<TConfigDB[]>([]);
+  // const [configsFromDB, setConfigsFromDB] = useState<TConfigDB[]>([]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const configs = await getConfigs(); // Assuming getConfigs is available
-      setConfigsFromDB(configs);
-    };
-    fetchData();
-  }, []);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  const configsFromDB = await getConfigs(); // Assuming getConfigs is available
+  // setConfigsFromDB(configs);
+  //   };
+  //   fetchData();
+  // }, []);
 
   // Handle potential loading state or errors if needed
 
