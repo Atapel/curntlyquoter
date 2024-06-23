@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import { UseConfigurationReducerContext } from "@context/globalContext";
-import { Button, Col, Row } from 'react-bootstrap';
-import {TPricingApiResponse} from "@api_requests/types"
+import { Button, Col, Row } from "react-bootstrap";
+import { TPricingApiResponse } from "@api_requests/types";
 const PriceDisplayComponent = () => {
   const { state, dispatch } = UseConfigurationReducerContext();
   const [data, setData] = useState<TPricingApiResponse>();
@@ -28,7 +28,7 @@ const PriceDisplayComponent = () => {
       setData(result);
       setButtonPressed(true); // Set the buttonPressed state to true after successful data fetch
     } catch (error) {
-      console.error('Error fetching data:', error.message);
+      console.error("Error fetching data:", error.message);
       setError(error.message);
     } finally {
       setLoading(false);
@@ -36,41 +36,36 @@ const PriceDisplayComponent = () => {
   };
 
   return (
-    <div>
-      <div>
-        <Row>
-          <Col>
-            <Button
-              data-testid="Price-Generator"
-              variant="success"
-              onClick={fetchData}
-              disabled={loading}
-              >
-              {loading ? 'Loading... (This can take up to a minute)' : 'Generate Quote'}
-            </Button>
-          </Col>
+    <>
+      <Row>
+        <Col>
+          <Button
+            data-testid="Price-Generator"
+            variant="success"
+            onClick={fetchData}
+            disabled={loading}
+          >
+            {loading
+              ? "Loading... (This can take up to a minute)"
+              : "Generate Quote"}
+          </Button>
+        </Col>
 
-          <Col>
+        <Col>
           {/* Render Price */}
           {buttonPressed && (
             <>
               {/* <p>Pannel Price: ${Math.ceil(data.pannel)}</p>
               <p>Breakers Price: ${Math.ceil(data.breakers)}</p> */}
-              <p
-                data-testid="Price-Display"
-              >Total Price: ${data.total}</p>
+              <p data-testid="Price-Display">Total Price: ${data.total}</p>
             </>
           )}
           {/* Render Error */}
           {error && <p data-testid="Price-Error">{error}</p>}
-          </Col>
-        </Row>
-        
-      </div>
-    </div>
+        </Col>
+      </Row>
+    </>
   );
 };
 
 export default PriceDisplayComponent;
-
-

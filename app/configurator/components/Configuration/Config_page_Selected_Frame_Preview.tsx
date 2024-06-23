@@ -7,12 +7,12 @@ const DisplaySelectedFrame = (props) => {
   const [panelSelected, setPanelSelected] = props.renderstate;
 
   const handleReset = () => {
-    dispatch({ type: 'RESET_CONFIGURATION' })
-    setPanelSelected(false)
-  }
+    dispatch({ type: "RESET_CONFIGURATION" });
+    setPanelSelected(false);
+  };
 
   return (
-    <div>
+    <>
       <ListGroup>
         <ListGroup.Item>
           <h2>Selected Frame: </h2>
@@ -86,12 +86,10 @@ const DisplaySelectedFrame = (props) => {
               <Col>
                 <h5>Feed thru lugs:</h5>
               </Col>
-              <Col>
-                {state.Configuration.FeedThruLugs ? "Yes" : "No"}
-              </Col>
+              <Col>{state.Configuration.FeedThruLugs ? "Yes" : "No"}</Col>
             </Row>
           </ListGroup.Item>
-        ): state.Configuration.SelectedFeedType === "Main Lug" ? (
+        ) : state.Configuration.SelectedFeedType === "Main Lug" ? (
           <ListGroup.Item>
             <Row>
               <Col>
@@ -100,9 +98,8 @@ const DisplaySelectedFrame = (props) => {
               <Col>{state.Configuration.SelectedFeedPosition}</Col>
             </Row>
           </ListGroup.Item>
-        ):
-        (null)}
-      
+        ) : null}
+
         <ListGroup.Item>
           <Button
             variant="outline-danger"
@@ -113,7 +110,7 @@ const DisplaySelectedFrame = (props) => {
           </Button>
         </ListGroup.Item>
       </ListGroup>
-    </div>
+    </>
   );
 };
 

@@ -1,26 +1,36 @@
 import React, { useEffect, useState } from "react";
-import { Alert, Dropdown, Button, Row, ListGroup, Col, ListGroupItem } from "react-bootstrap";
+import {
+  Alert,
+  Dropdown,
+  Button,
+  Row,
+  ListGroup,
+  Col,
+  ListGroupItem,
+} from "react-bootstrap";
 import { getBreakerDetails } from "@api_requests/fetch_products";
-import { UseConfigurationReducerContext, UseBreakerReducerContext } from "@context/globalContext";
+import {
+  UseConfigurationReducerContext,
+  UseBreakerReducerContext,
+} from "@context/globalContext";
 import DisplaySelectedItems from "./Config_page_Selected_Breakers_List";
 import BreakerMappings from "./BreakerMappings";
 
 const Select_Breakers_Menu = () => {
   const { state, dispatch } = UseConfigurationReducerContext();
-  const { breakerState, breakerDispatch } = UseBreakerReducerContext()
-  const [showAddButton, setShowAddButton] = useState(true)
+  const { breakerState, breakerDispatch } = UseBreakerReducerContext();
+  const [showAddButton, setShowAddButton] = useState(true);
 
   const handleProductSelect = () => {
-    dispatch({ type: 'ADD_BREAKER', payload: breakerState })
+    dispatch({ type: "ADD_BREAKER", payload: breakerState });
     // Ativate the Component that lists the selected Breakers
     // setrenderSelectedBrakers(true)
     // reset the states back to original
-    breakerDispatch({ type: 'RESET_BREAKER_STATE' })
-
+    breakerDispatch({ type: "RESET_BREAKER_STATE" });
   };
 
   return (
-    <div>
+    <>
       <ListGroup>
         <ListGroup.Item>
           <h2>Configure Breaker: </h2>
@@ -35,9 +45,10 @@ const Select_Breakers_Menu = () => {
               </Col>
               <Col>
                 <Dropdown.Toggle
-                  data-testid="Dropdown-BreakerFrame" 
-                  variant="primary" 
-                  id="dropdown-basic">
+                  data-testid="Dropdown-BreakerFrame"
+                  variant="primary"
+                  id="dropdown-basic"
+                >
                   {breakerState.SelectedSize}
                 </Dropdown.Toggle>
               </Col>
@@ -46,8 +57,13 @@ const Select_Breakers_Menu = () => {
             <Dropdown.Menu>
               <Dropdown.Item>
                 <Button
-                data-testid="selection-Single"
-                  onClick={() => breakerDispatch({ type: 'SET_SELECTED_SIZE', payload: "Single" })}
+                  data-testid="selection-Single"
+                  onClick={() =>
+                    breakerDispatch({
+                      type: "SET_SELECTED_SIZE",
+                      payload: "Single",
+                    })
+                  }
                   variant="outline-info"
                   size="sm"
                   className="w-100"
@@ -57,8 +73,13 @@ const Select_Breakers_Menu = () => {
               </Dropdown.Item>
               <Dropdown.Item>
                 <Button
-                data-testid="selection-Double"
-                  onClick={() => breakerDispatch({ type: 'SET_SELECTED_SIZE', payload: "Double" })}
+                  data-testid="selection-Double"
+                  onClick={() =>
+                    breakerDispatch({
+                      type: "SET_SELECTED_SIZE",
+                      payload: "Double",
+                    })
+                  }
                   variant="outline-info"
                   size="sm"
                   className="w-100"
@@ -79,9 +100,10 @@ const Select_Breakers_Menu = () => {
               </Col>
               <Col>
                 <Dropdown.Toggle
-                  data-testid="Dropdown-" 
-                  variant="primary" 
-                  id="dropdown-basic">
+                  data-testid="Dropdown-"
+                  variant="primary"
+                  id="dropdown-basic"
+                >
                   {breakerState.SelectedTrip} AT
                 </Dropdown.Toggle>
               </Col>
@@ -90,8 +112,10 @@ const Select_Breakers_Menu = () => {
             <Dropdown.Menu>
               <Dropdown.Item>
                 <Button
-                data-testid="selection-"
-                  onClick={() => breakerDispatch({ type: 'SET_SELECTED_TRIP', payload: 600 })}
+                  data-testid="selection-"
+                  onClick={() =>
+                    breakerDispatch({ type: "SET_SELECTED_TRIP", payload: 600 })
+                  }
                   variant="outline-info"
                   size="sm"
                   className="w-100"
@@ -121,18 +145,17 @@ const Select_Breakers_Menu = () => {
                 </Dropdown.Toggle>
               </Col>
             </Row>
-            
-            <BreakerMappings addButtonState={[showAddButton, setShowAddButton]}/>
 
+            <BreakerMappings
+              addButtonState={[showAddButton, setShowAddButton]}
+            />
           </Dropdown>
         </ListGroup.Item>
 
-
         {/* Conditionally rendering the next 3 menu items only if a breaker has been selected above */}
 
-
-        {breakerState.SelectedBreaker.Description !== "Select Breaker" ?
-          (<>
+        {breakerState.SelectedBreaker.Description !== "Select Breaker" ? (
+          <>
             <ListGroup.Item>
               {/* Dropdown for the Breaker Amperage */}
               <Dropdown>
@@ -142,8 +165,8 @@ const Select_Breakers_Menu = () => {
                   </Col>
                   <Col>
                     <Dropdown.Toggle
-                      data-testid="Dropdown-Amp" 
-                      variant="primary" 
+                      data-testid="Dropdown-Amp"
+                      variant="primary"
                       id="dropdown-basic"
                     >
                       {breakerState.SelectedBreakerAmp}
@@ -152,19 +175,26 @@ const Select_Breakers_Menu = () => {
                 </Row>
 
                 <Dropdown.Menu>
-                  {breakerState.SelectedBreaker.AmperageOptions.map((amperage, index) => (
-                    <Dropdown.Item key={index}>
-                      <Button
-                        data-testid={`selection-${amperage}`}
-                        onClick={() => breakerDispatch({ type: 'SET_SELECTED_BREAKER_AMP', payload: amperage })}
-                        variant="outline-info"
-                        size="sm"
-                        className="w-100"
-                      >
-                        {amperage}
-                      </Button>
-                    </Dropdown.Item>
-                  ))}
+                  {breakerState.SelectedBreaker.AmperageOptions.map(
+                    (amperage, index) => (
+                      <Dropdown.Item key={index}>
+                        <Button
+                          data-testid={`selection-${amperage}`}
+                          onClick={() =>
+                            breakerDispatch({
+                              type: "SET_SELECTED_BREAKER_AMP",
+                              payload: amperage,
+                            })
+                          }
+                          variant="outline-info"
+                          size="sm"
+                          className="w-100"
+                        >
+                          {amperage}
+                        </Button>
+                      </Dropdown.Item>
+                    )
+                  )}
                 </Dropdown.Menu>
               </Dropdown>
             </ListGroup.Item>
@@ -178,10 +208,12 @@ const Select_Breakers_Menu = () => {
                   </Col>
                   <Col>
                     <Dropdown.Toggle
-                      data-testid="Dropdown-Poles" 
-                      variant="primary" 
+                      data-testid="Dropdown-Poles"
+                      variant="primary"
                       id="dropdown-basic"
-                      disabled={breakerState.SelectedBreakerAmp === "Select Amperage"}  
+                      disabled={
+                        breakerState.SelectedBreakerAmp === "Select Amperage"
+                      }
                     >
                       {breakerState.SelectedBreakerPoles}
                     </Dropdown.Toggle>
@@ -189,24 +221,27 @@ const Select_Breakers_Menu = () => {
                 </Row>
 
                 <Dropdown.Menu>
-
-                  {breakerState.SelectedBreaker.PolesOptions.map((pole, index) => (
-
-                    <Dropdown.Item key={index}>
-                      <Button
-                      data-testid={`selection-${pole}`}
-                        onClick={() => breakerDispatch({ type: 'SET_SELECTED_BREAKER_POLES', payload: pole })}
-                        variant="outline-info"
-                        size="sm"
-                        className="w-100"
-                      // onClick={() => setSelectedBreakerAmp(600)}
-                      >
-                        {pole}
-                      </Button>
-                    </Dropdown.Item>
-
-                  ))}
-
+                  {breakerState.SelectedBreaker.PolesOptions.map(
+                    (pole, index) => (
+                      <Dropdown.Item key={index}>
+                        <Button
+                          data-testid={`selection-${pole}`}
+                          onClick={() =>
+                            breakerDispatch({
+                              type: "SET_SELECTED_BREAKER_POLES",
+                              payload: pole,
+                            })
+                          }
+                          variant="outline-info"
+                          size="sm"
+                          className="w-100"
+                          // onClick={() => setSelectedBreakerAmp(600)}
+                        >
+                          {pole}
+                        </Button>
+                      </Dropdown.Item>
+                    )
+                  )}
                 </Dropdown.Menu>
               </Dropdown>
             </ListGroup.Item>
@@ -220,10 +255,12 @@ const Select_Breakers_Menu = () => {
                   </Col>
                   <Col>
                     <Dropdown.Toggle
-                      data-testid="Dropdown-" 
-                      variant="primary" 
+                      data-testid="Dropdown-"
+                      variant="primary"
                       id="dropdown-basic"
-                      disabled={breakerState.SelectedBreakerPoles === "Select Poles"}
+                      disabled={
+                        breakerState.SelectedBreakerPoles === "Select Poles"
+                      }
                     >
                       {breakerState.SelectedFeature}
                     </Dropdown.Toggle>
@@ -233,12 +270,17 @@ const Select_Breakers_Menu = () => {
                 <Dropdown.Menu>
                   <Dropdown.Item>
                     <Button
-                    data-testid="selection-"
-                      onClick={() => breakerDispatch({ type: 'SET_SELECTED_FEATURE', payload: 69 })}
+                      data-testid="selection-"
+                      onClick={() =>
+                        breakerDispatch({
+                          type: "SET_SELECTED_FEATURE",
+                          payload: 69,
+                        })
+                      }
                       variant="outline-info"
                       size="sm"
                       className="w-100"
-                    // onClick={() => setSelectedFeature("Shunt trip selected")}
+                      // onClick={() => setSelectedFeature("Shunt trip selected")}
                     >
                       Add Shunt Trip
                     </Button>
@@ -246,46 +288,39 @@ const Select_Breakers_Menu = () => {
                 </Dropdown.Menu>
               </Dropdown>
             </ListGroup.Item>
-
-          </>) :
-        (
-          null
-        )}
+          </>
+        ) : null}
 
         <ListGroup.Item>
           {/* Add Breaker to Preview */}
           {showAddButton === true ? (
-          <Button
-          data-testid="Add-Breaker"
-            variant="outline-info"
-            size="sm"
-            className="w-100"
-            onClick={() => handleProductSelect()}
-            disabled={breakerState.SelectedBreakerPoles==="Select Poles"}
-          >
-            Add
-          </Button>
-        ):(
-          <Alert variant="warning">
-            No more Breakers available
-          </Alert>
-        )}
+            <Button
+              data-testid="Add-Breaker"
+              variant="outline-info"
+              size="sm"
+              className="w-100"
+              onClick={() => handleProductSelect()}
+              disabled={breakerState.SelectedBreakerPoles === "Select Poles"}
+            >
+              Add
+            </Button>
+          ) : (
+            <Alert variant="warning">No more Breakers available</Alert>
+          )}
         </ListGroup.Item>
-
       </ListGroup>
 
       {/* Below line fixes the conditional rendering error, but introduces new TypeError, to be continued... */}
       {/* {(renderSelectedBrakers === true && state.Configuration.SelectedBreakers.length() == 0 )? ( */}
-      
+
       {/* {(renderSelectedBrakers === true)? ( */}
-        <DisplaySelectedItems />
-        {/* renderstate={[renderSelectedBrakers, setrenderSelectedBrakers]} */}
+      <DisplaySelectedItems />
+      {/* renderstate={[renderSelectedBrakers, setrenderSelectedBrakers]} */}
       {/* ) : (
         null
       )} */}
-
-    </div>
+    </>
   );
 };
 
-export default Select_Breakers_Menu;  
+export default Select_Breakers_Menu;
