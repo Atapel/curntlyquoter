@@ -21,15 +21,13 @@ xterm -hold -e "pnpm start" &
 # Capture the process ID of the test server
 # TEST_SERVER_PID=$!
 
-# Give the server some time to start up
-# sleep 10
-
 # Run Cypress end-to-end tests
 echo "Running Cypress end-to-end tests..."
-xterm -hold -e "pnpm cypress open --browser chrome --e2e cypress/e2e/NewConfigTest.cy.ts" &
+# xterm -hold -e "pnpm cypress open --browser chrome --e2e cypress/e2e/NewConfigTest.cy.ts" &
+xterm -hold -e "pnpm cypress run --browser chrome --spec cypress/e2e/NewConfigTest.cy.ts" &
 
 # # Stop the test server
 # echo "Stopping the test server..."
 # kill $TEST_SERVER_PID
 
-# echo "All tests completed."
+echo "All tests completed."
