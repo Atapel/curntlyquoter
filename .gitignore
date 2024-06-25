@@ -41,6 +41,9 @@ next-env.d.ts
 # vscode
 settings.json
 
+# Vitest
+vitest/
+
 # Cypress
 cypress/screenshots
 cypress/downloads

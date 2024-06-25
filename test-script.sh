@@ -21,6 +21,11 @@ xterm -hold -e "pnpm start" &
 # Capture the process ID of the test server
 # TEST_SERVER_PID=$!
 
+# Run Vitest unit/integration tests
+echo "Running Vitest unit/integration tests"
+xterm -hold -e "pnpm vitest"&
+# xterm -hold -e "pnpm vitest --coverage > vitest/vitest-log.txt 2>&1"&
+
 # Run Cypress end-to-end tests
 echo "Running Cypress end-to-end tests..."
 # xterm -hold -e "pnpm cypress open --browser chrome --e2e cypress/e2e/NewConfigTest.cy.ts" &
