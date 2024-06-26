@@ -26,10 +26,16 @@ echo "Running Vitest unit/integration tests"
 xterm -hold -e "pnpm vitest"&
 # xterm -hold -e "pnpm vitest --coverage > vitest/vitest-log.txt 2>&1"&
 
-# Run Cypress end-to-end tests
+# Run Cypress end-to-end tests local
 echo "Running Cypress end-to-end tests..."
-# xterm -hold -e "pnpm cypress open --browser chrome --e2e cypress/e2e/NewConfigTest.cy.ts" &
-xterm -hold -e "pnpm cypress run --browser chrome --spec cypress/e2e/NewConfigTest.cy.ts" &
+
+# xterm -hold -e "
+# pnpm cypress open --browser chrome
+# --config baseUrl=https//preview-curntly-configurator.vercel.app --e2e cypress/e2e/NewConfigTest.cy.ts
+# "&
+
+xterm -hold -e "pnpm cypress run --browser chrome
+--config baseUrl=http://localhost:3000 --spec cypress/e2e/NewConfigTest.cy.ts" &
 
 # # Stop the test server
 # echo "Stopping the test server..."
