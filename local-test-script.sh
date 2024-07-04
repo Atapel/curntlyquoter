@@ -34,8 +34,7 @@ echo "Running Cypress end-to-end tests..."
 # --config baseUrl=https//preview-curntly-configurator.vercel.app --e2e cypress/e2e/NewConfigTest.cy.ts
 # "&
 
-xterm -hold -e "pnpm cypress run --browser chrome
---config baseUrl=http://localhost:3000 --spec cypress/e2e/NewConfigTest.cy.ts" &
+xterm -hold -e "pnpm cypress run --browser chrome --config baseUrl=http://localhost:3000 --spec cypress/e2e/NewConfigTest.cy.ts" &
 
 # # Stop the test server
 # echo "Stopping the test server..."
