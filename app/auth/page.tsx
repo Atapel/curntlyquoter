@@ -1,26 +1,20 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { redirect } from 'next/navigation';
-import { createClient } from '../utils/supabase/server'
-import SignIn from './providers/emailPassword/signIn';
-import SignUp from './providers/emailPassword/signUp'
-import ResetPassword from './providers/emailPassword/resetPassword';
+import "bootstrap/dist/css/bootstrap.min.css";
+import { redirect } from "next/navigation";
+import { createClient } from "../utils/supabase/server";
+import SignIn from "./providers/emailPassword/signIn";
+import AlternativeAuthActions from "./providers/emailPassword/alternativeActionsAuth";
 export default async function authPage() {
-  const supabase = createClient()
+  const supabase = createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
   if (user) {
-    redirect('/account');
+    redirect("/account");
   }
   return (
-    <div className="container mt-5">
-        <div className="row justify-content-center align-items-center">
-            <div className="col-md-4">
-              <SignIn />
-              <SignUp />
-              <ResetPassword />
-            </div>
-        </div>
+    <div className="container d-flex flex-column justify-content-around">
+      <SignIn />
+      <AlternativeAuthActions />
     </div>
-  )
+  );
 }
