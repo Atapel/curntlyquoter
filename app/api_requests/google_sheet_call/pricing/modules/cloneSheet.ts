@@ -8,7 +8,7 @@ export const clonePricingSheet = async (
     spreadsheetId:string
 ) :  Promise<string> => {
     const sourceSheetId: number = Number(process.env.GOOGLE_SHEETS_SOURCE_SHEET_ID);
-    
+    console.log('sourceSheetId',sourceSheetId)
     try {
         // Step 1: Duplicate the existing sheet
         const duplicateSheetRequest = {
