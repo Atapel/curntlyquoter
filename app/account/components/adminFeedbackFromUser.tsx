@@ -1,7 +1,5 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { Form, Button, Alert, Row, Col } from "react-bootstrap";
-
 const FeedbackForm = ({ session }) => {
   const [formData, setFormData] = useState({
     A: "",
@@ -10,14 +8,9 @@ const FeedbackForm = ({ session }) => {
     D: new Date().toLocaleDateString(),
     E: null,
   });
-
   const urlPath = process.env.NEXT_PUBLIC_FEEDBACK_SHEET_ROUTEHANDLER_URL;
-
-  console.log("urlPath Feedback: ", urlPath);
-
   const [feedbackMessage, setFeedbackMessage] = useState("");
   const [formSubmitted, setFormSubmitted] = useState(false);
-
   useEffect(() => {
     const submitFeedback = async () => {
       try {
@@ -61,34 +54,36 @@ const FeedbackForm = ({ session }) => {
   return (
     <>
       {!formSubmitted && (
-        <Form onSubmit={handleSubmit}>
-          <Row>
-            <Col>
-              <Form.Group controlId="formFeedback">
-                <Form.Label>Feedback:</Form.Label>
-                <Form.Control
-                  as="textarea"
-                  rows={3}
-                  value={formData.E}
-                  onChange={handleInputChange}
-                />
-              </Form.Group>
-            </Col>
-            <Col>
-              <Button type="submit">Submit Feedback</Button>
-            </Col>
-          </Row>
-        </Form>
+        <form
+          onSubmit={handleSubmit}
+          className="form-group p-2 d-flex flex-column justify-between"
+        >
+          <label htmlFor="formFeedback">Feedback:</label>
+          <textarea
+            className="form-control mx-3"
+            id="formFeedback"
+            rows={3}
+            value={formData.E}
+            onChange={handleInputChange}
+          />
+
+          <button type="submit" className="btn btn-primary m-2">
+            Submit Feedback
+          </button>
+        </form>
       )}
 
       {formSubmitted && (
-        <Alert
-          variant={
-            feedbackMessage.includes("successfully") ? "success" : "danger"
-          }
+        <div
+          className={`alert ${
+            feedbackMessage.includes("successfully")
+              ? "alert-success"
+              : "alert-danger"
+          }`}
+          role="alert"
         >
           {feedbackMessage}
-        </Alert>
+        </div>
       )}
     </>
   );

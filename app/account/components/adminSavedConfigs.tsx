@@ -1,33 +1,16 @@
-// import { useEffect, useState } from "react";
-import ConfigCards from "./savedConfigCards"; // Assuming this is a Teact component
-import { TConfigDB } from "@context/types";
+import ConfigCards from "./savedConfigs/savedConfigCards"; // Assuming this is a Teact component
 import { getConfigs } from "../actions";
 async function Saved_Configurations() {
-  // Fetch data using the useEffect hook or a custom data fetching function
-  // const [configsFromDB, setConfigsFromDB] = useState<TConfigDB[]>([]);
-
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  const configsFromDB = await getConfigs(); // Assuming getConfigs is available
-  // setConfigsFromDB(configs);
-  //   };
-  //   fetchData();
-  // }, []);
-
-  // Handle potential loading state or errors if needed
-
+  const configsFromDB  = await getConfigs(); // Assuming getConfigs is available
+  // Sort all configs for order finalized
+  // const drafts = []
+  // const finalized = []
   return (
-    <div className="list-group">
-      <div className="list-group-item">
-        <h2>Previous configurations</h2>
-      </div>
-      <div className="list-group-item">
-        <div className="row">
-          <ConfigCards configs={configsFromDB} />
-        </div>
-      </div>
+    <div className="border" style={{ margin: "1rem" }}>
+      <h2 className="border">Draft configurations</h2>
+      <ConfigCards configs={configsFromDB} />
+      {/* <h2 className="border">Finalized Orders</h2> */}
     </div>
   );
 }
-
 export default Saved_Configurations;
