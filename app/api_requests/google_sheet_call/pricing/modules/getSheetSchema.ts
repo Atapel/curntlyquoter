@@ -25,11 +25,11 @@ export const getRequestsObject = async (
   spreadsheetId: string, 
   sheetName: string
 ): Promise<TBatchUpdateRequest> => {
-  let validationRules = await getValidationRules(
-    spreadsheetId,
-    clientObject, 
-    sheetName
-  )
+  // let validationRules = await getValidationRules(
+  //   spreadsheetId,
+  //   clientObject, 
+  //   sheetName
+  // )
   // Define Sheet Schema
   let Schema: TSheetSchema = [
     {
