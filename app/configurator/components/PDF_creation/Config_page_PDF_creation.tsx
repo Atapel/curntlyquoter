@@ -81,7 +81,7 @@ const PDF_Generation = ({ canvasRef }) => {
 
   return (
     <>
-      <Button variant="outline-success" className="w-100" onClick={createPdf}>
+      <Button variant="outline-success" className="w-100 my-2" onClick={createPdf}>
         Save & Download PDF
       </Button>
       {feedback && <Alert variant={feedbackType}>{feedback}</Alert>}

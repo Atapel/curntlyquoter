@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-import { ListGroup } from "react-bootstrap";
 import { UseConfigurationReducerContext } from "@context/globalContext";
 import PDF_Generation from "./Config_page_PDF_creation";
 import SaveConfigurationButton from "../Configuration/Config_page_insert_button";
@@ -94,18 +93,14 @@ const PDF_preview = (props) => {
   return (
     <>
       {panelSelected === true ? (
-        <ListGroup>
-          <ListGroup.Item>
-            <h2>Configure Panel: </h2>
-          </ListGroup.Item>
-          <ListGroup.Item>
-            <canvas ref={canvasRef} className="m-5" />
-          </ListGroup.Item>
-          <ListGroup.Item>
+        <section className="border">
+          <h2 className="border p-2">Panel preview: </h2>
+          <canvas ref={canvasRef} className="m-5" />
+          <section className="border">
             <PDF_Generation canvasRef={canvasRef} />
             <SaveConfigurationButton />
-          </ListGroup.Item>
-        </ListGroup>
+          </section>
+        </section>
       ) : (
         <></>
       )}

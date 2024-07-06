@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Button, Alert } from "react-bootstrap";
 import { UseConfigurationReducerContext } from "@context/globalContext";
 import { updateConfiguration }  from '@api_requests/supabase/actions'
 function SaveConfigurationButton() {
@@ -26,28 +25,31 @@ function SaveConfigurationButton() {
       console.error('Error updating configuration:', error);
       setOperationStatus("danger");
     }
-    
+    // Reset operationStatus to null after 3 seconds
+    setTimeout(() => {
+      setOperationStatus(null);
+    }, 3000);
   }
 
   return (
     <>
-      <Button
+      <button
         onClick={insertConfigurations}
-        variant="outline-info"
-        className="w-100"
+        
+        className="btn btn-outline-info w-100"
         data-testid="Save-Config"
       >
         Save Configuration to Database
-      </Button>
+      </button>
       {operationStatus && (
-        <Alert 
-          variant={operationStatus}
+        <div 
+          className={`alert alert-${operationStatus}`}
           data-testid="Save-Config-Alert"  
         >
           {operationStatus === "success"
             ? "Configuration saved successfully!"
             : "Failed to save configuration!"}
-        </Alert>
+        </div>
       )}
     </>
   );
