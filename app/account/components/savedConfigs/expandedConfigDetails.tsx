@@ -30,7 +30,7 @@ function ExpandedConfigModal(props) {
                 className="modal-title fs-5"
                 id={`expandConfigModal${props.id}Label`}
               >
-                Details
+                Detailed Overview
               </h1>
               <button
                 type="button"
@@ -40,7 +40,7 @@ function ExpandedConfigModal(props) {
               ></button>
             </div>
             <div className="modal-body">
-              <section className="border my-2">
+              <section className="border my-2 p-2">
                 <h5 className="">Selected Switchboard</h5>
                 <ul>
                   <li
@@ -73,13 +73,13 @@ function ExpandedConfigModal(props) {
                 </ul>
               </section>
 
-              <section className="border my-2">
+              <section className="border my-2 p-2 ">
                 <h5 className="">Selected Breakers</h5>
                 <MapSelectedBreakers config_state={props.configuration} />
               </section>
 
-              <section className="border my-2">
-                <h5 className="card-title">Order Details</h5>
+              <section className="border my-2 p-2">
+                <h5 className="">Order Details</h5>
                 <ul>
                   <li
                     className="list-group-item"
