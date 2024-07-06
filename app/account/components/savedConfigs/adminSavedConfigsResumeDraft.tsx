@@ -1,6 +1,5 @@
 "use client";
-// import { Button } from "react-bootstrap";
-// import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { UseConfigurationReducerContext } from "@context/globalContext";
 import { TConfigDB } from "@context/types";
 interface IResumeDraftButtonProps {
@@ -8,30 +7,23 @@ interface IResumeDraftButtonProps {
 }
 function ResumeDraftButton(props: IResumeDraftButtonProps) {
   const { state, dispatch } = UseConfigurationReducerContext();
+  const router = useRouter();
   const loadConfigurationIntoState = (configObject: TConfigDB) => {
     dispatch({
       type: "LOAD_CONFIGURATION_FROM_DB",
       payload: configObject,
     });
+    router.push("/configurator");
   };
   return (
-    <a
-      href="/configurator"
+    <button
       className="btn btn-success my-2"
       onClick={() => {
         loadConfigurationIntoState(props.configFromDb);
       }}
     >
       Resume Configuration
-    </a>
+    </button>
   );
 }
 export default ResumeDraftButton;
-        // <Link href="/configurator">
-        //     <Button
-        //         variant="success"
-        //         onClick={() => { loadConfigurationIntoState(props.configFromDb) }}
-        //     >
-        //         Resume Configuration
-        //     </Button>
-        // </Link>
