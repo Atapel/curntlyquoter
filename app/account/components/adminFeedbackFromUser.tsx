@@ -6,7 +6,7 @@ const FeedbackForm = ({ session }) => {
     B: "",
     C: session?.user.email,
     D: new Date().toLocaleDateString(),
-    E: null,
+    E: "",
   });
   const urlPath = process.env.NEXT_PUBLIC_FEEDBACK_SHEET_ROUTEHANDLER_URL;
   const [feedbackMessage, setFeedbackMessage] = useState("");

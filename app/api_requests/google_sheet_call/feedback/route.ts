@@ -1,5 +1,4 @@
-const { google } = require("googleapis");
-const getGoogleSheetsClient = require("../sheetsClient")
+import getGoogleSheetsClient from "../sheetsClient";
 // Dev Acces at http://localhost:3000/configurator/api_requests/google_sheet_call/feedback
 export async function POST(dataObject) {
   
@@ -24,7 +23,7 @@ export async function POST(dataObject) {
       spreadsheetId,
       range,
       valueInputOption: "RAW",
-      resource: {
+      requestBody: {
         values: [values], // Wrap the values in an array
       },
     });

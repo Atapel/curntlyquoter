@@ -30,6 +30,7 @@
       "@auth/*": ["./app/auth/*"],
       "@context/*": ["./app/context/*"],
       "@configurator/*": ["app/configurator/*"],
+      "@global_components/*": ["app/global_components/*"],
       "@utils/*": ["./app/utils/*"]
     },
   },
