@@ -7,6 +7,7 @@ import {
   Col,
   Dropdown,
 } from "react-bootstrap"; // Make sure to import necessary Bootstrap components
+import DisplaySelectedPanel from "@global_components/selectedPanel";
 import ConfirmOrderButton from "./Quotation_page_order_button";
 import { UseConfigurationReducerContext } from "@context/globalContext";
 const ConfigReview = () => {
@@ -18,49 +19,20 @@ const ConfigReview = () => {
         <Row>
           <Col>
             <Card.Title>Selected Switchboard</Card.Title>
-            <ListGroupItem data-testid={`${state.Metadata.Project}-Width`}>
-              <strong>Width:</strong> {state.Configuration.SelectedFrameSize}
-            </ListGroupItem>
-            <ListGroupItem data-testid={`${state.Metadata.Project}-Voltage`}>
-              <strong>Voltage:</strong> {state.Configuration.SelectedVoltage}
-            </ListGroupItem>
-            <ListGroupItem data-testid={`${state.Metadata.Project}-Kaic`}>
-              <strong>KAIC rating:</strong>{" "}
-              {state.Configuration.SelectedKAICRating}
-            </ListGroupItem>
-            <ListGroupItem data-testid={`${state.Metadata.Project}-Bus`}>
-              <strong>Bus rating:</strong>{" "}
-              {state.Configuration.SelectedBusRating}
-            </ListGroupItem>
-            <ListGroupItem data-testid={`${state.Metadata.Project}-Height`}>
-              <strong>Panel Height:</strong>{" "}
-              {state.Configuration.SelectedPanelHeight}
-            </ListGroupItem>
-            <ListGroupItem
-              data-testid={`${state.Metadata.Project}-ServiceDistribution`}
-            >
-              <strong>Service Distribution:</strong>{" "}
-              {state.Configuration.SelectedServiceDistribution}
-            </ListGroupItem>
-            <ListGroupItem data-testid={`${state.Metadata.Project}-FeedType`}>
-              <strong>Feed Type:</strong> {state.Configuration.SelectedFeedType}
-            </ListGroupItem>
-
-            {state.Configuration.SelectedFeedType === "Main Breaker" ? (
-              <ListGroupItem
-                data-testid={`${state.Metadata.Project}-FeedThruLugs`}
-              >
-                <strong>Feed Thru Lugs:</strong>{" "}
-                {state.Configuration.FeedThruLugs ? "Yes" : "No"}
-              </ListGroupItem>
-            ) : state.Configuration.SelectedFeedType === "Main Lug" ? (
-              <ListGroupItem
-                data-testid={`${state.Metadata.Project}-FeedPosition`}
-              >
-                <strong>Feed Position:</strong>{" "}
-                {state.Configuration.SelectedFeedPosition}
-              </ListGroupItem>
-            ) : null}
+            <DisplaySelectedPanel
+              Id={state.Metadata.DatabaseID}
+              Width={state.Configuration.SelectedFrameSize}
+              Height={state.Configuration.SelectedPanelHeight}
+              Voltage={state.Configuration.SelectedVoltage}
+              KAIC={state.Configuration.SelectedKAICRating}
+              Bus={state.Configuration.SelectedBusRating}
+              ServiceDistribution={
+                state.Configuration.SelectedServiceDistribution
+              }
+              FeedType={state.Configuration.SelectedFeedType}
+              FeedThruLugs={state.Configuration.FeedThruLugs}
+              FeedPosition={state.Configuration.SelectedFeedPosition}
+            />
           </Col>
 
           <Col>
@@ -99,11 +71,10 @@ const ConfigReview = () => {
                   </Row>
                 </ListGroup.Item>
               ))}
-            
+
             {state.Configuration.SelectedBreakers.length === 0 && (
               <div className="alert alert-warning">No breakers selected</div>
             )}
-            
           </Col>
           <Col>
             <Card.Title>Order Details</Card.Title>

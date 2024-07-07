@@ -1,6 +1,6 @@
 import { TConfigDB } from "@context/types";
-import DeleteConfigPopUp from "./deletePopup";
-import ResumeDraftButton from "./adminSavedConfigsResumeDraft";
+// import DeleteConfigPopUp from "./deletePopup";
+// import ResumeDraftButton from "./adminSavedConfigsResumeDraft";
 import ExpandedConfigModal from "./expandedConfigDetails";
 interface configCardsProps {
   configs: TConfigDB[];
@@ -8,7 +8,7 @@ interface configCardsProps {
 function ConfigCards(props: configCardsProps) {
   console.log("props.configs", props.configs);
   return (
-    <>
+    <div className="border p-2 d-flex flex-row justify-between flex-wrap">
       {props.configs.length > 0 ? (
         props.configs.map((configuration: TConfigDB) => (
           <div
@@ -41,20 +41,11 @@ function ConfigCards(props: configCardsProps) {
               >
                 <strong>Client:</strong> {configuration.init_client}
               </li>
-            </ul>
 
-            {/* Button Row */}
-            <div style={{}}>
-              <ResumeDraftButton configFromDb={configuration} />
-              <DeleteConfigPopUp
-                // data-testid={`Delete-Config-${configuration.init_project}`}
-                id={configuration.id}
-              />
-              <ExpandedConfigModal
-                configuration={configuration}
-                id={configuration.id}
-              />
-            </div>
+              <li className="list-group-item">
+                <ExpandedConfigModal configuration={configuration} />
+              </li>
+            </ul>
           </div>
         ))
       ) : (
@@ -62,7 +53,7 @@ function ConfigCards(props: configCardsProps) {
           User has no configurations saved.
         </div>
       )}
-    </>
+    </div>
   );
 }
 

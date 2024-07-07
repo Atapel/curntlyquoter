@@ -1,5 +1,9 @@
 "use client";
 import { useEffect } from "react";
+import { TConfigDB } from "@context/types";
+import ResumeDraftButton from "./adminSavedConfigsResumeDraft";
+import DeleteConfigPopUp from "./deletePopup";
+import DisplaySelectedPanel from "@global_components/selectedPanel";
 import MapSelectedBreakers from "./adminSavedConfigsSelectedBreakersMap";
 function ExpandedConfigModal(props) {
   useEffect(() => {
@@ -9,7 +13,7 @@ function ExpandedConfigModal(props) {
     <>
       <button
         type="button"
-        className="btn btn-primary"
+        className="btn btn-primary w-50"
         data-bs-toggle="modal"
         data-bs-target={`#expandConfigModal${props.id}`}
       >
@@ -42,35 +46,20 @@ function ExpandedConfigModal(props) {
             <div className="modal-body">
               <section className="border my-2 p-2">
                 <h5 className="">Selected Switchboard</h5>
-                <ul>
-                  <li
-                    className="list-group-item"
-                    data-testid={`${props.configuration.init_project}-Width`}
-                  >
-                    <strong>Width:</strong> {props.configuration.panel_width}
-                  </li>
-                  <li
-                    className="list-group-item"
-                    data-testid={`${props.configuration.init_project}-Voltage`}
-                  >
-                    <strong>Voltage:</strong>{" "}
-                    {props.configuration.panel_voltage}
-                  </li>
-                  <li
-                    className="list-group-item"
-                    data-testid={`${props.configuration.init_project}-Kaic`}
-                  >
-                    <strong>KAIC rating:</strong>{" "}
-                    {props.configuration.panel_KAIC_rating}
-                  </li>
-                  <li
-                    className="list-group-item"
-                    data-testid={`${props.configuration.init_project}-Bus`}
-                  >
-                    <strong>Bus rating:</strong>{" "}
-                    {props.configuration.panel_bus_rating}
-                  </li>
-                </ul>
+                <DisplaySelectedPanel
+                  Id={props.id}
+                  Width={props.configuration.panel_width}
+                  Height={props.configuration.panel_height}
+                  Voltage={props.configuration.panel_voltage}
+                  KAIC={props.configuration.panel_KAIC_rating}
+                  Bus={props.configuration.panel_bus_rating}
+                  ServiceDistribution={
+                    props.configuration.panel_service_distribution
+                  }
+                  FeedType={props.configuration.panel_feed_type}
+                  FeedThruLugs={props.configuration.panel_feed_thru_lugs}
+                  FeedPosition={props.configuration.panel_feed_position}
+                />
               </section>
 
               <section className="border my-2 p-2 ">
@@ -98,6 +87,13 @@ function ExpandedConfigModal(props) {
                   </li> */}
                 </ul>
               </section>
+            </div>
+            <div className="modal-footer">
+              <DeleteConfigPopUp
+                // data-testid={`Delete-Config-${configuration.init_project}`}
+                id={props.configuration.id}
+              />
+              <ResumeDraftButton configFromDb={props.configuration} />
             </div>
           </div>
         </div>
