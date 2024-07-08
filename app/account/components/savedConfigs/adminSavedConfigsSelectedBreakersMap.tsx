@@ -11,9 +11,15 @@ const MapSelectedBreakers = (props: selectedBreakersProps) => {
         selectedBreakers.map((item, index) => (
           <div
             key={index}
-            className="border m-2 p-2 d-flex flex-row justify-content: space-between"
+            className="border p-2"
+            style={{
+              display:"flex",
+              flexDirection: "row",
+              alignItems: "baseline", 
+              justifyContent: "space-between" 
+              }}
           >
-            <p>{item.SelectedBreaker.Description}</p>
+            <p className="fw-bold">{item.SelectedBreaker.Description}</p>
 
             <button
               className="btn btn-primary dropdown-toggle"

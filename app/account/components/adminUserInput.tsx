@@ -121,38 +121,3 @@ const NewConfigInput = () => {
 
 export default NewConfigInput;
 
-{/* <>
-<div className="border" style={{ margin: "1rem" }}>
-  <h2>New configuration</h2>
-  <form className="border p-2 form-group d-flex flex-row justify-between">
-    <label htmlFor="formClient">Client</label>
-    <input
-      type="text"
-      className="form-control mx-3"
-      id="formClient"
-      name="client"
-      value={formData.client}
-      onChange={handleChange}
-      data-testid="client-input"
-    />
-    <label htmlFor="formProject">Project</label>
-    <input
-      type="text"
-      className="form-control mx-3"
-      id="formProject"
-      name="project"
-      value={formData.project}
-      onChange={handleChange}
-      data-testid="project-input"
-    />
-    <button
-      className="btn btn-outline-success w-50"
-      onClick={handleSubmit}
-      // disabled={isFormIncomplete}
-      data-testid="launch-new-configuration-button"
-    >
-      Launch Configurator
-    </button>
-  </form>
-</div>
-</> */}

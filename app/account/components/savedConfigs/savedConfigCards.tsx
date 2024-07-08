@@ -13,7 +13,7 @@ function ConfigCards(props: configCardsProps) {
       {props.configs.length > 0 ? (
         props.configs.map((configuration: TConfigDB) => (
           <div
-            className="border m-2"
+            className="border m-2 bg-light"
             key={configuration.id}
             style={{ width: "18rem" }}
           >

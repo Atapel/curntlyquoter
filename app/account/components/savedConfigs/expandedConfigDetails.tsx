@@ -37,7 +37,7 @@ function ExpandedConfigModal(props) {
               </h1>
               <button
                 type="button"
-                className="btn-close"
+                className="btn-close border bg-danger"
                 data-bs-dismiss="modal"
                 aria-label="Close"
               ></button>
