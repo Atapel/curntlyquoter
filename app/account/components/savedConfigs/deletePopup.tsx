@@ -9,7 +9,7 @@ function DeleteConfigPopUp(props) {
     <>
       <button
         type="button"
-        className="btn btn-danger"
+        className="btn btn-danger w-100"
         data-bs-toggle="modal"
         data-bs-target={`#deleteConfigModal${props.id}`}
         // data-testid={`Delete-Config-${configuration.init_project}`}

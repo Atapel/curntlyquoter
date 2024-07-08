@@ -18,6 +18,7 @@ function ResumeDraftButton(props: IResumeDraftButtonProps) {
   return (
     <button
       className="btn btn-success my-2"
+      data-bs-dismiss="modal"
       onClick={() => {
         loadConfigurationIntoState(props.configFromDb);
       }}

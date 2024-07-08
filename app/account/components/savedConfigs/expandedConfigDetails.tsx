@@ -2,7 +2,6 @@
 import { useEffect } from "react";
 import { TConfigDB } from "@context/types";
 import ResumeDraftButton from "./adminSavedConfigsResumeDraft";
-import DeleteConfigPopUp from "./deletePopup";
 import DisplaySelectedPanel from "@global_components/selectedPanel";
 import MapSelectedBreakers from "./adminSavedConfigsSelectedBreakersMap";
 function ExpandedConfigModal(props) {
@@ -13,7 +12,7 @@ function ExpandedConfigModal(props) {
     <>
       <button
         type="button"
-        className="btn btn-primary w-50"
+        className="btn btn-primary w-100 my-2"
         data-bs-toggle="modal"
         data-bs-target={`#expandConfigModal${props.id}`}
       >
@@ -89,10 +88,6 @@ function ExpandedConfigModal(props) {
               </section>
             </div>
             <div className="modal-footer">
-              <DeleteConfigPopUp
-                // data-testid={`Delete-Config-${configuration.init_project}`}
-                id={props.configuration.id}
-              />
               <ResumeDraftButton configFromDb={props.configuration} />
             </div>
           </div>
