@@ -85,10 +85,10 @@ Cypress.Commands.add(`addFrame`, (ConfigSpecs) => {
     // cy.visit('/configurator')
     // cy.wait('@configPage')
 
-    cy.get(`[data-testid="Dropdown-Width"]`).click();
+    cy.get(`[data-testid="Dropdown-Panel Width"]`).click();
     cy.get(`[data-testid="selection-${ConfigSpecs.Width}"]`).click()
 
-    cy.get(`[data-testid="Dropdown-Height"]`).click();
+    cy.get(`[data-testid="Dropdown-Panel Height"]`).click();
     cy.get(`[data-testid="selection-${ConfigSpecs.Height}"]`).click()
 
     cy.get(`[data-testid="Dropdown-Voltage"]`).click();
@@ -97,13 +97,13 @@ Cypress.Commands.add(`addFrame`, (ConfigSpecs) => {
     cy.get(`[data-testid="Dropdown-Kaic"]`).click();
     cy.get(`[data-testid="selection-${ConfigSpecs.Kaic}"]`).click()
 
-    cy.get(`[data-testid="Dropdown-Bus"]`).click();
+    cy.get(`[data-testid="Dropdown-Bus Rating"]`).click();
     cy.get(`[data-testid="selection-${ConfigSpecs.Bus}"]`).click()
     
-    cy.get(`[data-testid="Dropdown-DistService"]`).click();
+    cy.get(`[data-testid="Dropdown-Distribution or Service"]`).click();
     cy.get(`[data-testid="selection-${ConfigSpecs.ServiceDistribution}"]`).click()
 
-    cy.get(`[data-testid="Dropdown-Feed"]`).click();
+    cy.get(`[data-testid="Dropdown-Feed Type"]`).click();
     cy.get(`[data-testid="selection-${ConfigSpecs.FeedType}"]`).click()
 
     // if (feedPosition) {

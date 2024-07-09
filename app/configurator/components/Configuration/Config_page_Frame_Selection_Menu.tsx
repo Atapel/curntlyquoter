@@ -9,9 +9,10 @@ import {
   Form,
 } from "react-bootstrap";
 import { selectableFrameOptions } from "../../assets/FrameSelectionOptions";
+import { updateConfiguration } from "@api_requests/supabase/actions";
 import { UseConfigurationReducerContext } from "@context/globalContext";
 import DisplaySelectedFrame from "./Config_page_Selected_Frame_Preview";
-
+import FrameSelectionItem from "./SelectionItemDropdown";
 function Select_Panel_Menu(props) {
   const [panelSelected, setPanelSelected] = props.renderstate;
   const { state, dispatch } = UseConfigurationReducerContext();
@@ -22,6 +23,21 @@ function Select_Panel_Menu(props) {
     }
   }, []);
 
+  const addFrameConfimation = async function () {
+    // Save configuration as soon as the user clicks the add button
+    try {
+      await updateConfiguration(state);
+    } catch (error) {
+      console.error("Error updating configuration:", error);
+      // You can also display an error message to the user here
+      alert(
+        "An error occurred while updating the configuration. Please try again later."
+      );
+    }
+    // Set conditional rendering variable to true
+    setPanelSelected(true);
+  };
+
   return (
     <>
       {panelSelected === false ? (
@@ -29,126 +45,43 @@ function Select_Panel_Menu(props) {
           <ListGroup.Item>
             <h2>Configure Panel: </h2>
           </ListGroup.Item>
+
           <ListGroup.Item>
             {/* Dropdown for Frame Size */}
-            <Dropdown>
-              <Row>
-                <Col>
-                  <h5>Selected Width:</h5>
-                </Col>
-                <Col>
-                  <Dropdown.Toggle
-                    data-testid="Dropdown-Width"
-                    variant="primary"
-                    id="dropdown-basic"
-                  >
-                    {state.Configuration.SelectedFrameSize}
-                  </Dropdown.Toggle>
-                </Col>
-              </Row>
-
-              <Dropdown.Menu>
-                {selectableFrameOptions.frameSize.map((framesize) => (
-                  <Dropdown.Item key={framesize}>
-                    <Button
-                      data-testid={`selection-${framesize}`}
-                      variant="outline-info"
-                      size="sm"
-                      className="w-100"
-                      onClick={() =>
-                        dispatch({ type: "SET_FRAME_SIZE", payload: framesize })
-                      }
-                    >
-                      {framesize}
-                    </Button>
-                  </Dropdown.Item>
-                ))}
-              </Dropdown.Menu>
-            </Dropdown>
+            <FrameSelectionItem
+              disabledBool={false}
+              ItemName={"Panel Width"}
+              SelectableItemsArray={selectableFrameOptions.frameSize}
+              dispatchFunc={dispatch}
+              dispatchAction={"SET_FRAME_SIZE"}
+            />
+            {/* Dropdown for Frame Size */}
           </ListGroup.Item>
 
           <ListGroup.Item>
             {/* Dropdown for Panel Height */}
-            <Dropdown>
-              <Row>
-                <Col>
-                  <h5>Selected Panel Height:</h5>
-                </Col>
-                <Col>
-                  <Dropdown.Toggle
-                    data-testid="Dropdown-Height"
-                    variant="primary"
-                    id="dropdown-basic"
-                    disabled={
-                      state.Configuration.SelectedFrameSize === "Select Width"
-                    }
-                  >
-                    {state.Configuration.SelectedPanelHeight}
-                  </Dropdown.Toggle>
-                </Col>
-              </Row>
-              <Dropdown.Menu>
-                {selectableFrameOptions.panelHeight.map((panelHeight) => (
-                  <Dropdown.Item key={panelHeight}>
-                    <Button
-                      data-testid={`selection-${panelHeight}`}
-                      variant="outline-info"
-                      size="sm"
-                      className="w-100"
-                      onClick={() =>
-                        dispatch({
-                          type: "SET_PANEL_HEIGHT",
-                          payload: panelHeight,
-                        })
-                      }
-                    >
-                      {panelHeight}
-                    </Button>
-                  </Dropdown.Item>
-                ))}
-              </Dropdown.Menu>
-            </Dropdown>
+            <FrameSelectionItem
+              disabledBool={
+                state.Configuration.SelectedFrameSize === "Select Width"
+              }
+              ItemName={"Panel Height"}
+              SelectableItemsArray={selectableFrameOptions.panelHeight}
+              dispatchFunc={dispatch}
+              dispatchAction={"SET_PANEL_HEIGHT"}
+            />
           </ListGroup.Item>
 
           <ListGroup.Item>
             {/* Dropdown for Voltage */}
-            <Dropdown>
-              <Row>
-                <Col>
-                  <h5>Selected Voltage:</h5>
-                </Col>
-                <Col>
-                  <Dropdown.Toggle
-                    data-testid="Dropdown-Voltage"
-                    variant="primary"
-                    id="dropdown-basic"
-                    disabled={
-                      state.Configuration.SelectedPanelHeight ===
-                      "Select Height"
-                    }
-                  >
-                    {state.Configuration.SelectedVoltage}
-                  </Dropdown.Toggle>
-                </Col>
-              </Row>
-              <Dropdown.Menu>
-                {selectableFrameOptions.voltage.map((voltage) => (
-                  <Dropdown.Item key={voltage}>
-                    <Button
-                      data-testid={`selection-${voltage}`}
-                      variant="outline-info"
-                      size="sm"
-                      className="w-100"
-                      onClick={() =>
-                        dispatch({ type: "SET_VOLTAGE", payload: voltage })
-                      }
-                    >
-                      {voltage}
-                    </Button>
-                  </Dropdown.Item>
-                ))}
-              </Dropdown.Menu>
-            </Dropdown>
+            <FrameSelectionItem
+              disabledBool={
+                state.Configuration.SelectedPanelHeight === "Select Height"
+              }
+              ItemName={"Voltage"}
+              SelectableItemsArray={selectableFrameOptions.voltage}
+              dispatchFunc={dispatch}
+              dispatchAction={"SET_VOLTAGE"}
+            />
           </ListGroup.Item>
 
           <ListGroup.Item>
@@ -225,173 +158,54 @@ function Select_Panel_Menu(props) {
 
           <ListGroup.Item>
             {/* Dropdown for Bus Rating */}
-            <Dropdown>
-              <Row>
-                <Col>
-                  <h5>Selected Bus Rating:</h5>
-                </Col>
-                <Col>
-                  <Dropdown.Toggle
-                    data-testid="Dropdown-Bus"
-                    variant="primary"
-                    id="dropdown-basic"
-                    disabled={
-                      state.Configuration.SelectedKAICRating ===
-                      "Select KAIC Rating"
-                    }
-                  >
-                    {state.Configuration.SelectedBusRating}
-                  </Dropdown.Toggle>
-                </Col>
-              </Row>
-              <Dropdown.Menu>
-                {selectableFrameOptions.busRating.map((busRating) => (
-                  <Dropdown.Item key={busRating}>
-                    <Button
-                      data-testid={`selection-${busRating}`}
-                      variant="outline-info"
-                      size="sm"
-                      className="w-100"
-                      onClick={() =>
-                        dispatch({ type: "SET_BUS_RATING", payload: busRating })
-                      }
-                    >
-                      {busRating}
-                    </Button>
-                  </Dropdown.Item>
-                ))}
-              </Dropdown.Menu>
-            </Dropdown>
+            <FrameSelectionItem
+              disabledBool={
+                state.Configuration.SelectedKAICRating === "Select KAIC Rating"
+              }
+              ItemName={"Bus Rating"}
+              SelectableItemsArray={selectableFrameOptions.busRating}
+              dispatchFunc={dispatch}
+              dispatchAction={"SET_BUS_RATING"}
+            />
           </ListGroup.Item>
 
           <ListGroup.Item>
             {/* Dropdown for DistributionSerie */}
-
-            <Dropdown>
-              <Row>
-                <Col>
-                  <h5>Distribution or Service: </h5>
-                </Col>
-                <Col>
-                  <Dropdown.Toggle
-                    data-testid="Dropdown-DistService"
-                    variant="primary"
-                    id="dropdown-basic"
-                    disabled={
-                      state.Configuration.SelectedBusRating ===
-                      "Select Bus Rating"
-                    }
-                  >
-                    {state.Configuration.SelectedServiceDistribution}
-                  </Dropdown.Toggle>
-                </Col>
-              </Row>
-              <Dropdown.Menu>
-                {selectableFrameOptions.serviceDistribution.map(
-                  (serviceDistribution) => (
-                    <Dropdown.Item key={serviceDistribution}>
-                      <Button
-                        data-testid={`selection-${serviceDistribution}`}
-                        variant="outline-info"
-                        size="sm"
-                        className="w-100"
-                        onClick={() =>
-                          dispatch({
-                            type: "SET_SERVICE_OR_DISTRIBUTION",
-                            payload: serviceDistribution,
-                          })
-                        }
-                      >
-                        {serviceDistribution}
-                      </Button>
-                    </Dropdown.Item>
-                  )
-                )}
-              </Dropdown.Menu>
-            </Dropdown>
+            <FrameSelectionItem
+              disabledBool={
+                state.Configuration.SelectedBusRating === "Select Bus Rating"
+              }
+              ItemName={"Distribution or Service"}
+              SelectableItemsArray={selectableFrameOptions.serviceDistribution}
+              dispatchFunc={dispatch}
+              dispatchAction={"SET_SERVICE_OR_DISTRIBUTION"}
+            />
           </ListGroup.Item>
 
           <ListGroup.Item>
             {/* Dropdown for Feed Type */}
-            <Dropdown>
-              <Row>
-                <Col>
-                  <h5>Selected Feed Type:</h5>
-                </Col>
-                <Col>
-                  <Dropdown.Toggle
-                    data-testid="Dropdown-Feed"
-                    variant="primary"
-                    id="dropdown-basic"
-                    disabled={
-                      state.Configuration.SelectedServiceDistribution ===
-                      "Select Service or Distribution"
-                    }
-                  >
-                    {state.Configuration.SelectedFeedType}
-                  </Dropdown.Toggle>
-                </Col>
-              </Row>
-              <Dropdown.Menu>
-                {selectableFrameOptions.feedType.map((feedType) => (
-                  <Dropdown.Item key={feedType}>
-                    <Button
-                      data-testid={`selection-${feedType}`}
-                      variant="outline-info"
-                      size="sm"
-                      className="w-100"
-                      onClick={() =>
-                        dispatch({ type: "SET_FEED_TYPE", payload: feedType })
-                      }
-                    >
-                      {feedType}
-                    </Button>
-                  </Dropdown.Item>
-                ))}
-              </Dropdown.Menu>
-            </Dropdown>
+            <FrameSelectionItem
+              disabledBool={
+                state.Configuration.SelectedServiceDistribution ===
+                "Select Service or Distribution"
+              }
+              ItemName={"Feed Type"}
+              SelectableItemsArray={selectableFrameOptions.feedType}
+              dispatchFunc={dispatch}
+              dispatchAction={"SET_FEED_TYPE"}
+            />
           </ListGroup.Item>
 
           {state.Configuration.SelectedFeedType === "Main Lug" ? (
             <ListGroup.Item>
               {/* Dropdown for Feed Position */}
-              <Dropdown>
-                <Row>
-                  <Col>
-                    <h5>Selected Feed Position:</h5>
-                  </Col>
-                  <Col>
-                    <Dropdown.Toggle
-                      data-testid="Dropdown-Position"
-                      variant="primary"
-                      id="dropdown-basic"
-                      // disabled={state.Configuration.MainLug === false}
-                    >
-                      {state.Configuration.SelectedFeedPosition}
-                    </Dropdown.Toggle>
-                  </Col>
-                </Row>
-                <Dropdown.Menu>
-                  {selectableFrameOptions.feedPosition.map((feedPosition) => (
-                    <Dropdown.Item key={feedPosition}>
-                      <Button
-                        data-testid={`selection-${feedPosition}`}
-                        variant="outline-info"
-                        size="sm"
-                        className="w-100"
-                        onClick={() =>
-                          dispatch({
-                            type: "SET_FEED_POSITION",
-                            payload: feedPosition,
-                          })
-                        }
-                      >
-                        {feedPosition}
-                      </Button>
-                    </Dropdown.Item>
-                  ))}
-                </Dropdown.Menu>
-              </Dropdown>
+              <FrameSelectionItem
+                disabledBool={false}
+                ItemName={"Feed Position"}
+                SelectableItemsArray={selectableFrameOptions.feedPosition}
+                dispatchFunc={dispatch}
+                dispatchAction={"SET_FEED_POSITION"}
+              />
             </ListGroup.Item>
           ) : state.Configuration.SelectedFeedType === "Main Breaker" ? (
             <ListGroup.Item>
@@ -416,14 +230,13 @@ function Select_Panel_Menu(props) {
           ) : (
             <></>
           )}
-
           <ListGroupItem>
             <Button
               data-testid="Add-Frame"
               variant="outline-info"
               size="sm"
               className="w-100"
-              onClick={() => setPanelSelected(true)}
+              onClick={() => addFrameConfimation()}
               disabled={
                 (state.Configuration.SelectedFeedPosition ===
                   "Select Feed Position" &&
