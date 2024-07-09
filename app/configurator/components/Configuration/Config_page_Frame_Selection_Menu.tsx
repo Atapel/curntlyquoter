@@ -8,6 +8,7 @@ import {
   ListGroupItem,
   Form,
 } from "react-bootstrap";
+import { createSheet, writeFramePricing } from "@api_requests/google_sheet_call/pricing/actions";
 import { selectableFrameOptions } from "../../assets/FrameSelectionOptions";
 import { updateConfiguration } from "@api_requests/supabase/actions";
 import { UseConfigurationReducerContext } from "@context/globalContext";
@@ -21,12 +22,17 @@ function Select_Panel_Menu(props) {
     if (state.Metadata.ResumeDraft) {
       setPanelSelected(true);
     }
+    // Create corresponding google sheet in the background
+    createSheet(state);
   }, []);
 
   const addFrameConfimation = async function () {
+    // Set conditional rendering variable to true
+    setPanelSelected(true);
     // Save configuration as soon as the user clicks the add button
     try {
-      await updateConfiguration(state);
+      // Async function that runs in the background without await
+      updateConfiguration(state);
     } catch (error) {
       console.error("Error updating configuration:", error);
       // You can also display an error message to the user here
@@ -34,8 +40,8 @@ function Select_Panel_Menu(props) {
         "An error occurred while updating the configuration. Please try again later."
       );
     }
-    // Set conditional rendering variable to true
-    setPanelSelected(true);
+    // Write Configured Frame into Google sheet
+    writeFramePricing(state);
   };
 
   return (

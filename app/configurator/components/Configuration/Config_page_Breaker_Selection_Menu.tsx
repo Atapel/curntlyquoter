@@ -4,6 +4,7 @@ import {
   UseConfigurationReducerContext,
   UseBreakerReducerContext,
 } from "@context/globalContext";
+import { writeBreakersPricing } from "@api_requests/google_sheet_call/pricing/actions";
 import DisplaySelectedItems from "./Config_page_Selected_Breakers_List";
 import BreakerMappings from "./BreakerMappings";
 import SelectionItemDropdown from "./SelectionItemDropdown";
@@ -13,8 +14,8 @@ const Select_Breakers_Menu = () => {
   const [showAddButton, setShowAddButton] = useState(true);
   const handleProductSelect = () => {
     dispatch({ type: "ADD_BREAKER", payload: breakerState });
-    // Ativate the Component that lists the selected Breakers
-    // setrenderSelectedBrakers(true)
+    //Write selection to pricing sheet
+    writeBreakersPricing(state);
     // reset the states back to original
     breakerDispatch({ type: "RESET_BREAKER_STATE" });
   };
