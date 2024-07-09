@@ -12,7 +12,7 @@ import { selectableFrameOptions } from "../../assets/FrameSelectionOptions";
 import { updateConfiguration } from "@api_requests/supabase/actions";
 import { UseConfigurationReducerContext } from "@context/globalContext";
 import DisplaySelectedFrame from "./Config_page_Selected_Frame_Preview";
-import FrameSelectionItem from "./SelectionItemDropdown";
+import SelectionItemDropdown from "./SelectionItemDropdown";
 function Select_Panel_Menu(props) {
   const [panelSelected, setPanelSelected] = props.renderstate;
   const { state, dispatch } = UseConfigurationReducerContext();
@@ -48,7 +48,7 @@ function Select_Panel_Menu(props) {
 
           <ListGroup.Item>
             {/* Dropdown for Frame Size */}
-            <FrameSelectionItem
+            <SelectionItemDropdown
               disabledBool={false}
               ItemName={"Panel Width"}
               SelectableItemsArray={selectableFrameOptions.frameSize}
@@ -60,7 +60,7 @@ function Select_Panel_Menu(props) {
 
           <ListGroup.Item>
             {/* Dropdown for Panel Height */}
-            <FrameSelectionItem
+            <SelectionItemDropdown
               disabledBool={
                 state.Configuration.SelectedFrameSize === "Select Width"
               }
@@ -73,7 +73,7 @@ function Select_Panel_Menu(props) {
 
           <ListGroup.Item>
             {/* Dropdown for Voltage */}
-            <FrameSelectionItem
+            <SelectionItemDropdown
               disabledBool={
                 state.Configuration.SelectedPanelHeight === "Select Height"
               }
@@ -158,7 +158,7 @@ function Select_Panel_Menu(props) {
 
           <ListGroup.Item>
             {/* Dropdown for Bus Rating */}
-            <FrameSelectionItem
+            <SelectionItemDropdown
               disabledBool={
                 state.Configuration.SelectedKAICRating === "Select KAIC Rating"
               }
@@ -171,7 +171,7 @@ function Select_Panel_Menu(props) {
 
           <ListGroup.Item>
             {/* Dropdown for DistributionSerie */}
-            <FrameSelectionItem
+            <SelectionItemDropdown
               disabledBool={
                 state.Configuration.SelectedBusRating === "Select Bus Rating"
               }
@@ -184,7 +184,7 @@ function Select_Panel_Menu(props) {
 
           <ListGroup.Item>
             {/* Dropdown for Feed Type */}
-            <FrameSelectionItem
+            <SelectionItemDropdown
               disabledBool={
                 state.Configuration.SelectedServiceDistribution ===
                 "Select Service or Distribution"
@@ -199,7 +199,7 @@ function Select_Panel_Menu(props) {
           {state.Configuration.SelectedFeedType === "Main Lug" ? (
             <ListGroup.Item>
               {/* Dropdown for Feed Position */}
-              <FrameSelectionItem
+              <SelectionItemDropdown
                 disabledBool={false}
                 ItemName={"Feed Position"}
                 SelectableItemsArray={selectableFrameOptions.feedPosition}

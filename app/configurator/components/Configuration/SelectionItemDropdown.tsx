@@ -1,6 +1,6 @@
 import { UseConfigurationReducerContext } from "@context/globalContext";
 import { useState } from "react";
-function FrameSelectionItem({
+function SelectionItemDropdown({
   ItemName,
   SelectableItemsArray,
   dispatchFunc,
@@ -41,4 +41,4 @@ function FrameSelectionItem({
     </div>
   );
 }
-export default FrameSelectionItem;
+export default SelectionItemDropdown;
