@@ -116,16 +116,16 @@ Cypress.Commands.add(`addFrame`, (ConfigSpecs) => {
 
 
 Cypress.Commands.add('addBreaker', (ConfigSpecs) => {
-    cy.get(`[data-testid="Dropdown-BreakerFrame"]`).click();
+    cy.get(`[data-testid="Dropdown-Breaker Frame"]`).click();
     cy.get(`[data-testid="selection-${ConfigSpecs.BreakerFrame}"]`).click();
   
     cy.get(`[data-testid="Dropdown-Breaker"]`).click();
     cy.get(`[data-testid="selection-${ConfigSpecs.BreakerModel}"]`).click();
   
-    cy.get(`[data-testid="Dropdown-Amp"]`).click();
+    cy.get(`[data-testid="Dropdown-Breaker Amperage"]`).click();
     cy.get(`[data-testid="selection-${ConfigSpecs.BreakerAmp}"]`).click();
   
-    cy.get(`[data-testid="Dropdown-Poles"]`).click();
+    cy.get(`[data-testid="Dropdown-Breaker Poles"]`).click();
     cy.get(`[data-testid="selection-${ConfigSpecs.BreakerPole}"]`).click();
 
     cy.get(`[data-testid="Add-Breaker"]`).click();
