@@ -1,9 +1,6 @@
 import getGoogleSheetsClient from "../sheetsClient";
-import { doesSheetExist } from "./modules/doesSheetExist";
-import { clonePricingSheet } from "./modules/cloneSheet";
-import { getRequestsObject } from "./modules/getSheetSchema";
+import { writeBreakersPricing } from "./actions";
 import { readSheet } from "./modules/getPricing";
-import { writeSheet } from "./modules/writePricing";
 import { getPricing } from "./modules/extractPricing";
 import { TConfigurationState } from "@context/types";
 import { TPricingApiResponse } from "@api_requests/types";
@@ -20,47 +17,7 @@ export async function POST(configObjectRAW) {
     // Initialize Google Sheets Client
     const googleSheets = getGoogleSheetsClient();
 
-    // Check if sheet already exists
-    const sheetExistenceCheck = await doesSheetExist(
-      googleSheets,
-      templateSheetID,
-      configObject.Metadata.DatabaseID
-    );
-
-    let tabSubSheet: string;
-
-    if (!sheetExistenceCheck) {
-      console.log("Sheet does not exist, cloning template sheet");
-      // if not then clone the original template sheet
-      try {
-        tabSubSheet = await clonePricingSheet(
-          googleSheets,
-          configObject,
-          templateSheetID
-        );
-      } catch (cloneError) {
-        console.error("Error cloning pricing sheet:", cloneError);
-        throw new Error("Failed to clone pricing sheet");
-      }
-    } else {
-      // Sheet already exists
-      tabSubSheet = configObject.Metadata.DatabaseID;
-    }
-
-    // Transform Config object into sheets batch request
-    const batchUpdateRequest = await getRequestsObject(
-      configObject.Configuration,
-      googleSheets,
-      templateSheetID,
-      tabSubSheet
-    );
-
-    try {
-      await writeSheet(googleSheets, batchUpdateRequest);
-    } catch (writeError) {
-      console.error("Error writing to pricing sheet:", writeError);
-      throw new Error("Failed to write to pricing sheet");
-    }
+    await writeBreakersPricing(configObject);
 
     // Read Sheet and get Pricing Data
     let pricingSheet;
@@ -68,7 +25,7 @@ export async function POST(configObjectRAW) {
       pricingSheet = await readSheet(
         googleSheets,
         templateSheetID,
-        tabSubSheet
+        configObject.Metadata.DatabaseID
       );
     } catch (readError) {
       console.error("Error reading pricing sheet:", readError);
