@@ -1,9 +1,10 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { signup } from "../../actions";
 import { ISignUpForm } from "../../types";
 const SignUp = () => {
+  const [buttonValue, setButtonValue] = useState(<p>Sign Up</p>);
   const {
     register,
     handleSubmit,
@@ -13,6 +14,11 @@ const SignUp = () => {
   } = useForm();
   const password = watch("password");
   const handleSignUp = async (formData: ISignUpForm) => {
+    setButtonValue(
+      <div>
+        Signing Up... <div className="spinner-border"></div>
+      </div>
+    );
     try {
       await signup(formData);
       console.log("signup successful");
@@ -25,7 +31,7 @@ const SignUp = () => {
     }
   };
   return (
-    <div className="card" style={{backgroundColor: "grey"}}>
+    <div className="card" style={{ backgroundColor: "grey" }}>
       <h2 className="card-title text-center">Create Account</h2>
       <form className="column" onSubmit={handleSubmit(handleSignUp)}>
         <label htmlFor="email">Email</label>
@@ -91,7 +97,7 @@ const SignUp = () => {
           type="submit"
           disabled={isSubmitting}
         >
-          Submit
+          {buttonValue}
         </button>
       </form>
     </div>

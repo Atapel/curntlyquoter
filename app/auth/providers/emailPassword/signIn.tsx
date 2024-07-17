@@ -2,12 +2,17 @@
 import React, { useState } from "react";
 import { login } from "../../actions";
 const SignIn = () => {
-  // Define state for error messages if needed
+  const [buttonValue, setButtonValue] = useState(<p>Sign In</p>);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   // Function to handle the login form submission
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setButtonValue(
+      <div>
+        Signing In... <div className="spinner-border"></div>
+      </div>
+    );
 
     // Create a FormData object from the form element
     const formData = new FormData(e.currentTarget);
@@ -29,7 +34,7 @@ const SignIn = () => {
     }
   };
   return (
-    <div className="card my-5" style={{backgroundColor: "grey"}}>
+    <div className="card my-5" style={{ backgroundColor: "grey" }}>
       <h2 className="card-title text-center">Sign In</h2>
       <form className="column" onSubmit={handleLogin}>
         {/* Display error message if present */}
@@ -60,7 +65,7 @@ const SignIn = () => {
           type="submit"
           data-testid="signin-button"
         >
-          Submit
+          {buttonValue}
         </button>
       </form>
     </div>

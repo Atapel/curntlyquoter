@@ -1,73 +1,71 @@
-'use server'
+"use server";
 // import { revalidatePath } from 'next/cache'
-import { redirect } from 'next/navigation'
-import { createClient } from '../utils/supabase/server'
-import { ISignUpForm, IConfirmSignupForm} from './types'
+import { redirect } from "next/navigation";
+import { createClient } from "../utils/supabase/server";
+import { ISignUpForm, IConfirmSignupForm } from "./types";
 // type returnAuthErrMsg = {
 //   error: string
 // }
 export async function login(
-    formData: FormData
-  ):  Promise<void | {error: string}>  {
-  const supabase = createClient()
-  
+  formData: FormData
+): Promise<void | { error: string }> {
+  const supabase = createClient();
+
   const credentials = {
-    email: formData.get('email') as string,
-    password: formData.get('password') as string,
-  }
-  
-  try{
-    const { error} = await supabase.auth.signInWithPassword(credentials)
-    if(error) throw error;
+    email: formData.get("email") as string,
+    password: formData.get("password") as string,
+  };
+
+  try {
+    const { error } = await supabase.auth.signInWithPassword(credentials);
+    if (error) throw error;
   } catch (error) {
     console.error(error);
     // throw new Error(error.message);
-    return {error: error.message}
+    return { error: error.message };
   }
-  redirect('/account')
+  redirect("/account");
 }
 
-export async function signup(
-  formData: ISignUpForm
-  ) {
-  const supabase = createClient()
+export async function signup(formData: ISignUpForm) {
+  const supabase = createClient();
 
   const reqData = {
     email: formData.email,
     password: formData.password,
-  }
+  };
 
   try {
-    const { error } = await supabase.auth.signUp(reqData)
+    const { error } = await supabase.auth.signUp(reqData);
     if (error) {
-      throw new Error(error.message)
+      throw new Error(error.message);
     }
   } catch (error) {
     console.error(error);
     throw new Error(error.message);
   }
 
-  redirect('/auth/providers/emailPassword/checkYourEmails')
+  redirect("/auth/providers/emailPassword/checkYourEmails");
 }
 
 export async function validateOtp(
-    emailFromQueryParam: string,
-    tokenFromQueryParam: string
-  ) {
-  const supabase = createClient()
-  try{
+  emailFromQueryParam: string,
+  tokenFromQueryParam: string
+) {
+  const supabase = createClient();
+  try {
     const { error } = await supabase.auth.verifyOtp({
       email: emailFromQueryParam,
       token: tokenFromQueryParam,
-      type: 'email',
+      type: "email",
     });
     if (error) {
-        console.error('Supabase error:', error.message);
-        throw new Error('Failed to validate OTP token.');
+      console.error("Supabase error:", error.message);
+      throw new Error("Failed to validate OTP token.");
     }
-    console.log('Session retrieved');
+    console.log("Session retrieved");
   } catch (error) {
-    console.error('Session not retrieved', error);
+    console.error("Session not retrieved", error);
     throw new Error(error.message);
   }
 }
@@ -75,8 +73,8 @@ export async function validateOtp(
 export async function confirmSignUp(
   // formData: FormData
   formData: IConfirmSignupForm
-  ) {
-  const supabase = createClient()
+) {
+  const supabase = createClient();
 
   try {
     const { data, error } = await supabase.auth.getUser();
@@ -85,15 +83,13 @@ export async function confirmSignUp(
       throw new Error(`Error fetching user data: ${error.message}`);
     }
 
-    const { error: insertError } = await supabase
-      .from('User_Metadata')
-      .insert({
-        User_UID: data.user.id,
-        Given_Name: formData.givenName,
-        Family_Name: formData.familyName,
-        Company_Name: formData.companyName,
-        Phone_Number: formData.phoneNumber,
-      });
+    const { error: insertError } = await supabase.from("User_Metadata").insert({
+      User_UID: data.user.id,
+      Given_Name: formData.givenName,
+      Family_Name: formData.familyName,
+      Company_Name: formData.companyName,
+      Phone_Number: formData.phoneNumber,
+    });
 
     if (insertError) {
       throw new Error(`Error inserting user metadata: ${error.message}`);
@@ -103,35 +99,35 @@ export async function confirmSignUp(
     // Re-throw the error to allow client-side handling
     // Mot sure if just throw or throw new error
     throw new Error(error.message);
-  } 
+  }
 
-  redirect('/account')
+  redirect("/account");
 }
 
 export async function logout() {
-  const supabase = createClient()
+  const supabase = createClient();
 
-  const { error } = await supabase.auth.signOut()
+  const { error } = await supabase.auth.signOut();
 
   if (error) {
     console.log(error);
-  }
-  else {
-    redirect('/')
+  } else {
+    redirect("/");
   }
 }
 
-export async function resetPassword(formData: FormData) {
-  const supabase = createClient()
+// export async function resetPassword(formData: FormData) {
+export async function resetPassword(eMail: string) {
+  const supabase = createClient();
 
   const { error } = await supabase.auth.resetPasswordForEmail(
-    formData.get('email') as string,
-  )
+    // formData.get("email") as string
+    eMail
+  );
 
   if (error) {
     console.log(error);
-  }
-  else {
-    redirect('/account')
+  } else {
+    redirect("/auth/providers/emailPassword/checkYourEmails");
   }
 }
