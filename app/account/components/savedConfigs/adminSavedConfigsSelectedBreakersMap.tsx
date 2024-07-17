@@ -1,23 +1,23 @@
-import { TInitialBreaker, TConfigDB } from "@context/types";
-interface selectedBreakersProps {
-  config_state: TConfigDB;
-}
-const MapSelectedBreakers = (props: selectedBreakersProps) => {
-  let selectedBreakers: TInitialBreaker[] =
-    props.config_state.selected_breakers;
+import { TInitialBreaker } from "@context/types";
+
+const MapSelectedBreakers = ({
+  Breakers,
+}: {
+  Breakers: TInitialBreaker[] | null;
+}) => {
   return (
     <>
-      {selectedBreakers &&
-        selectedBreakers.map((item, index) => (
+      {Breakers &&
+        Breakers.map((item, index) => (
           <div
             key={index}
             className="border p-2"
             style={{
-              display:"flex",
+              display: "flex",
               flexDirection: "row",
-              alignItems: "baseline", 
-              justifyContent: "space-between" 
-              }}
+              alignItems: "baseline",
+              justifyContent: "space-between",
+            }}
           >
             <p className="fw-bold">{item.SelectedBreaker.Description}</p>
 
@@ -36,7 +36,7 @@ const MapSelectedBreakers = (props: selectedBreakersProps) => {
             </div>
           </div>
         ))}
-      {!selectedBreakers && (
+      {!Breakers && (
         <div className="alert alert-warning m-3">No breakers selected</div>
       )}
     </>

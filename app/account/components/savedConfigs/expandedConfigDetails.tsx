@@ -4,7 +4,7 @@ import { TConfigDB } from "@context/types";
 import ResumeDraftButton from "./adminSavedConfigsResumeDraft";
 import DisplaySelectedPanel from "@global_components/selectedPanel";
 import MapSelectedBreakers from "./adminSavedConfigsSelectedBreakersMap";
-function ExpandedConfigModal(props) {
+function ExpandedConfigModal({ configuration }: { configuration: TConfigDB }) {
   useEffect(() => {
     require("bootstrap/dist/js/bootstrap.bundle.min.js");
   }, []);
@@ -14,16 +14,16 @@ function ExpandedConfigModal(props) {
         type="button"
         className="btn btn-primary w-100 my-2"
         data-bs-toggle="modal"
-        data-bs-target={`#expandConfigModal${props.id}`}
+        data-bs-target={`#expandConfigModal${configuration.id}`}
       >
         Show Details
       </button>
 
       <div
         className="modal fade"
-        id={`expandConfigModal${props.id}`}
+        id={`expandConfigModal${configuration.id}`}
         // tabindex="-1"
-        aria-labelledby={`expandConfigModal${props.id}Label`}
+        aria-labelledby={`expandConfigModal${configuration.id}Label`}
         aria-hidden="true"
       >
         <div className="modal-dialog modal-dialog-scrollable">
@@ -31,7 +31,7 @@ function ExpandedConfigModal(props) {
             <div className="modal-header">
               <h1
                 className="modal-title fs-5"
-                id={`expandConfigModal${props.id}Label`}
+                id={`expandConfigModal${configuration.id}Label`}
               >
                 Detailed Overview
               </h1>
@@ -46,24 +46,24 @@ function ExpandedConfigModal(props) {
               <section className="border my-2 p-2">
                 <h5 className="">Selected Switchboard</h5>
                 <DisplaySelectedPanel
-                  Id={props.id}
-                  Width={props.configuration.panel_width}
-                  Height={props.configuration.panel_height}
-                  Voltage={props.configuration.panel_voltage}
-                  KAIC={props.configuration.panel_KAIC_rating}
-                  Bus={props.configuration.panel_bus_rating}
-                  ServiceDistribution={
-                    props.configuration.panel_service_distribution
-                  }
-                  FeedType={props.configuration.panel_feed_type}
-                  FeedThruLugs={props.configuration.panel_feed_thru_lugs}
-                  FeedPosition={props.configuration.panel_feed_position}
+                  Id={configuration.id}
+                  Width={configuration.panel_width}
+                  Height={configuration.panel_height}
+                  Voltage={configuration.panel_voltage}
+                  KAIC={configuration.panel_KAIC_rating}
+                  Bus={configuration.panel_bus_rating}
+                  ServiceDistribution={configuration.panel_service_distribution}
+                  FeedType={configuration.panel_feed_type}
+                  FeedThruLugs={configuration.panel_feed_thru_lugs}
+                  FeedPosition={configuration.panel_feed_position}
                 />
               </section>
 
               <section className="border my-2 p-2 ">
                 <h5 className="">Selected Breakers</h5>
-                <MapSelectedBreakers config_state={props.configuration} />
+                <MapSelectedBreakers
+                  Breakers={configuration.selected_breakers}
+                />
               </section>
 
               <section className="border my-2 p-2">
@@ -71,10 +71,10 @@ function ExpandedConfigModal(props) {
                 <ul>
                   <li
                     className="list-group-item"
-                    data-testid={`${props.configuration.init_project}`}
+                    data-testid={`${configuration.init_project}`}
                   >
                     <strong>Order status:</strong>{" "}
-                    {props.configuration.order_confirmed
+                    {configuration.order_confirmed
                       ? "Confirmed"
                       : "Not confirmed"}
                   </li>
@@ -88,7 +88,7 @@ function ExpandedConfigModal(props) {
               </section>
             </div>
             <div className="modal-footer">
-              <ResumeDraftButton configFromDb={props.configuration} />
+              <ResumeDraftButton configFromDb={configuration} />
             </div>
           </div>
         </div>
