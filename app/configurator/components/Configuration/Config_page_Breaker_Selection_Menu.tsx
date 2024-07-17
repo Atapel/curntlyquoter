@@ -4,7 +4,7 @@ import {
   UseConfigurationReducerContext,
   UseBreakerReducerContext,
 } from "@context/globalContext";
-import { writeBreakersPricing } from "@api_requests/google_sheet_call/pricing/actions";
+// import { writeBreakersPricing } from "@api_requests/google_sheet_call/pricing/actions";
 import DisplaySelectedItems from "./Config_page_Selected_Breakers_List";
 import BreakerMappings from "./BreakerMappings";
 import SelectionItemDropdown from "./SelectionItemDropdown";
@@ -14,8 +14,6 @@ const Select_Breakers_Menu = () => {
   const [showAddButton, setShowAddButton] = useState(true);
   const handleProductSelect = () => {
     dispatch({ type: "ADD_BREAKER", payload: breakerState });
-    //Write selection to pricing sheet
-    writeBreakersPricing(state);
     // reset the states back to original
     breakerDispatch({ type: "RESET_BREAKER_STATE" });
   };
@@ -49,9 +47,9 @@ const Select_Breakers_Menu = () => {
                   data-testid="Dropdown-Breaker"
                   variant="primary"
                   id="dropdown-basic"
-                  disabled={breakerState.SelectedSize === "Select Breaker Size"}
+                  disabled={breakerState.SelectedSize === null}
                 >
-                  {breakerState.SelectedBreaker.Description}
+                  {breakerState.Name ? breakerState.Name : "Select Breaker"}
                 </Dropdown.Toggle>
               </Col>
             </Row>
@@ -64,7 +62,7 @@ const Select_Breakers_Menu = () => {
 
         {/* Conditionally rendering the next 3 menu items only if a breaker has been selected above */}
 
-        {breakerState.SelectedBreaker.Description !== "Select Breaker" ? (
+        {breakerState.Name !== null ? (
           <>
             <ListGroup.Item>
               {/* Dropdown for the Breaker Amperage */}
@@ -83,9 +81,7 @@ const Select_Breakers_Menu = () => {
             <ListGroup.Item>
               {/* Dropdown for the Breaker Poles */}
               <SelectionItemDropdown
-                disabledBool={
-                  breakerState.SelectedBreakerAmp === "Select Amperage"
-                }
+                disabledBool={breakerState.SelectedBreakerAmp === null}
                 ItemName={"Breaker Poles"}
                 SelectableItemsArray={breakerState.SelectedBreaker.PolesOptions}
                 dispatchFunc={breakerDispatch}
@@ -105,9 +101,7 @@ const Select_Breakers_Menu = () => {
                       data-testid="Dropdown-"
                       variant="primary"
                       id="dropdown-basic"
-                      disabled={
-                        breakerState.SelectedBreakerPoles === "Select Poles"
-                      }
+                      disabled={breakerState.SelectedBreakerPoles === null}
                     >
                       {breakerState.SelectedFeature}
                     </Dropdown.Toggle>
@@ -147,7 +141,7 @@ const Select_Breakers_Menu = () => {
               size="sm"
               className="w-100"
               onClick={() => handleProductSelect()}
-              disabled={breakerState.SelectedBreakerPoles === "Select Poles"}
+              disabled={breakerState.SelectedBreakerPoles === null}
             >
               Add
             </Button>

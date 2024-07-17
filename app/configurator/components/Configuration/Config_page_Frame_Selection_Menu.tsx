@@ -8,7 +8,10 @@ import {
   ListGroupItem,
   Form,
 } from "react-bootstrap";
-import { createSheet, writeFramePricing } from "@api_requests/google_sheet_call/pricing/actions";
+import {
+  createSheet,
+  writeFramePricing,
+} from "@api_requests/google_sheet_call/pricing/actions";
 import { selectableFrameOptions } from "../../assets/FrameSelectionOptions";
 import { updateConfiguration } from "@api_requests/supabase/actions";
 import { UseConfigurationReducerContext } from "@context/globalContext";
@@ -67,9 +70,7 @@ function Select_Panel_Menu(props) {
           <ListGroup.Item>
             {/* Dropdown for Panel Height */}
             <SelectionItemDropdown
-              disabledBool={
-                state.Configuration.SelectedFrameSize === "Select Width"
-              }
+              disabledBool={state.Configuration.SelectedFrameSize === null}
               ItemName={"Panel Height"}
               SelectableItemsArray={selectableFrameOptions.panelHeight}
               dispatchFunc={dispatch}
@@ -80,9 +81,7 @@ function Select_Panel_Menu(props) {
           <ListGroup.Item>
             {/* Dropdown for Voltage */}
             <SelectionItemDropdown
-              disabledBool={
-                state.Configuration.SelectedPanelHeight === "Select Height"
-              }
+              disabledBool={state.Configuration.SelectedPanelHeight === null}
               ItemName={"Voltage"}
               SelectableItemsArray={selectableFrameOptions.voltage}
               dispatchFunc={dispatch}
@@ -102,11 +101,11 @@ function Select_Panel_Menu(props) {
                     data-testid="Dropdown-Kaic"
                     variant="primary"
                     id="dropdown-basic"
-                    disabled={
-                      state.Configuration.SelectedVoltage === "Select Voltage"
-                    }
+                    disabled={state.Configuration.SelectedVoltage === null}
                   >
-                    {state.Configuration.SelectedKAICRating}
+                    {state.Configuration.SelectedKAICRating
+                      ? state.Configuration.SelectedKAICRating
+                      : "Select KAIC Rating"}
                   </Dropdown.Toggle>
                 </Col>
               </Row>
@@ -165,9 +164,7 @@ function Select_Panel_Menu(props) {
           <ListGroup.Item>
             {/* Dropdown for Bus Rating */}
             <SelectionItemDropdown
-              disabledBool={
-                state.Configuration.SelectedKAICRating === "Select KAIC Rating"
-              }
+              disabledBool={state.Configuration.SelectedKAICRating === null}
               ItemName={"Bus Rating"}
               SelectableItemsArray={selectableFrameOptions.busRating}
               dispatchFunc={dispatch}
@@ -178,9 +175,7 @@ function Select_Panel_Menu(props) {
           <ListGroup.Item>
             {/* Dropdown for DistributionSerie */}
             <SelectionItemDropdown
-              disabledBool={
-                state.Configuration.SelectedBusRating === "Select Bus Rating"
-              }
+              disabledBool={state.Configuration.SelectedBusRating === null}
               ItemName={"Distribution or Service"}
               SelectableItemsArray={selectableFrameOptions.serviceDistribution}
               dispatchFunc={dispatch}
@@ -192,8 +187,7 @@ function Select_Panel_Menu(props) {
             {/* Dropdown for Feed Type */}
             <SelectionItemDropdown
               disabledBool={
-                state.Configuration.SelectedServiceDistribution ===
-                "Select Service or Distribution"
+                state.Configuration.SelectedServiceDistribution === null
               }
               ItemName={"Feed Type"}
               SelectableItemsArray={selectableFrameOptions.feedType}

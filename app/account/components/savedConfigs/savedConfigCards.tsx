@@ -7,7 +7,6 @@ interface configCardsProps {
   configs: TConfigDB[];
 }
 function ConfigCards(props: configCardsProps) {
-  console.log("props.configs", props.configs);
   return (
     <div className="border d-flex flex-row justify-between flex-wrap">
       {props.configs.length > 0 ? (
