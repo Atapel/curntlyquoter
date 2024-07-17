@@ -1,228 +1,254 @@
-import {TConfigurationState,TConfigurationActions} from "./types"
+import { TConfigurationState, TConfigurationActions } from "./types";
 export const initialConfiguration: TConfigurationState = {
   Configuration: {
-    SelectedFrameSize: 'Select Width',
-    SelectedVoltage: 'Select Voltage',
-    SelectedKAICRating: 'Select KAIC Rating',
-    SelectedBusRating: 'Select Bus Rating',
-    SelectedPanelHeight: 'Select Height',
-    SelectedServiceDistribution: 'Select Service or Distribution',
+    SelectedFrameSize: null,
+    SelectedVoltage: null,
+    SelectedKAICRating: null,
+    SelectedBusRating: null,
+    SelectedPanelHeight: null,
+    SelectedServiceDistribution: null,
     FeedThruLugs: false,
-    SelectedFeedType: "Select Feed Type",
-    SelectedFeedPosition: "Select Feed Position",
+    SelectedFeedType: null,
+    SelectedFeedPosition: null,
     SelectedBreakers: [],
-    CurrentBreakersSize: 0,
+    CurrentBreakersSize: null,
     // MaxBreakeSize is not Static, rather depending on FrameSize, BusRating and PanelHeight
-    MaxBreakerSize: 45
+    MaxBreakerSize: 45,
   },
   Metadata: {
-    Client: 'Enter Client Name',
-    Project: 'Enter Project Address',
+    Client: null,
+    Project: null,
     DatabaseID: null,
-    ResumeDraft: false
+    ResumeDraft: false,
   },
   Pricing: {
-    OrderConfirmed:false,
+    OrderConfirmed: false,
     // Price: ;
     // OrderNumber: ;
     // OrderDate: ;
-  }
+  },
 };
 export type TConfigReducer = (
-  state: TConfigurationState, 
-  action: TConfigurationActions) => TConfigurationState 
+  state: TConfigurationState,
+  action: TConfigurationActions
+) => TConfigurationState;
 
 export const reducer: TConfigReducer = (state, action) => {
-  let newSize: number
+  let newSize: number;
 
   switch (action.type) {
-    
-    case 'TOTAL_RESET':
+    case "TOTAL_RESET":
       return initialConfiguration;
 
-    case 'RESET_CONFIGURATION':
+    case "RESET_CONFIGURATION":
       return {
         ...state,
-        Configuration: initialConfiguration.Configuration
+        Configuration: initialConfiguration.Configuration,
       };
 
-    case 'LOAD_CONFIGURATION_FROM_DB':
-      // Calculate current Breaker Size
-      let sizeArray = []
+    case "LOAD_CONFIGURATION_FROM_DB":
+      const {
+        payload: {
+          panel_width,
+          panel_voltage,
+          panel_KAIC_rating,
+          panel_bus_rating,
+          panel_height,
+          panel_service_distribution,
+          panel_feed_thru_lugs,
+          panel_feed_type,
+          panel_feed_position,
+          selected_breakers,
+          init_client,
+          init_project,
+          id,
+          order_confirmed,
+        },
+      } = action;
 
-      action.payload.selected_breakers && action.payload.selected_breakers.forEach(breaker => {
-        sizeArray.push(breaker["Size"])
-      });
-      let newBreakersSize = sizeArray.reduce((total, num) => total + num, 0)
+      // Calculate current Breaker Size
+      let sizeArray = [];
+
+      selected_breakers &&
+        selected_breakers.forEach((breaker) => {
+          sizeArray.push(breaker["Size"]);
+        });
+      let newBreakersSize = sizeArray.reduce((total, num) => total + num, 0);
 
       return {
         Configuration: {
-          SelectedFrameSize: action.payload.panel_width,
-          SelectedVoltage: action.payload.panel_voltage,
-          SelectedKAICRating: action.payload.panel_KAIC_rating,
-          SelectedBusRating: action.payload.panel_bus_rating,
-          SelectedPanelHeight: action.payload.panel_height,
-          SelectedServiceDistribution: action.payload.panel_service_distribution,
-          FeedThruLugs: action.payload.panel_feed_thru_lugs,
-          SelectedFeedType: action.payload.panel_feed_type,
-          SelectedFeedPosition: action.payload.panel_feed_position,
-          SelectedBreakers: action.payload.selected_breakers,
+          SelectedFrameSize: panel_width,
+          SelectedVoltage: panel_voltage,
+          SelectedKAICRating: panel_KAIC_rating,
+          SelectedBusRating: panel_bus_rating,
+          SelectedPanelHeight: panel_height,
+          SelectedServiceDistribution: panel_service_distribution,
+          FeedThruLugs: panel_feed_thru_lugs,
+          SelectedFeedType: panel_feed_type,
+          SelectedFeedPosition: panel_feed_position,
+          SelectedBreakers: selected_breakers,
           CurrentBreakersSize: newBreakersSize,
-          MaxBreakerSize: 45
+          MaxBreakerSize: 45,
         },
         Metadata: {
-          Client: action.payload.init_client,
-          Project: action.payload.init_project,
-          DatabaseID: action.payload.id,
-          ResumeDraft: true
+          Client: init_client,
+          Project: init_project,
+          DatabaseID: id,
+          ResumeDraft: true,
         },
         Pricing: {
-          OrderConfirmed:action.payload.order_confirmed,
+          OrderConfirmed: order_confirmed,
           // Price: action.payload.price;
           // OrderNumber: action.payload.price_order_number;
           // OrderDate: action.payload.price_order_date;
-        }
-      }
-
-
-    case 'SET_FRAME_SIZE':
-      return {
-        ...state,
-        Configuration: {
-          ...state.Configuration,
-          SelectedFrameSize: action.payload as TConfigurationState["Configuration"]["SelectedFrameSize"]
-        }
+        },
       };
 
-    case 'SET_VOLTAGE':
+    case "SET_FRAME_SIZE":
       return {
         ...state,
         Configuration: {
           ...state.Configuration,
-          SelectedVoltage: action.payload as TConfigurationState["Configuration"]["SelectedVoltage"]
-        }
+          SelectedFrameSize: action.payload,
+        },
       };
 
-    case 'SET_KAIC_RATING':
+    case "SET_VOLTAGE":
       return {
         ...state,
         Configuration: {
           ...state.Configuration,
-          SelectedKAICRating: action.payload as TConfigurationState["Configuration"]["SelectedKAICRating"]
-        }
+          SelectedVoltage: action.payload,
+        },
       };
 
-    case 'SET_BUS_RATING':
+    case "SET_KAIC_RATING":
       return {
         ...state,
         Configuration: {
           ...state.Configuration,
-          SelectedBusRating: action.payload as TConfigurationState["Configuration"]["SelectedBusRating"]
-        }
+          SelectedKAICRating: action.payload,
+        },
       };
 
-    case 'SET_PANEL_HEIGHT':
+    case "SET_BUS_RATING":
       return {
         ...state,
         Configuration: {
           ...state.Configuration,
-          SelectedPanelHeight: action.payload as TConfigurationState["Configuration"]["SelectedPanelHeight"]
-        }
+          SelectedBusRating: action.payload,
+        },
       };
 
-    case 'SET_SERVICE_OR_DISTRIBUTION':
+    case "SET_PANEL_HEIGHT":
       return {
         ...state,
         Configuration: {
           ...state.Configuration,
-          SelectedServiceDistribution: action.payload as TConfigurationState["Configuration"]["SelectedServiceDistribution"]
-        }
+          SelectedPanelHeight: action.payload,
+        },
       };
 
-    case 'SET_FEED_THRU_LUGS':
+    case "SET_SERVICE_OR_DISTRIBUTION":
       return {
         ...state,
         Configuration: {
           ...state.Configuration,
-          FeedThruLugs: action.payload
-        }
-      }
+          SelectedServiceDistribution: action.payload,
+        },
+      };
 
-    case 'SET_FEED_TYPE':
+    case "SET_FEED_THRU_LUGS":
       return {
         ...state,
         Configuration: {
           ...state.Configuration,
-          SelectedFeedType: action.payload as TConfigurationState["Configuration"]["SelectedFeedType"]
-        }
-      }
+          FeedThruLugs: action.payload,
+        },
+      };
 
-    case 'SET_FEED_POSITION':
+    case "SET_FEED_TYPE":
       return {
         ...state,
         Configuration: {
           ...state.Configuration,
-          SelectedFeedPosition: action.payload as TConfigurationState["Configuration"]["SelectedFeedPosition"]
-        }
-      }
+          SelectedFeedType: action.payload,
+        },
+      };
 
-    case 'ADD_BREAKER':
+    case "SET_FEED_POSITION":
+      return {
+        ...state,
+        Configuration: {
+          ...state.Configuration,
+          SelectedFeedPosition: action.payload,
+        },
+      };
+
+    case "ADD_BREAKER":
       // Size Checker
-      newSize = state.Configuration.CurrentBreakersSize + action.payload['BreakerSize']
+      newSize =
+        state.Configuration.CurrentBreakersSize + action.payload["BreakerSize"];
       // Breaker Description labeling
       let modifiedPayload = { ...action.payload }; // Creating a shallow copy of action.payload
 
-      modifiedPayload.BreakerDisplayName = action.payload.SelectedBreaker.Description
-      
+      modifiedPayload.BreakerDisplayName =
+        action.payload.SelectedBreaker.Description;
+
       // Breaker Description labeling
       if (state.Configuration.SelectedVoltage === "208Y/120V") {
         if (state.Configuration.SelectedKAICRating === 65) {
-          modifiedPayload.BreakerDisplayName += 'N';
+          modifiedPayload.BreakerDisplayName += "N";
         } else if (state.Configuration.SelectedKAICRating === 100) {
-          modifiedPayload.BreakerDisplayName += 'H';
+          modifiedPayload.BreakerDisplayName += "H";
         } else if (state.Configuration.SelectedKAICRating === 150) {
-          modifiedPayload.BreakerDisplayName += 'L';
+          modifiedPayload.BreakerDisplayName += "L";
         }
       } else if (state.Configuration.SelectedVoltage === "480Y/270V") {
         if (state.Configuration.SelectedKAICRating === 35) {
-          modifiedPayload.BreakerDisplayName += 'N';
+          modifiedPayload.BreakerDisplayName += "N";
         } else if (state.Configuration.SelectedKAICRating === 65) {
-          modifiedPayload.BreakerDisplayName += 'H';
+          modifiedPayload.BreakerDisplayName += "H";
         } else if (state.Configuration.SelectedKAICRating === 100) {
-          modifiedPayload.BreakerDisplayName += 'L';
+          modifiedPayload.BreakerDisplayName += "L";
         }
       }
-      
+
       if (newSize < state.Configuration.MaxBreakerSize) {
         return {
           ...state,
           Configuration: {
             ...state.Configuration,
-            SelectedBreakers: [...state.Configuration.SelectedBreakers, modifiedPayload],
-            CurrentBreakersSize: newSize
-          }
+            SelectedBreakers: [
+              ...state.Configuration.SelectedBreakers,
+              modifiedPayload,
+            ],
+            CurrentBreakersSize: newSize,
+          },
         };
       } else {
-        console.warn("couldnt add breaker")
-        return { ...state }
+        console.warn("couldnt add breaker");
+        return { ...state };
       }
 
-    case 'REMOVE_BREAKER':
+    case "REMOVE_BREAKER":
       let newSelected_Breakers = state.Configuration.SelectedBreakers.filter(
         (_, index) => index !== action.payload
       );
 
-      newSize = state.Configuration.CurrentBreakersSize - state.Configuration.SelectedBreakers[action.payload]['Size']
+      newSize =
+        state.Configuration.CurrentBreakersSize -
+        state.Configuration.SelectedBreakers[action.payload]["Size"];
       return {
         ...state,
         Configuration: {
           ...state.Configuration,
           SelectedBreakers: newSelected_Breakers,
-          CurrentBreakersSize: newSize
-        }
+          CurrentBreakersSize: newSize,
+        },
       };
 
-    case 'INIT_NEW_CONFIG':
+    case "INIT_NEW_CONFIG":
       console.log(action);
       return {
         // initialConfiguration,
@@ -234,8 +260,8 @@ export const reducer: TConfigReducer = (state, action) => {
           Client: action.payload.Client,
           Project: action.payload.Project,
           DatabaseID: action.payload.DatabaseID,
-          ResumeDraft: false
-        }
-      } 
+          ResumeDraft: false,
+        },
+      };
   }
 };
