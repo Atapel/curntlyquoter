@@ -6,7 +6,7 @@ import { UseConfigurationReducerContext } from "@/app/context/globalContext";
 const DisplaySelectedItems = () => {
   const { state, dispatch } = UseConfigurationReducerContext();
 
-  const deleteItem = (indexToDelete) => {
+  const deleteItem = (indexToDelete: number) => {
     dispatch({ type: "REMOVE_BREAKER", payload: indexToDelete });
   };
   return (
