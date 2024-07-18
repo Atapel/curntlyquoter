@@ -239,9 +239,9 @@ function Select_Panel_Menu(props) {
               onClick={() => addFrameConfimation()}
               disabled={
                 (state.Configuration.SelectedFeedPosition ===
-                  "Select Feed Position" &&
-                  state.Configuration.SelectedFeedType === "Main Lug") ||
-                state.Configuration.SelectedFeedType === "Select Feed Type"
+                  null &&
+                  state.Configuration.SelectedFeedType === null) ||
+                state.Configuration.SelectedFeedType === null
               }
             >
               Add
