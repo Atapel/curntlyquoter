@@ -47,7 +47,7 @@ const Select_Breakers_Menu = () => {
                   data-testid="Dropdown-Breaker"
                   variant="primary"
                   id="dropdown-basic"
-                  disabled={breakerState.SelectedSize === null}
+                  disabled={breakerState.SelectedHeight === null}
                 >
                   {breakerState.Name ? breakerState.Name : "Select Breaker"}
                 </Dropdown.Toggle>

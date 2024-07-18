@@ -72,15 +72,16 @@ export type TSelectedBreaker = {
   MaxAmp?: number;
   Description: string;
   Max_Amperage?: number;
-  BreakerSize?: string;
+  BreakerWidth: number;
+  BreakerHeight: string;
   PolesOptions?: string[];
   AmperageOptions?: number[];
-  Size?: number;
+  Size: number;
   SVG_str?: string;
 };
 
 export type TInitialBreaker = {
-  SelectedSize: string | null;
+  SelectedHeight: string | null;
   SelectedTrip: any;
   SelectedFeature: any;
   SelectedBreaker: TSelectedBreaker | null;

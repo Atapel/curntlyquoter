@@ -70,7 +70,7 @@ export const getRequestsObject = async (
         range: `${sheetName}!A${sheetRow}`
       }, {
         // CellName: 'Single or Double',
-        values: [[configObject.SelectedBreakers[index].SelectedSize]],
+        values: [[configObject.SelectedBreakers[index].SelectedHeight]],
         range: `${sheetName}!B${sheetRow}`
       }
     )

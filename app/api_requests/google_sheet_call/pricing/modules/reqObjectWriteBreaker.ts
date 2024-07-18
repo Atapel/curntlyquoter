@@ -44,7 +44,7 @@ export const ReqObjectWriteBreakers = (
       },
       {
         // CellName: 'Single or Double',
-        values: [[configObject.SelectedBreakers[index].SelectedSize]],
+        values: [[configObject.SelectedBreakers[index].SelectedHeight]],
         range: `${sheetName}!B${sheetRow}`,
       }
     );

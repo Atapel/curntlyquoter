@@ -43,7 +43,7 @@ const ConfigReview = () => {
                 <ListGroup.Item key={index}>
                   <Row>
                     <Col>{item.BreakerDisplayName}</Col>
-                    <Col>{item.SelectedSize}</Col>
+                    <Col>{item.SelectedHeight}</Col>
                     <Col>
                       Availability:
                       {

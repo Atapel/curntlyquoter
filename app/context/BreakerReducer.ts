@@ -1,7 +1,7 @@
 import { TInitialBreaker, TBreakerActions } from "./types";
 export const initialBreaker: TInitialBreaker = {
   // User Selecions
-  SelectedSize: null,
+  SelectedHeight: null,
   SelectedTrip: null,
   SelectedFeature: null,
   SelectedBreaker: null,
@@ -24,7 +24,7 @@ export const breakerReducer = (
     case "SET_SELECTED_SIZE":
       return {
         ...state,
-        SelectedSize: action.payload,
+        SelectedHeight: action.payload,
       };
 
     case "SET_SELECTED_TRIP":
