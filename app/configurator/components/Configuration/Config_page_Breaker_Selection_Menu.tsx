@@ -11,7 +11,7 @@ import SelectionItemDropdown from "./SelectionItemDropdown";
 const Select_Breakers_Menu = () => {
   const { state, dispatch } = UseConfigurationReducerContext();
   const { breakerState, breakerDispatch } = UseBreakerReducerContext();
-  const [showAddButton, setShowAddButton] = useState(true);
+  const [showAddButton, setShowAddButton] = useState<boolean>(true);
   const handleProductSelect = () => {
     dispatch({ type: "ADD_BREAKER", payload: breakerState });
     // reset the states back to original
@@ -91,7 +91,7 @@ const Select_Breakers_Menu = () => {
 
             <ListGroup.Item>
               {/* Dropdown for the Breaker Trip */}
-              <Dropdown>
+              {/* <Dropdown>
                 <Row>
                   <Col>
                     <h5>Add Feature:</h5>
@@ -127,7 +127,7 @@ const Select_Breakers_Menu = () => {
                     </Button>
                   </Dropdown.Item>
                 </Dropdown.Menu>
-              </Dropdown>
+              </Dropdown> */}
             </ListGroup.Item>
           </>
         ) : null}
