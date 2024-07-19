@@ -1,5 +1,6 @@
 import { TSelectedBreaker } from "@context/types";
-export let Breakers: TSelectedBreaker[] = [
+export const Breakers = (): TSelectedBreaker[] => {
+  return [
     {
       Description: "UTS1200",
       Max_Amperage: 1200,
@@ -199,3 +200,4 @@ export let Breakers: TSelectedBreaker[] = [
         '<svg width="132" height="22" viewBox="0 0 132 22" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M67.9942 7.52307L68.0004 14.5097M69.0671 14.5088L69.8138 14.5081M70.8271 14.5072L70.8208 7.52053M59.4074 7.53079L80.2607 7.51205L80.267 14.4987L59.4137 14.5175L59.4074 7.53079ZM1.12585 20.7033L130.832 20.5867L130.815 1.33336L1.10855 1.44995L1.12585 20.7033Z" stroke="black" stroke-width="1.28" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/></svg>',
     },
   ];
+};

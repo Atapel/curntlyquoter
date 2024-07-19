@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # file needs 755 permission on linux
-# sudo chmod 755 test-script.sh
+# sudo chmod 755 prod-test-script.sh
 
 # Please install Xterm to make this script run
 
