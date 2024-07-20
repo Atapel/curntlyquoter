@@ -13,11 +13,11 @@ export default function BreakerMappings({ addButtonState }) {
     TSelectedBreaker[]
   >(Breakers());
   const [showAddButton, setShowAddButton] = addButtonState;
-  const filterByWidthandHeight = (breaker: TSelectedBreaker) => {
-    return (
-      breaker.BreakerWidth === state.Configuration.SelectedFrameSize &&
-      breaker.BreakerHeight === breakerState.SelectedHeight
-    );
+  const filterByWidth = (breaker: TSelectedBreaker) => {
+    return breaker.BreakerWidth === state.Configuration.SelectedFrameSize;
+  };
+  const filterByHeight = (breaker: TSelectedBreaker) => {
+    return breaker.BreakerHeight === breakerState.SelectedHeight;
   };
   const filterByBreakerSize = (breaker: TSelectedBreaker) => {
     // Making sure that all breakers that can be selected are bellow the Max breaker size
@@ -30,31 +30,28 @@ export default function BreakerMappings({ addButtonState }) {
     return false;
   };
   useEffect(() => {
-    if (
-      state.Configuration.SelectedFrameSize !== null &&
-      breakerState.SelectedHeight !== null
-    ) {
+    if (state.Configuration.SelectedFrameSize !== null) {
       // Filter based on Frame width and Breaker Height
-      let filtered = Breakers().filter((breaker) =>
-        filterByWidthandHeight(breaker)
-      );
+      let filtered = Breakers().filter((breaker) => filterByWidth(breaker));
+      if (breakerState.SelectedHeight !== null) {
+        filtered = filtered.filter((breaker) => filterByHeight(breaker));
+      }
       // Filter based on X size
       let filtered2 = filtered.filter((breaker) =>
         filterByBreakerSize(breaker)
       );
+      setAvailableBreakers(filtered2);
       if (filtered2.length === 0) {
         setShowAddButton(false);
       } else {
         setShowAddButton(true);
-        setAvailableBreakers(filtered2);
       }
     }
   }, [
     breakerState.SelectedHeight,
     state.Configuration.SelectedFrameSize,
-    state.Configuration.SelectedBreakers
+    state.Configuration.SelectedBreakers,
   ]);
-
   return (
     <Dropdown.Menu>
       {availableBreakers.map((product: TSelectedBreaker, index: number) => (
