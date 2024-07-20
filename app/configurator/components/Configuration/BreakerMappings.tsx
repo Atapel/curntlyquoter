@@ -45,10 +45,15 @@ export default function BreakerMappings({ addButtonState }) {
       if (filtered2.length === 0) {
         setShowAddButton(false);
       } else {
+        setShowAddButton(true);
         setAvailableBreakers(filtered2);
       }
     }
-  }, [breakerState.SelectedHeight, state.Configuration.SelectedFrameSize]);
+  }, [
+    breakerState.SelectedHeight,
+    state.Configuration.SelectedFrameSize,
+    state.Configuration.SelectedBreakers
+  ]);
 
   return (
     <Dropdown.Menu>
