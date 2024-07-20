@@ -3,22 +3,18 @@ import ListGroup from "react-bootstrap/ListGroup";
 import { Alert, Button, Col, Dropdown, Row } from "react-bootstrap";
 import { UseConfigurationReducerContext } from "@/app/context/globalContext";
 
-const DisplaySelectedItems = () => {
+const DisplaySelectedItems = ({ addButtonState }) => {
   const { state, dispatch } = UseConfigurationReducerContext();
-
+  const [showAddButton, setShowAddButton] = addButtonState;
   const deleteItem = (indexToDelete: number) => {
     dispatch({ type: "REMOVE_BREAKER", payload: indexToDelete });
+    setShowAddButton(true);
   };
   return (
     <>
       <ListGroup>
         {state.Configuration.SelectedBreakers &&
-        state.Configuration.SelectedBreakers.length ===
-          0 ? // <Alert variant="info">
-        //   Please select some breakers
-        // </Alert>
-        null : (
-          //null
+        state.Configuration.SelectedBreakers.length === 0 ? null : (
           <ListGroup.Item>
             <h2>Selected breakers: </h2>
           </ListGroup.Item>
