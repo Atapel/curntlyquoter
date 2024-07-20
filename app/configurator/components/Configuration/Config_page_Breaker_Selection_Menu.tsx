@@ -23,75 +23,78 @@ const Select_Breakers_Menu = () => {
         <ListGroup.Item>
           <h2>Configure Breaker: </h2>
         </ListGroup.Item>
-
-        <ListGroup.Item>
-          {/* Dropdown for Breaker Size */}
-          <SelectionItemDropdown
-            disabledBool={false}
-            ItemName={"Breaker Frame"}
-            SelectableItemsArray={["Single", "Double"]}
-            dispatchFunc={breakerDispatch}
-            dispatchAction={"SET_SELECTED_SIZE"}
-          />
-        </ListGroup.Item>
-
-        <ListGroup.Item>
-          {/* Dropdown for Breaker */}
-          <Dropdown>
-            <Row>
-              <Col>
-                <h5>Breaker:</h5>
-              </Col>
-              <Col>
-                <Dropdown.Toggle
-                  data-testid="Dropdown-Breaker"
-                  variant="primary"
-                  id="dropdown-basic"
-                  disabled={breakerState.SelectedHeight === null}
-                >
-                  {breakerState.Name ? breakerState.Name : "Select Breaker"}
-                </Dropdown.Toggle>
-              </Col>
-            </Row>
-
-            <BreakerMappings
-              addButtonState={[showAddButton, setShowAddButton]}
-            />
-          </Dropdown>
-        </ListGroup.Item>
-
-        {/* Conditionally rendering the next 3 menu items only if a breaker has been selected above */}
-
-        {breakerState.Name !== null ? (
+        {showAddButton === true ? (
           <>
             <ListGroup.Item>
-              {/* Dropdown for the Breaker Amperage */}
-
+              {/* Dropdown for Breaker Size */}
               <SelectionItemDropdown
                 disabledBool={false}
-                ItemName={"Breaker Amperage"}
-                SelectableItemsArray={
-                  breakerState.SelectedBreaker.AmperageOptions
-                }
+                ItemName={"Breaker Frame"}
+                SelectableItemsArray={["Single", "Double"]}
                 dispatchFunc={breakerDispatch}
-                dispatchAction={"SET_SELECTED_BREAKER_AMP"}
+                dispatchAction={"SET_SELECTED_SIZE"}
               />
             </ListGroup.Item>
 
             <ListGroup.Item>
-              {/* Dropdown for the Breaker Poles */}
-              <SelectionItemDropdown
-                disabledBool={breakerState.SelectedBreakerAmp === null}
-                ItemName={"Breaker Poles"}
-                SelectableItemsArray={breakerState.SelectedBreaker.PolesOptions}
-                dispatchFunc={breakerDispatch}
-                dispatchAction={"SET_SELECTED_BREAKER_POLES"}
-              />
+              {/* Dropdown for Breaker */}
+              <Dropdown>
+                <Row>
+                  <Col>
+                    <h5>Breaker:</h5>
+                  </Col>
+                  <Col>
+                    <Dropdown.Toggle
+                      data-testid="Dropdown-Breaker"
+                      variant="primary"
+                      id="dropdown-basic"
+                      disabled={breakerState.SelectedHeight === null}
+                    >
+                      {breakerState.Name ? breakerState.Name : "Select Breaker"}
+                    </Dropdown.Toggle>
+                  </Col>
+                </Row>
+
+                <BreakerMappings
+                  addButtonState={[showAddButton, setShowAddButton]}
+                />
+              </Dropdown>
             </ListGroup.Item>
 
-            <ListGroup.Item>
-              {/* Dropdown for the Breaker Trip */}
-              {/* <Dropdown>
+            {/* Conditionally rendering the next 3 menu items only if a breaker has been selected above */}
+
+            {breakerState.Name !== null ? (
+              <>
+                <ListGroup.Item>
+                  {/* Dropdown for the Breaker Amperage */}
+
+                  <SelectionItemDropdown
+                    disabledBool={false}
+                    ItemName={"Breaker Amperage"}
+                    SelectableItemsArray={
+                      breakerState.SelectedBreaker.AmperageOptions
+                    }
+                    dispatchFunc={breakerDispatch}
+                    dispatchAction={"SET_SELECTED_BREAKER_AMP"}
+                  />
+                </ListGroup.Item>
+
+                <ListGroup.Item>
+                  {/* Dropdown for the Breaker Poles */}
+                  <SelectionItemDropdown
+                    disabledBool={breakerState.SelectedBreakerAmp === null}
+                    ItemName={"Breaker Poles"}
+                    SelectableItemsArray={
+                      breakerState.SelectedBreaker.PolesOptions
+                    }
+                    dispatchFunc={breakerDispatch}
+                    dispatchAction={"SET_SELECTED_BREAKER_POLES"}
+                  />
+                </ListGroup.Item>
+
+                <ListGroup.Item>
+                  {/* Dropdown for the Breaker Trip */}
+                  {/* <Dropdown>
                 <Row>
                   <Col>
                     <h5>Add Feature:</h5>
@@ -128,30 +131,35 @@ const Select_Breakers_Menu = () => {
                   </Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown> */}
+                </ListGroup.Item>
+              </>
+            ) : null}
+
+            <ListGroup.Item>
+              {/* Add Breaker to Preview */}
+
+              <Button
+                data-testid="Add-Breaker"
+                variant="outline-info"
+                size="sm"
+                className="w-100"
+                onClick={() => handleProductSelect()}
+                disabled={breakerState.SelectedBreakerPoles === null}
+              >
+                Add
+              </Button>
             </ListGroup.Item>
           </>
-        ) : null}
-
-        <ListGroup.Item>
-          {/* Add Breaker to Preview */}
-          {showAddButton === true ? (
-            <Button
-              data-testid="Add-Breaker"
-              variant="outline-info"
-              size="sm"
-              className="w-100"
-              onClick={() => handleProductSelect()}
-              disabled={breakerState.SelectedBreakerPoles === null}
-            >
-              Add
-            </Button>
-          ) : (
+        ) : (
+          <ListGroup.Item>
             <Alert variant="warning">No more Breakers available</Alert>
-          )}
-        </ListGroup.Item>
+          </ListGroup.Item>
+        )}
       </ListGroup>
 
-      <DisplaySelectedItems />
+      <DisplaySelectedItems
+        addButtonState={[showAddButton, setShowAddButton]}
+      />
     </>
   );
 };
