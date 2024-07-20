@@ -214,7 +214,7 @@ export const reducer: TConfigReducer = (state, action) => {
         }
       }
 
-      if (newSize < state.Configuration.MaxBreakerSize) {
+      if (newSize <= state.Configuration.MaxBreakerSize) {
         return {
           ...state,
           Configuration: {
@@ -238,7 +238,7 @@ export const reducer: TConfigReducer = (state, action) => {
 
       newSize =
         state.Configuration.CurrentBreakersSize -
-        state.Configuration.SelectedBreakers[action.payload]["Size"];
+        state.Configuration.SelectedBreakers[action.payload]["BreakerSize"];
       return {
         ...state,
         Configuration: {
