@@ -6,10 +6,6 @@ import {
 } from "@context/globalContext";
 import { Breakers } from "../../assets/BreakerSelectionOptions";
 import { TSelectedBreaker } from "@/app/context/types";
-import {
-  filterByWidthandHeight,
-  filterByBreakerSize,
-} from "./BreakerMappingFilters";
 export default function BreakerMappings({ addButtonState }) {
   const { state, dispatch } = UseConfigurationReducerContext();
   const { breakerState, breakerDispatch } = UseBreakerReducerContext();
@@ -17,7 +13,22 @@ export default function BreakerMappings({ addButtonState }) {
     TSelectedBreaker[]
   >(Breakers());
   const [showAddButton, setShowAddButton] = addButtonState;
-
+  const filterByWidthandHeight = (breaker: TSelectedBreaker) => {
+    return (
+      breaker.BreakerWidth === state.Configuration.SelectedFrameSize &&
+      breaker.BreakerHeight === breakerState.SelectedHeight
+    );
+  };
+  const filterByBreakerSize = (breaker: TSelectedBreaker) => {
+    // Making sure that all breakers that can be selected are bellow the Max breaker size
+    if (
+      breaker.Size + state.Configuration.CurrentBreakersSize <=
+      state.Configuration.MaxBreakerSize
+    ) {
+      return true;
+    }
+    return false;
+  };
   useEffect(() => {
     if (
       state.Configuration.SelectedFrameSize !== null &&
