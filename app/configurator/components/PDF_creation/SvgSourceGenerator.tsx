@@ -1,3 +1,4 @@
+import {TConfiguration} from "@context/types"
 import {
   container_46_w_dimensions_SVG,
   container_36_w_dimensions_SVG,
@@ -17,7 +18,7 @@ export function frontViewSvgSource(configStateObject) {
     return ("data:image/svg+xml," + encodeURIComponent(container_46_w_dimensions_SVG))
   }   
 }
-export function sideViewSvgSource(configStateObject) {
+export function sideViewSvgSource(configStateObject: TConfiguration) {
   let sideViewSource = sideViewFrame
 
   if (configStateObject.SelectedFeedType === "Main Lug") {
@@ -30,7 +31,7 @@ export function sideViewSvgSource(configStateObject) {
       console.log('Bottom');
       sideViewSource = sideViewSource + encodeURIComponent(sideViewMainLugBottom);
     }
-    else if(configStateObject.SelectedFeedPosition === "FeedThru"){
+    else if(configStateObject.SelectedFeedPosition === "FeedThru (Top/Bottom)"){
       console.log('FeedThru');
       sideViewSource = sideViewSource + encodeURIComponent(sideViewMainLugTop + sideViewMainLugBottom);
     }
