@@ -1,7 +1,17 @@
 import {
   sheets_v4
 } from "googleapis"
-import { TBatchUpdateRequest } from "./getSheetSchema"
+type TSheetSchema = ({
+  values: (number | string)[][];
+  range: string;
+})[]
+type TBatchUpdateRequest = {
+  spreadsheetId: string,
+  resource: {
+    valueInputOption: "RAW",
+    data: TSheetSchema
+  }
+}
 export const writeSheet = async (
   clienObject: sheets_v4.Sheets, 
   batchRequest: TBatchUpdateRequest
