@@ -10,7 +10,7 @@ import {
   sideViewMainLugTop, 
   sideViewMainLugBottom} from "../../assets/SideViewBoard.js"
 // import {technicalViewBreaker, technicalViewFrame} from "../../assets/TechnicalView"
-export function frontViewSvgSource(configStateObject) {
+export function frontViewSvgSource(configStateObject: TConfiguration) {
   // Set front view src
   if (configStateObject.SelectedFrameSize === 36) {
     return ("data:image/svg+xml," + encodeURIComponent(container_36_w_dimensions_SVG))
