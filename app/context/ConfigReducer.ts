@@ -11,7 +11,7 @@ export const initialConfiguration: TConfigurationState = {
     SelectedFeedType: null,
     SelectedFeedPosition: null,
     SelectedBreakers: [],
-    CurrentBreakersSize: null,
+    CurrentBreakersSize: 0,
     // MaxBreakeSize is not Static, rather depending on FrameSize, BusRating and PanelHeight
     MaxBreakerSize: 45,
   },
@@ -67,11 +67,11 @@ export const reducer: TConfigReducer = (state, action) => {
       } = action;
 
       // Calculate current Breaker Size
-      let sizeArray = [];
+      let sizeArray: number[] = [];
 
       selected_breakers &&
         selected_breakers.forEach((breaker) => {
-          sizeArray.push(breaker["Size"]);
+          sizeArray.push(breaker["BreakerSize"]);
         });
       let newBreakersSize = sizeArray.reduce((total, num) => total + num, 0);
 
