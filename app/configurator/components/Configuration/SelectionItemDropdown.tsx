@@ -1,12 +1,27 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+interface SelectionItemDropdownProps {
+  ItemName: string;
+  SelectableItemsArray: string[] | number[];
+  dispatchFunc: React.Dispatch<any>; // Replace with the appropriate action type
+  dispatchAction: string; // Replace with the appropriate action type
+  disabledBool: boolean;
+  resetSignal?: any;
+}
 function SelectionItemDropdown({
   ItemName,
   SelectableItemsArray,
   dispatchFunc,
   dispatchAction,
   disabledBool,
-}) {
+  resetSignal,
+}: SelectionItemDropdownProps) {
   const [selectedItem, setSelectedItem] = useState(`Select ${ItemName}`);
+
+  useEffect(() => {
+    if (resetSignal) {
+      setSelectedItem(`Select ${ItemName}`);
+    }
+  }, [resetSignal])
   function setValue(Item) {
     setSelectedItem(Item);
     dispatchFunc({ type: dispatchAction, payload: Item });

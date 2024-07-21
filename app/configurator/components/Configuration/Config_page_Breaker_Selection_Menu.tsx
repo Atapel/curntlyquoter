@@ -14,7 +14,7 @@ const Select_Breakers_Menu = () => {
   const [showAddButton, setShowAddButton] = useState<boolean>(true);
   const handleProductSelect = () => {
     dispatch({ type: "ADD_BREAKER", payload: breakerState });
-    // reset the states back to original
+    // reset the state back to original
     breakerDispatch({ type: "RESET_BREAKER_STATE" });
   };
   return (
@@ -33,6 +33,7 @@ const Select_Breakers_Menu = () => {
                 SelectableItemsArray={["Single", "Double"]}
                 dispatchFunc={breakerDispatch}
                 dispatchAction={"SET_SELECTED_SIZE"}
+                resetSignal={state.Configuration.SelectedBreakers}
               />
             </ListGroup.Item>
 

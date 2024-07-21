@@ -238,8 +238,7 @@ function Select_Panel_Menu(props) {
               className="w-100"
               onClick={() => addFrameConfimation()}
               disabled={
-                (state.Configuration.SelectedFeedPosition ===
-                  null &&
+                (state.Configuration.SelectedFeedPosition === null &&
                   state.Configuration.SelectedFeedType === null) ||
                 state.Configuration.SelectedFeedType === null
               }
