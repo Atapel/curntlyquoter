@@ -1,14 +1,14 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Alert, Col, Row, Tab, Tabs } from "react-bootstrap";
 import Link from "next/link";
 import PDF_preview from "./PDF_creation/Config_page_pdf_preview";
 import Select_Breakers_Menu from "./Configuration/Config_page_Breaker_Selection_Menu";
 import Select_Panel_Menu from "./Configuration/Config_page_Frame_Selection_Menu";
 import QuotePage from "./Quotation/Quotation_page";
-import { UseConfigurationReducerContext } from "../../context/globalContext";
 
-export default function configuratorApp(userMetadata) {
+
+export default function configuratorApp() {
   // Rendering Variables
   const [panelSelected, setPanelSelected] = useState(false)
 
